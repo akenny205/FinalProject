@@ -2,7 +2,7 @@
 
 This repo is a template for your semester project.  It includes most of the infrastructure setup (containers) and sample code and data throughout.  Explore it fully and ask questions.
 
-Video Link:
+Video Link: (user needs to have permission)
 
 ## Prerequisites
 
