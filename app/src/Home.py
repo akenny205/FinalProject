@@ -92,7 +92,7 @@ if st.button('Act as John, a CO-OP/Career Advisor',
     st.session_state['first_name'] = 'John'
     st.switch_page('pages/20_Advisor_Home.py')
 
-if st.button('Act as Mike, System Administrator',
+if st.button('Act as Mike, System Administrator Committing',
              type = 'primary',
              use_container_width = True):
     st.session_state['authenticated'] = True
