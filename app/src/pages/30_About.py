@@ -4,15 +4,29 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.write("# About this App")
+st.title("About PeerPoint")
 
-st.markdown (
+st.write(
     """
-    This is a demo app for CS 3200 Course Project.  
-
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
-
-    Stay tuned for more information and features to come!
+    PeerPoint is a platform designed to empower students through meaningful mentorship connections. 
+    We believe that the best advice comes from peers who’ve walked the same path, so we’ve created a 
+    space where students can share insights, experiences, and tips for succeeding in co-ops and beyond.
     """
-        )
+)
+
+st.subheader("At PeerPoint, you can:")
+st.markdown(
+    """
+    - Connect with mentors who’ve experienced the co-op process firsthand.
+    - Gain practical advice on resumes, interviews, and navigating workplace challenges.
+    - Learn about diverse industries and career paths directly from peers.
+    """
+)
+
+st.write(
+    """
+    Our mission is to foster a supportive community where students help each other grow professionally 
+    and personally. PeerPoint isn’t just about mentorship; it’s about building relationships that 
+    inspire and guide you toward achieving your goals.
+    """
+)
