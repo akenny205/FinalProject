@@ -36,45 +36,46 @@ st.markdown("""
 if st.button('Chat With Your Mentors', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/11_Prediction.py')
+  st.switch_page('pages/03_Chat_Mentors.py')
 
 if st.button('View Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/12_API_Test.py')
+  st.switch_page('pages/01_View_Matches.py')
 
 if st.button('View Feed', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/02_View_Feed.py')
 
 if st.button('Browse Jobs',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/11_Jobs.py')
 
 if st.button('Browse Employeers',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/12_Employeers.py')
 
 if st.button('Find Alumni',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/13_Alumni.py')
 
 if st.button('Browse Experiences',
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/14_Experiences.py')
 
 if st.button('Update Profile',
              type='primary',
              use_container_width=False):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/06_Update_Profile.py')
 
 toggle = st.toggle("Toggle Mentee Capacity")
 
+# Need to connect this to the database!
 if toggle:
     st.write("No Longer Open to Mentee Matches")
     # Add advanced features or options here

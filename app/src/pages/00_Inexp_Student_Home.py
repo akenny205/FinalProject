@@ -36,29 +36,29 @@ st.markdown("""
 if st.button('View Matches', 
             type='primary',
             use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+  st.switch_page('pages/01_View_Matches.py')
 
 if st.button('View Feed', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/02_View_Feed.py')
 
 if st.button('Chat With Mentors', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/03_Chat_Mentors.py')
 
 if st.button('Chat With Your Advisor', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/04_Chat_Advisor.py')
 
 if st.button('Search Mentors', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/05_Search_Mentors.py')
 
 if st.button('Update Profile', 
              type='primary',
              use_container_width=False):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+  st.switch_page('pages/06_Update_Profile.py')

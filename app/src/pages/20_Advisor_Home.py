@@ -36,29 +36,29 @@ st.markdown("""
 if st.button('View Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/22_Advisor_Matches.py')
 
 if st.button('View Feed', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/02_View_Feed.py')
 
 if st.button('View Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/23_View_Students.py')
 
 if st.button('Recommend Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/22_Advisor_Matches.py')
 
 if st.button('Chat With Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/04_Chat_Advisor.py')
 
 if st.button('Add Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/21_Add_Students.py')
