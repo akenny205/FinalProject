@@ -3,13 +3,13 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
 
 st.set_page_config(layout = 'wide')
 
-# Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-st.title(f"Welcome peer mentor, {st.session_state['first_name']}.")
+st.title(f"Welcome advisor, {st.session_state['first_name']}.")
 st.write('')
 st.write('')
 st.write('### Welcome to PeerPoint')
@@ -33,50 +33,32 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-if st.button('Chat With Your Mentors', 
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/11_Prediction.py')
-
 if st.button('View Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/12_API_Test.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
 if st.button('View Feed', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/02_Map_Demo.py')
 
-if st.button('Browse Jobs',
+if st.button('View Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Browse Employeers',
+if st.button('Recommend Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Find Alumni',
+if st.button('Chat With Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Browse Experiences',
+if st.button('Add Students', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/13_Classification.py')
-
-if st.button('Update Profile',
-             type='primary',
-             use_container_width=False):
-  st.switch_page('pages/13_Classification.py')
-
-toggle = st.toggle("Toggle Mentee Capacity")
-
-if toggle:
-    st.write("No Longer Open to Mentee Matches")
-    # Add advanced features or options here
-else:
-    st.write("Open to Mentee Matches")
+  st.switch_page('pages/21_ML_Model_Mgmt.py')

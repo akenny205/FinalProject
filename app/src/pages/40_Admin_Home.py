@@ -3,13 +3,13 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
 
 st.set_page_config(layout = 'wide')
 
-# Show appropriate sidebar links for the role of the currently logged in user
 SideBarLinks()
 
-st.title(f"Peer mentee, {st.session_state['first_name']}")
+st.title(f"Welcome system administrator, {st.session_state['first_name']}.")
 st.write('')
 st.write('')
 st.write('### Welcome to PeerPoint')
@@ -33,32 +33,22 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-if st.button('View Matches', 
-            type='primary',
-            use_container_width=True):
-  st.switch_page('pages/01_World_Bank_Viz.py')
-
-if st.button('View Feed', 
+if st.button('View Usage Dashboard', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Chat With Mentors', 
+if st.button('View Flagged Posts', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Chat With Your Advisor', 
+if st.button('Update Flagged Comments', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
 
-if st.button('Search Mentors', 
+if st.button('Update User Details', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/02_Map_Demo.py')
-
-if st.button('Update Profile', 
-             type='primary',
-             use_container_width=False):
-  st.switch_page('pages/01_World_Bank_Viz.py')
+  st.switch_page('pages/21_ML_Model_Mgmt.py')
