@@ -148,12 +148,37 @@ def delete_user(userID):
 # Get user based on a specific trait (major, minor, interest, skills, career_goals, career_path)
 @users.route('/user/trait', methods=['GET'])
 def get_users_by_trait():
+    # Validate the trait to prevent SQL injection
+    valid_traits = ['Major', 'Minor']
+    join_tables = {
+        'Interest': 'interests',
+        'Skill': 'skills',
+        'CareerGoal': 'career_goals',
+        'CareerPath': 'career_path'
+    }
+    
     trait = request.args.get('trait')
     value = request.args.get('value')
-    query = f'''SELECT UserID, fname, lname, joinDate FROM users 
-                WHERE {trait} = %s'''
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (value,))
+
+    if trait in valid_traits:
+        # Query from users table for valid traits
+        query = f'''SELECT UserID, fname, lname, joinDate FROM users 
+                    WHERE {trait} = %s'''
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (value,))
+    elif trait in join_tables:
+        # Query using a join for related tables
+        join_table = join_tables[trait]
+        query = f'''SELECT u.UserID, u.fname, u.lname, u.joinDate
+                    FROM users u
+                    JOIN {join_table} jt ON u.UserID = jt.UserID
+                    WHERE jt.{trait} = %s'''
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (value,))
+    else:
+        # Return error for invalid traits
+        return make_response(jsonify({'error': 'Invalid trait specified'}), 400)
+
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
