@@ -5,5 +5,5 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
-experiences = Blueprint('experiences', __name__)
+jobs = Blueprint('jobs', __name__)
 
