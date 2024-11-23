@@ -30,3 +30,14 @@ def create_job():
     return 'Job Created!'
 
 # admin deletes jobs
+
+@jobs.route('/jobs', methods=['DELETE'])
+def delete_job(job_id):
+    current_app.logger.info('/jobs/job_id DELETE request')
+    # query
+    query = 'DELETE FROM jobs WHERE JobID = %s'
+    # cursor
+    cursor = db.get._db().cursor()
+    cursor.execute(query, job_id)
+    db.get_db().commit()
+    return 'Job Deleted!'
