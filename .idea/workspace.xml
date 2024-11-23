@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0049fa5b-da61-4b4d-b695-3bc70504f24a" name="Changes" comment="Deleted that, added experience file">
+    <list default="true" id="0049fa5b-da61-4b4d-b695-3bc70504f24a" name="Changes" comment="delete job route written">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/backend/experience/experience.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/backend/experience/experience.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +66,7 @@
       <workItem from="1732207080476" duration="619000" />
       <workItem from="1732224593338" duration="69000" />
       <workItem from="1732307472621" duration="2982000" />
-      <workItem from="1732312375915" duration="2838000" />
+      <workItem from="1732312375915" duration="4666000" />
     </task>
     <task id="LOCAL-00001" summary="Testing Commits">
       <option name="closed" value="true" />
@@ -99,7 +100,39 @@
       <option name="project" value="LOCAL" />
       <updated>1732320925636</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Deleted that, added experience file">
+      <option name="closed" value="true" />
+      <created>1732323045287</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1732323045287</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Deleted that, added experience file&#10;added 2 functions to experiences">
+      <option name="closed" value="true" />
+      <created>1732323084341</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1732323084341</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Deleted that, added experience file&#10;added 2 functions to experiences&#10;added create function to jobs">
+      <option name="closed" value="true" />
+      <created>1732323467796</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732323467796</updated>
+    </task>
+    <task id="LOCAL-00008" summary="delete job route written">
+      <option name="closed" value="true" />
+      <created>1732323743402</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732323743402</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,7 +142,10 @@
     <MESSAGE value="Testing Commits" />
     <MESSAGE value="Deleted that" />
     <MESSAGE value="Deleted that, added experience file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted that, added experience file" />
+    <MESSAGE value="Deleted that, added experience file&#10;added 2 functions to experiences" />
+    <MESSAGE value="Deleted that, added experience file&#10;added 2 functions to experiences&#10;added create function to jobs" />
+    <MESSAGE value="delete job route written" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete job route written" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

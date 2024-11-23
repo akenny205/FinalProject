@@ -20,11 +20,13 @@ def view_experiences():
     response.status_code = 200
     return response
 
+
+# Creates experience for a user
 @experiences.route('/experiences', methods=['POST'])
 def create_experience():
     current_app.logger.info('POST /customers route')
     cust_info = request.get_json()
-    # Init
+    # init
     userID = cust_info['UserID']
     experienceName = cust_info['ExperienceName']
     date = cust_info['Date']
@@ -40,5 +42,7 @@ def create_experience():
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
-    return 'User Created!'
+    return 'Experience Created!'
+
+    # Must add filter by traits !
 
