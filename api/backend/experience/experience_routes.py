@@ -5,10 +5,10 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
-experiences = Blueprint('experiences', __name__)
+experience = Blueprint('experiences', __name__)
 
 # Displays an Advisor's students and their experiences
-@experiences.route('/experiences', methods=['GET'])
+@experience.route('/experiences', methods=['GET'])
 def view_experiences():
     cursor = db.get_db().cursor()
     cursor.execute('SELECT u.UserID, u.fName AS FirstName, u.lName AS LastName,'
@@ -22,7 +22,7 @@ def view_experiences():
 
 
 # Creates experience for a user
-@experiences.route('/experiences', methods=['POST'])
+@experience.route('/experiences', methods=['POST'])
 def create_experience():
     current_app.logger.info('POST /customers route')
     cust_info = request.get_json()
