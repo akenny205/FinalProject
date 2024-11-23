@@ -30,7 +30,6 @@ def create_job():
     return 'Job Created!'
 
 # admin deletes jobs
-
 @jobs.route('/jobs', methods=['DELETE'])
 def delete_job(job_id):
     current_app.logger.info('/jobs/job_id DELETE request')
