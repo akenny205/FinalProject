@@ -39,7 +39,7 @@ with col1:
                 'Description': description
             }
 
-            response = requests.post("/jobs", json=job_data) # Error here
+            response = requests.post(f"http://api:4000/j/create_job/{empid}/{title}/{description}", json=job_data) # Error here
 
             if response.status_code == 200:
                 st.success("Job added successfully!")
@@ -52,7 +52,7 @@ with col1:
 # Delete Jobs
     if st.button('Delete Job', use_container_width=True):
         if JobID:
-            response = requests.delete(f"/jobs/{JobID}") # Error here
+            response = requests.delete(f"http://api:4000/j/deletejob/{JobID}") # Error here
             if response.status_code == 200:
                 st.success("Job deleted successfully!")
             else:

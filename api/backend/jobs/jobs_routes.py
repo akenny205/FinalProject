@@ -21,7 +21,7 @@ def view_jobs():
     return response
 
 # admin creates jobs
-@jobs.route('/createjob/<EmpID>/<Title>/<Description>', methods=['POST'])
+@jobs.route('/create_job/<EmpID>/<Title>/<Description>', methods=['POST'])
 def create_job(EmpID, Title, Description):
     current_app.logger.info('/jobs POST request')
     data = (EmpID, Title, Description)
