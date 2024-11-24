@@ -35,7 +35,6 @@ CREATE TABLE users (
     Minor VARCHAR(50),
     MenteeID INT,
     Semesters INT,
-    mentorCap INT,
     numCoops INT,
     Status BOOLEAN DEFAULT TRUE,
     AdvisorID INT,

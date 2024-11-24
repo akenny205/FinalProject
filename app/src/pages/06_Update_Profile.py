@@ -6,99 +6,63 @@ from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+import requests
 
 SideBarLinks()
 
-# import mysql.connector
+UPDATE_USER_URL = "http://web-api:4000/u/user"  # Adjust the hostname and port as necessary
 
-# Function to update student profile in the database
-# def update_student_profile(user_id, last_name, first_name, email, phone, major, minor, semesters, mentor_cap, num_coops):
-#    try:
-    #     # Connect to the database
-    #     connection = mysql.connector.connect(
-    #         host="localhost",    # Update with your database host
-    #         user="root",         # Update with your database username
-    #         password="password", # Update with your database password
-    #         database="finalproject"
-    #     )
-    #     cursor = connection.cursor()
-        
-    #     # Update query
-    #     update_query = """
-    #     UPDATE users
-    #     SET lName = %s, fName = %s, Email = %s, Phone = %s, Major = %s, Minor = %s,
-    #         Semesters = %s, mentorCap = %s, numCoops = %s
-    #     WHERE UserID = %s
-    #     """
-    #     cursor.execute(update_query, (last_name, first_name, email, phone, major, minor, semesters, mentor_cap, num_coops, user_id))
-    #     connection.commit()
-        
-    #     st.success("Profile updated successfully!")
-    # except mysql.connector.Error as err:
-    #     st.error(f"Error: {err}")
-    # finally:
-    #     if connection.is_connected():
-    #         cursor.close()
-    #         connection.close()
+# Streamlit App
+st.title("Update User Profile")
 
-# Streamlit form
-st.title("Update Your Profile")
+# Input UserID
+user_id = st.text_input("Enter UserID to Update", help="Provide the ID of the user whose profile you want to update")
 
-# Prompt the user for their UserID
-# user_id = st.number_input("Enter Your User ID", min_value=1, step=1)
-
-# if user_id:
-    # try:
-        # # Connect to the database to retrieve existing profile details
-        # connection = mysql.connector.connect(
-        #     host="localhost",    # Update with your database host
-        #     user="root",         # Update with your database username
-        #     password="password", # Update with your database password
-        #     database="finalproject"
-        # )
-        # cursor = connection.cursor(dictionary=True)
-        
-        # # Query to fetch user details
-        # select_query = "SELECT * FROM users WHERE UserID = %s"
-        # cursor.execute(select_query, (user_id,))
-        # user = cursor.fetchone()
-        
-        # if user:
-with st.form("update_profile_form"):
-    # Populate the form with existing data
-    # last_name = st.text_input("Last Name", value=user["lName"])
-    # first_name = st.text_input("First Name", value=user["fName"])
-    # email = st.text_input("Email", value=user["Email"])
-    # phone = st.text_input("Phone", value=user["Phone"] or "")
-    # major = st.text_input("Major", value=user["Major"] or "")
-    # minor = st.text_input("Minor", value=user["Minor"] or "")
-    # semesters = st.number_input("Semesters", min_value=0, step=1, value=user["Semesters"] or 0)
-    # mentor_cap = st.number_input("Mentor Capacity", min_value=0, step=1, value=user["mentorCap"] or 0)
-    # num_coops = st.number_input("Number of Co-ops", min_value=0, step=1, value=user["numCoops"] or 0)
-    last_name = st.text_input("Last Name")
-    first_name = st.text_input("First Name")
+# Create a form to input all user details
+with st.form("update_user_form"):
+    st.subheader("Enter Updated User Details")
+    # Basic user details
+    fname = st.text_input("First Name")
+    lname = st.text_input("Last Name")
+    usertype = st.selectbox("User Type", options=["Mentor", "Mentee", "Advisor"])
     email = st.text_input("Email")
-    phone = st.text_input("Phone")
+    phone = st.text_input("Phone Number")
     major = st.text_input("Major")
     minor = st.text_input("Minor")
-    semesters = st.number_input("Semesters", min_value=0, step=1)
-    mentor_cap = st.number_input("Mentor Capacity", min_value=0, step=1)
-    num_coops = st.number_input("Number of Co-ops", min_value=0, step=1)
-
-    submit_button = st.form_submit_button("Update Profile")
     
-    if submit_button:
-        # Validate input
-        if not last_name or not first_name or not email:
-            st.error("Please fill in all required fields.")
-        else:
-            # update_student_profile(user_id, last_name, first_name, email, phone, major, minor, semesters, mentor_cap, num_coops)
-            st.write('## Thanks for Updating Your Profile')
-        # else:
-            # st.warning("No user found with the given User ID.")
-    # except mysql.connector.Error as err:
-    #     st.error(f"Error: {err}")
-    # finally:
-    #     if connection.is_connected():
-    #         cursor.close()
-    #         connection.close()
+    # Additional user attributes
+    semesters = st.number_input("Semesters (Optional)", min_value=0, step=1, format="%d")
+    num_coops = st.number_input("Number of Co-ops (Optional)", min_value=0, step=1, format="%d")
+
+    # Submit button
+    submitted = st.form_submit_button("Update User")
+
+# Handle form submission
+if submitted:
+    if not user_id:
+        st.error("UserID is required to update the profile.")
+    else:
+        # Prepare the data payload
+        user_data = {
+            "fname": fname,
+            "lname": lname,
+            "usertype": usertype,
+            "email": email,
+            "phone": phone,
+            "major": major,
+            "minor": minor,
+            "semesters": int(semesters) if semesters else None,
+            "num_coops": int(num_coops) if num_coops else None,
+        }
+
+        try:
+            # Send a PUT request to the Flask API
+            response = requests.put(f"{UPDATE_USER_URL}/{user_id}", json=user_data)
+
+            if response.status_code == 200:
+                st.success("User profile updated successfully!")
+            else:
+                st.error(f"Failed to update user: {response.status_code} - {response.text}")
+
+        except Exception as e:
+            st.error(f"An error occurred: {e}")

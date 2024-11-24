@@ -6,52 +6,42 @@ from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+import requests
 
 SideBarLinks()
 
-st.write("""
-# Simple Iris Flower Prediction App
+ALUMNI_URL = "http://web-api:4000/u/user/alumni"  # Adjust the hostname and port as necessary
 
-This example is borrowed from [The Data Professor](https://github.com/dataprofessor/streamlit_freecodecamp/tree/main/app_7_classification_iris)
-         
-This app predicts the **Iris flower** type!
-""")
+# Streamlit App
+st.title("Alumni Viewer")
 
-st.sidebar.header('User Input Parameters')
+# Fetch alumni data when the button is clicked
+if st.button("Get Alumni"):
+    try:
+        # Send a GET request to the Flask API
+        response = requests.get(ALUMNI_URL)
 
-def user_input_features():
-    sepal_length = st.sidebar.slider('Sepal length', 4.3, 7.9, 5.4)
-    sepal_width = st.sidebar.slider('Sepal width', 2.0, 4.4, 3.4)
-    petal_length = st.sidebar.slider('Petal length', 1.0, 6.9, 1.3)
-    petal_width = st.sidebar.slider('Petal width', 0.1, 2.5, 0.2)
-    data = {'sepal_length': sepal_length,
-            'sepal_width': sepal_width,
-            'petal_length': petal_length,
-            'petal_width': petal_width}
-    features = pd.DataFrame(data, index=[0])
-    return features
+        if response.status_code == 200:
+            # Parse the JSON response
+            data = response.json()
 
-df = user_input_features()
+            # Convert to a Pandas DataFrame
+            df = pd.DataFrame(data)
 
-st.subheader('User Input parameters')
-st.write(df)
+            # Display the data as a table
+            st.subheader("List of Alumni")
+            st.dataframe(df)
 
-iris = datasets.load_iris()
-X = iris.data
-Y = iris.target
+            # Optional: Add a download button for the data
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="Download Alumni Data as CSV",
+                data=csv,
+                file_name="alumni_data.csv",
+                mime="text/csv",
+            )
+        else:
+            st.error(f"Failed to fetch data: {response.status_code} - {response.text}")
 
-clf = RandomForestClassifier()
-clf.fit(X, Y)
-
-prediction = clf.predict(df)
-prediction_proba = clf.predict_proba(df)
-
-st.subheader('Class labels and their corresponding index number')
-st.write(iris.target_names)
-
-st.subheader('Prediction')
-st.write(iris.target_names[prediction])
-#st.write(prediction)
-
-st.subheader('Prediction Probability')
-st.write(prediction_proba)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
