@@ -61,12 +61,11 @@ with col1:
 # Displays all jobIDs and Titles
 with col2:
     st.subheader("Current Jobs")
-    response = requests.get("http://localhost:3306/jobs") # Error here
-    if response.status_code == 200:
-        jobs = response.json()
+    results = requests.get('http://api:').json() # Error here
+    if results.status_code == 200:
+        jobs = results.json()
         if jobs:
-            df = pd.DataFrame(jobs)
-            st.dataframe(df)
+            st.dataframe(results)
         else:
             st.write("No jobs available.")
     else:
