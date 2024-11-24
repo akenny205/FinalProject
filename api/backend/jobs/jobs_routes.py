@@ -21,25 +21,17 @@ def view_jobs():
     return response
 
 # admin creates jobs
-@jobs.route('/create_job/<EmpID>/<Title>/<Description>', methods=['POST'])
-def create_job(EmpID, Title, Description):
-    current_app.logger.info('/jobs POST request')
-    data = (EmpID, Title, Description)
-    query = '''
-        INSERT INTO jobs (EmpID, Title, Description)
-        VALUES (%s, %s, %s)
-    '''
-    cursor = db.get_db().cursor()
-    cursor.execute(query, data)
-    db.get_db().commit()
-    return 'Job Created!'
-
-# admin deletes jobs
-@jobs.route('/deletejob/<JobId>', methods=['DELETE'])
+@jobs.route('/deletejob/<JobID>', methods=['DELETE'])
 def delete_job(JobID):
-    current_app.logger.info('/jobs DELETE request')
+    current_app.logger.info(f'/jobs DELETE request for JobID: {JobID}')
     query = 'DELETE FROM jobs WHERE JobID = %s'
-    cursor = db.get._db().cursor()
-    cursor.execute(query, job_id)
-    db.get_db().commit()
-    return 'Job Deleted!'
+    try:
+        with db.get_db().cursor() as cursor:
+            cursor.execute(query, (JobID,))
+        db.get_db().commit()
+        return jsonify({'message': 'Job Deleted!'}), 200
+    except Exception as e:
+        current_app.logger.error(f"Error deleting job {JobID}: {e}")
+        return jsonify({'error': 'Failed to delete job', 'details': str(e)}), 500
+
+
