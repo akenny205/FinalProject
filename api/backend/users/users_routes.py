@@ -69,7 +69,7 @@ def get_users_count():
 
 #------------------------------------------------------------
 # Add new users to the system [system admin / advisor purposes]
-@users.route('/user', methods=['POST'])
+@users.route('/user/add', methods=['POST'])
 def add_user():
     user_info = request.json
     query = '''INSERT INTO users (fname, lname, Usertype, Email, Phone, Major, Minor, AdminID, EmpID)
@@ -84,7 +84,7 @@ def add_user():
     db.get_db().commit()
     return 'User added!', 201
 
-#------------------------------------------------------------
+#------------------------------------------------------------ Done until here
 # Update user profile [users]
 @users.route('/user/<userID>', methods=['PUT'])
 def update_user_profile(userID):

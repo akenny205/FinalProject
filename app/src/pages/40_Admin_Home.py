@@ -3,7 +3,6 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
-import requests
 
 st.set_page_config(layout = 'wide')
 
@@ -36,22 +35,22 @@ st.markdown("""
 if st.button('View Usage Dashboard', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/41_usage.py')
 
 if st.button('View Flagged Posts', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/02_View_Feed.py')
 
 if st.button('Update Flagged Comments', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/42_update_comments.py')
 
 if st.button('Update User Details', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/21_ML_Model_Mgmt.py')
+  st.switch_page('pages/43_update_users.py')
 
 if st.button('Create and Delete Jobs',
              type='primary',
