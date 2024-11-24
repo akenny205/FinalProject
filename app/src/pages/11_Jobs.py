@@ -13,7 +13,7 @@ st.sidebar.header("Menu")
 if st.sidebar.button("Home"):
     st.switch_page('Home.py')
 if st.sidebar.button("Back"):
-    st.switch_page('40_Admin_Home.py')
+    st.switch_page('pages/40_Admin_Home.py')
 
 SideBarLinks()
 
