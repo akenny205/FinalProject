@@ -15,19 +15,17 @@ st.title("User Data Viewer")
 
 BACKEND_URL = "http://web-api:4000/u/user"
 
-# Fetch Data from the Flask API
 try:
     response = requests.get(BACKEND_URL)
 
     if response.status_code == 200:
-        # Parse the JSON data
         data = response.json()
+        df = pd.DataFrame(data)
 
         st.subheader("User Table")
         st.dataframe(response)
 
-        # Optionally, include download functionality
-        csv = response.to_csv(index=False).encode('utf-8')
+        csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="Download User Data as CSV",
             data=csv,
