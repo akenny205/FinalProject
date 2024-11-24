@@ -20,7 +20,6 @@ def view_experiences():
     response.status_code = 200
     return response
 
-
 # Creates experience for a user
 @experience.route('/experiences', methods=['POST'])
 def create_experience():
@@ -44,5 +43,5 @@ def create_experience():
     db.get_db().commit()
     return 'Experience Created!'
 
-    # Must add filter by traits !
+# Must add filter by traits !
 

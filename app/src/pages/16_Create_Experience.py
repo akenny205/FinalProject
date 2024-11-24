@@ -11,4 +11,4 @@ SideBarLinks()
 if st.sidebar.button('Back'):
     st.switch_page('/appcode/pages/14_Experiences.py')
 
-st.title('Student Experiences Viewer')
+st.title('Add an Experience to your Profile!')
