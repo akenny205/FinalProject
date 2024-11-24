@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 
 st.set_page_config(layout='wide')
 
-# Display the appropriate sidebar links for the role of the logged-in user
-st.sidebar.header("Menu")
+# Quick links
+st.sidebar.header("Quick Links")
 if st.sidebar.button("Home"):
     st.switch_page('Home.py')
 if st.sidebar.button("Back"):
@@ -39,7 +39,7 @@ with col1:
                 'Description': description
             }
 
-            response = requests.post(f"http://api:4000/j/create_job/{empid}/{title}/{description}", json=job_data) # Error here
+            response = requests.post(f"http://api:4000/j/create_job/{empid}/{title}/{description}", json=job_data)
 
             if response.status_code == 200:
                 st.success("Job added successfully!")
@@ -52,7 +52,7 @@ with col1:
 # Delete Jobs
     if st.button('Delete Job', use_container_width=True):
         if JobID:
-            response = requests.delete(f"http://api:4000/j/deletejob/{JobID}") # Error here
+            response = requests.delete(f"http://api:4000/j/deletejob/{JobID}")
             if response.status_code == 200:
                 st.success("Job deleted successfully!")
             else:
