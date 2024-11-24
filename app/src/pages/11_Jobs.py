@@ -58,14 +58,15 @@ with col1:
                 st.error("Failed to delete job.")
         else:
             st.warning("Please fill in all fields.")
+
 # Displays all jobIDs and Titles
 with col2:
     st.subheader("Current Jobs")
-    results = requests.get('http://api:').json() # Error here
-    if results.status_code == 200:
-        jobs = results.json()
+    response = requests.get('http://api:4000/j/viewjobs')
+    if response.status_code == 200:
+        jobs = response.json()
         if jobs:
-            st.dataframe(results)
+            st.dataframe(jobs)
         else:
             st.write("No jobs available.")
     else:

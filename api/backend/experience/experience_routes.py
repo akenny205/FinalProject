@@ -5,7 +5,7 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
-experience = Blueprint('experiences', __name__)
+experience = Blueprint('experience', __name__)
 
 # Displays an Advisor's students and their experiences
 @experience.route('/experiences', methods=['GET'])
