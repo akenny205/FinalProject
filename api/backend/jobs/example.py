@@ -80,3 +80,21 @@ def predict_value(var01, var02):
     the_response.status_code = 200
     the_response.mimetype = 'application/json'
     return the_response
+
+
+@products.route('/8mostordered', methods = ['GET'])
+def get_top8_ordered():
+    query = '''
+    SELECT Products.ProductName, COUNT(Orders.ProductID) AS NumOrders
+    FROM Products
+    JOIN Orders ON Products.ProductID = Orders.ProductID
+    GROUP BY Products.ProductName
+    ORDER BY NumOrders DESC
+    LIMIT 8;
+    '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    response = make_response(jsonify(theData))
+    response.status_code = 200
+    return response

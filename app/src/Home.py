@@ -99,5 +99,3 @@ if st.button('Act as Mike, System Administrator',
     st.session_state['role'] = 'admin'
     st.session_state['first_name'] = 'Mike'
     st.switch_page('pages/40_Admin_Home.py')
-
-
