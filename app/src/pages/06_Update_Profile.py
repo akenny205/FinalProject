@@ -42,12 +42,36 @@ if user_id:
                 st.write("**Semesters:**", user_data['semesters'])
                 st.write("**Number of Co-ops:**", user_data['num_coops'])
 
+            # Display multi-value attributes
+            st.subheader("Skills")
+            st.write(", ".join(user_data['skills']) if user_data['skills'] else "No skills listed")
+            
+            st.subheader("Interests") 
+            st.write(", ".join(user_data['interests']) if user_data['interests'] else "No interests listed")
+            
+            st.subheader("Career Goals")
+            st.write(", ".join(user_data['career_goals']) if user_data['career_goals'] else "No career goals listed")
+            
+            st.subheader("Career Path")
+            st.write(", ".join(user_data['career_path']) if user_data['career_path'] else "No career path listed")
+            
+            st.subheader("Experiences")
+            if user_data['experiences']:
+                for exp in user_data['experiences']:
+                    st.write(f"**{exp['ExperienceName']}**")
+                    st.write(f"Date: {exp['Date']}")
+                    st.write(f"Location: {exp['Location']}")
+                    st.write(f"Description: {exp['Description']}")
+                    st.write("---")
+            else:
+                st.write("No experiences listed")
+
             # Button to show edit form
             if st.button("Edit Profile"):
                 with st.form("update_user_form"):
                     st.subheader("Update Profile")
                     
-                    # Pre-fill form with current values
+                    # Basic info
                     fname = st.text_input("First Name", value=user_data['fname'])
                     lname = st.text_input("Last Name", value=user_data['lname'])
                     usertype = st.selectbox("User Type", 
@@ -64,6 +88,35 @@ if user_id:
                                               value=user_data['num_coops'] if user_data['num_coops'] else 0, 
                                               min_value=0, step=1)
 
+                    # Multi-value attributes
+                    skills = st.text_area("Skills (one per line)", 
+                                        value="\n".join(user_data['skills']) if user_data['skills'] else "")
+                    
+                    interests = st.text_area("Interests (one per line)",
+                                           value="\n".join(user_data['interests']) if user_data['interests'] else "")
+                    
+                    career_goals = st.text_area("Career Goals (one per line)",
+                                              value="\n".join(user_data['career_goals']) if user_data['career_goals'] else "")
+                    
+                    career_path = st.text_area("Career Path (one per line)",
+                                             value="\n".join(user_data['career_path']) if user_data['career_path'] else "")
+
+                    # Experiences section
+                    st.subheader("Experiences")
+                    experiences = []
+                    num_experiences = st.number_input("Number of experiences", min_value=0, value=len(user_data['experiences']))
+                    
+                    for i in range(num_experiences):
+                        st.write(f"Experience {i+1}")
+                        exp_default = user_data['experiences'][i] if i < len(user_data['experiences']) else {}
+                        exp = {
+                            'name': st.text_input(f"Name {i+1}", value=exp_default.get('ExperienceName', '')),
+                            'date': st.date_input(f"Date {i+1}", value=None),
+                            'location': st.text_input(f"Location {i+1}", value=exp_default.get('Location', '')),
+                            'description': st.text_area(f"Description {i+1}", value=exp_default.get('Description', ''))
+                        }
+                        experiences.append(exp)
+
                     submitted = st.form_submit_button("Submit Updates")
 
                     if submitted:
@@ -76,7 +129,12 @@ if user_id:
                             "major": major,
                             "minor": minor,
                             "semesters": int(semesters),
-                            "num_coops": int(num_coops)
+                            "num_coops": int(num_coops),
+                            "skills": [s.strip() for s in skills.split('\n') if s.strip()],
+                            "interests": [i.strip() for i in interests.split('\n') if i.strip()],
+                            "career_goals": [g.strip() for g in career_goals.split('\n') if g.strip()],
+                            "career_path": [p.strip() for p in career_path.split('\n') if p.strip()],
+                            "experiences": experiences
                         }
 
                         try:
