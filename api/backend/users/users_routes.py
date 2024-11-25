@@ -84,22 +84,109 @@ def add_user():
     db.get_db().commit()
     return 'User added!', 201
 
+#------------------------------------------------------------
+# Get user profile details [users]
+@users.route('/user/<userID>', methods=['GET'])
+def get_user_profile(userID):
+    cursor = db.get_db().cursor()
+    
+    # Get basic user info
+    user_query = '''SELECT fname, lname, Usertype, Email, Phone, Major, Minor, 
+                           Semesters, NumCoops
+                    FROM users 
+                    WHERE UserID = %s'''
+    cursor.execute(user_query, (userID,))
+    user_data = cursor.fetchone()
+    
+    if not user_data:
+        return 'User not found', 404
+        
+    # Get user skills
+    cursor.execute('SELECT Skill FROM user_skills WHERE UserID = %s', (userID,))
+    skills = [row['Skill'] for row in cursor.fetchall()]
+    
+    # Get user interests
+    cursor.execute('SELECT Interest FROM user_interests WHERE UserID = %s', (userID,))
+    interests = [row['Interest'] for row in cursor.fetchall()]
+    
+    # Get career goals
+    cursor.execute('SELECT CareerGoal FROM user_career_goals WHERE UserID = %s', (userID,))
+    career_goals = [row['CareerGoal'] for row in cursor.fetchall()]
+    
+    # Get career path
+    cursor.execute('SELECT CareerPath FROM user_career_path WHERE UserID = %s', (userID,))
+    career_path = [row['CareerPath'] for row in cursor.fetchall()]
+    
+    # Combine all data
+    profile_data = {
+        'fname': user_data['fname'],
+        'lname': user_data['lname'],
+        'usertype': user_data['Usertype'],
+        'email': user_data['Email'],
+        'phone': user_data['Phone'],
+        'major': user_data['Major'],
+        'minor': user_data['Minor'],
+        'semesters': user_data['Semesters'],
+        'num_coops': user_data['NumCoops'],
+        'skills': skills,
+        'interests': interests,
+        'career_goals': career_goals,
+        'career_path': career_path
+    }
+    
+    return jsonify(profile_data), 200
+
 #------------------------------------------------------------ Done until here
 # Update user profile [users]
 @users.route('/user/<userID>', methods=['PUT'])
 def update_user_profile(userID):
     user_info = request.json
-    query = '''UPDATE users 
-               SET fname = %s, lname = %s, Email = %s, Phone = %s, Major = %s, Minor = %s
-               WHERE UserID = %s'''
-    data = (
-        user_info['fname'], user_info['lname'], user_info['email'], user_info['phone'], 
-        user_info['major'], user_info['minor'], userID
-    )
     cursor = db.get_db().cursor()
-    cursor.execute(query, data)
+
+    # Update basic user info
+    user_query = '''UPDATE users 
+                    SET fname = %s, lname = %s, Usertype = %s, Email = %s, Phone = %s, 
+                        Major = %s, Minor = %s, Semesters = %s, NumCoops = %s
+                    WHERE UserID = %s'''
+    user_data = (
+        user_info['fname'], user_info['lname'], user_info['usertype'], user_info['email'],
+        user_info['phone'], user_info['major'], user_info['minor'], 
+        user_info.get('semesters'), user_info.get('num_coops'), userID
+    )
+    cursor.execute(user_query, user_data)
+
+    # Update skills
+    if 'skills' in user_info:
+        # First delete existing skills
+        cursor.execute('DELETE FROM user_skills WHERE UserID = %s', (userID,))
+        # Insert new skills
+        for skill in user_info['skills']:
+            cursor.execute('INSERT INTO user_skills (UserID, Skill) VALUES (%s, %s)', 
+                         (userID, skill))
+
+    # Update interests
+    if 'interests' in user_info:
+        cursor.execute('DELETE FROM user_interests WHERE UserID = %s', (userID,))
+        for interest in user_info['interests']:
+            cursor.execute('INSERT INTO user_interests (UserID, Interest) VALUES (%s, %s)',
+                         (userID, interest))
+
+    # Update career goals
+    if 'career_goals' in user_info:
+        cursor.execute('DELETE FROM user_career_goals WHERE UserID = %s', (userID,))
+        for goal in user_info['career_goals']:
+            cursor.execute('INSERT INTO user_career_goals (UserID, CareerGoal) VALUES (%s, %s)',
+                         (userID, goal))
+
+    # Update career path
+    if 'career_path' in user_info:
+        cursor.execute('DELETE FROM user_career_path WHERE UserID = %s', (userID,))
+        for path in user_info['career_path']:
+            cursor.execute('INSERT INTO user_career_path (UserID, CareerPath) VALUES (%s, %s)',
+                         (userID, path))
+
     db.get_db().commit()
-    return 'User profile updated!', 200
+    return 'User profile and related attributes updated!', 200
 
 #------------------------------------------------------------
 # Update status
