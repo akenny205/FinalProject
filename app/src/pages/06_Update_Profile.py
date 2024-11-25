@@ -121,10 +121,9 @@ if user_id:
                     st.write(f"Experience {i+1}")
                     exp_default = user_data['experiences'][i] if i < len(user_data['experiences']) else {}
                     
-                    # Parse the existing date correctly
+                    # Parse the existing date for each experience
                     try:
                         if exp_default.get('Date'):
-                            # Try parsing the date string in various formats
                             try:
                                 default_date = datetime.strptime(exp_default['Date'], '%Y-%m-%d').date()
                             except ValueError:
@@ -134,13 +133,14 @@ if user_id:
                                     default_date = None
                         else:
                             default_date = None
-                    except Exception as e:
-                        st.write(f"Debug: Date parsing error: {str(e)}")
+                    except Exception:
                         default_date = None
                     
+                    # Create experience entry
+                    date_value = st.date_input(f"Date {i+1}", value=default_date)
                     exp = {
                         'ExperienceName': st.text_input(f"Name {i+1}", value=exp_default.get('ExperienceName', '')),
-                        'Date': st.date_input(f"Date {i+1}", value=default_date).strftime('%Y-%m-%d') if default_date else None,
+                        'Date': date_value.strftime('%Y-%m-%d') if date_value else None,
                         'Location': st.text_input(f"Location {i+1}", value=exp_default.get('Location', '')),
                         'Description': st.text_area(f"Description {i+1}", value=exp_default.get('Description', ''))
                     }
