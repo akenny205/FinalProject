@@ -116,6 +116,11 @@ def get_user_profile(userID):
     # Get career path
     cursor.execute('SELECT CareerPath FROM career_path WHERE UserID = %s', (userID,))
     career_path = [row['CareerPath'] for row in cursor.fetchall()]
+
+    # Get experiences
+    cursor.execute('''SELECT ExperienceName, Date, Location, Description 
+                     FROM experience WHERE UserID = %s''', (userID,))
+    experiences = [dict(row) for row in cursor.fetchall()]
     
     # Combine all data
     profile_data = {
@@ -131,7 +136,8 @@ def get_user_profile(userID):
         'skills': skills,
         'interests': interests,
         'career_goals': career_goals,
-        'career_path': career_path
+        'career_path': career_path,
+        'experiences': experiences
     }
     
     return jsonify(profile_data), 200
@@ -184,6 +190,15 @@ def update_user_profile(userID):
         for path in user_info['career_path']:
             cursor.execute('INSERT INTO career_path (UserID, CareerPath) VALUES (%s, %s)',
                          (userID, path))
+
+    # Update experiences
+    if 'experiences' in user_info:
+        cursor.execute('DELETE FROM experience WHERE UserID = %s', (userID,))
+        for exp in user_info['experiences']:
+            cursor.execute('''INSERT INTO experience 
+                            (UserID, ExperienceName, Date, Location, Description)
+                            VALUES (%s, %s, %s, %s, %s)''',
+                         (userID, exp['name'], exp['date'], exp['location'], exp['description']))
 
     db.get_db().commit()
     return 'User profile and related attributes updated!', 200
