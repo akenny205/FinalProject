@@ -8,6 +8,7 @@ from flask import jsonify
 from flask import make_response
 from flask import current_app
 from backend.db_connection import db
+from datetime import datetime
 
 #------------------------------------------------------------
 # Create a new Blueprint object, which is a collection of routes.
@@ -196,6 +197,42 @@ def update_user_profile(userID):
                                     (userID, interest.strip()))
                 current_app.logger.info("Interests updated")
 
+            # Update career goals
+            if 'career_goals' in user_info:
+                current_app.logger.info(f"Updating career goals: {user_info['career_goals']}")
+                cursor.execute('DELETE FROM career_goals WHERE UserID = %s', (userID,))
+                for goal in user_info['career_goals']:
+                    if goal.strip():
+                        cursor.execute('INSERT INTO career_goals (UserID, Goal) VALUES (%s, %s)', 
+                                    (userID, goal.strip()))
+                current_app.logger.info("Career goals updated")
+
+            # Update career path
+            if 'career_path' in user_info:
+                current_app.logger.info(f"Updating career path: {user_info['career_path']}")
+                cursor.execute('DELETE FROM career_path WHERE UserID = %s', (userID,))
+                for path in user_info['career_path']:
+                    if path.strip():
+                        cursor.execute('INSERT INTO career_path (UserID, CareerPath) VALUES (%s, %s)', 
+                                    (userID, path.strip()))
+                current_app.logger.info("Career path updated")
+
+            # Update experiences
+            if 'experiences' in user_info:
+                current_app.logger.info(f"Updating experiences: {user_info['experiences']}")
+                cursor.execute('DELETE FROM experience WHERE UserID = %s', (userID,))
+                for exp in user_info['experiences']:
+                    if exp['ExperienceName'].strip():  # Only insert if there's at least a name
+                        # Ensure date is in correct format or set to NULL if empty
+                        date_value = exp['Date'] if exp['Date'] else None
+                        
+                        cursor.execute('''INSERT INTO experience 
+                                    (UserID, ExperienceName, Date, Location, Description)
+                                    VALUES (%s, %s, %s, %s, %s)''',
+                                    (userID, exp['ExperienceName'], date_value, 
+                                     exp['Location'], exp['Description']))
+                current_app.logger.info("Experiences updated")
+
             # Commit all changes
             connection.commit()
             current_app.logger.info("All changes committed successfully")
@@ -210,10 +247,22 @@ def update_user_profile(userID):
             cursor.execute('SELECT Interest FROM interests WHERE UserID = %s', (userID,))
             interests = [row['Interest'] for row in cursor.fetchall()]
             
+            cursor.execute('SELECT Goal FROM career_goals WHERE UserID = %s', (userID,))
+            career_goals = [row['Goal'] for row in cursor.fetchall()]
+            
+            cursor.execute('SELECT CareerPath FROM career_path WHERE UserID = %s', (userID,))
+            career_paths = [row['CareerPath'] for row in cursor.fetchall()]
+            
+            cursor.execute('SELECT * FROM experience WHERE UserID = %s', (userID,))
+            experiences = cursor.fetchall()
+            
             response_data = {
                 'user': user_data,
                 'skills': skills,
-                'interests': interests
+                'interests': interests,
+                'career_goals': career_goals,
+                'career_paths': career_paths,
+                'experiences': experiences
             }
             
             return jsonify({'message': 'Update successful', 'data': response_data}), 200

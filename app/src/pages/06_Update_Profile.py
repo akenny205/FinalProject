@@ -8,17 +8,19 @@ from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 import requests
 import time
+from datetime import datetime
 
 SideBarLinks()
 
 UPDATE_USER_URL = "http://web-api:4000/u/user"  # Adjust the hostname and port as necessary
 
-# Test API connection
+# Keep one test for API connection
 try:
     test_response = requests.get(f"{UPDATE_USER_URL}/1")
-    st.write("Debug: API Test Response:", test_response.status_code)
+    if test_response.status_code != 200:
+        st.error("API connection error")
 except Exception as e:
-    st.write("Debug: API Test Error:", str(e))
+    st.error(f"API connection error: {str(e)}")
 
 # Streamlit App
 st.title("Update User Profile")
@@ -26,17 +28,7 @@ st.title("Update User Profile")
 # Input UserID
 user_id = st.text_input("Enter UserID to Update", help="Provide the ID of the user whose profile you want to update")
 
-# Add this near the top of your file after the imports
-st.write("Debug: Testing form submission")
-with st.form("test_form"):
-    test_input = st.text_input("Test Input")
-    test_submit = st.form_submit_button("Test Submit")
-    
-if test_submit:
-    st.write("Debug: Test form submitted with value:", test_input)
-
 # Create a form to input all user details
-# First fetch and display current user data
 if user_id:
     try:
         # Get current user profile
@@ -84,7 +76,6 @@ if user_id:
                 st.write("No experiences listed")
 
             # Remove the edit button wrapper and show form directly
-            st.write("Debug: Starting update form section")  # Debug line
 
             # Create form
             with st.form("update_profile_form", clear_on_submit=False):
@@ -114,15 +105,52 @@ if user_id:
                 interests = st.text_area("Interests (one per line)",
                                        value="\n".join(user_data['interests']) if user_data['interests'] else "")
                 
-                # Submit button inside form
-                submitted = st.form_submit_button("Update Profile")
-                st.write("Debug: Form submit button state:", submitted)  # Debug line
-
-            # Process form submission outside the form
-            if submitted:
-                st.write("Debug: Form was submitted")  # Debug line
+                career_goals = st.text_area("Career Goals (one per line)",
+                                          value="\n".join(user_data['career_goals']) if user_data['career_goals'] else "")
                 
-                # Prepare update data
+                career_path = st.text_area("Career Path (one per line)",
+                                         value="\n".join(user_data['career_path']) if user_data['career_path'] else "")
+                
+                # Experiences section
+                st.subheader("Experiences")
+                num_experiences = st.number_input("Number of Experiences", min_value=0, 
+                                                value=len(user_data['experiences']) if user_data['experiences'] else 0)
+                
+                experiences = []
+                for i in range(num_experiences):
+                    st.write(f"Experience {i+1}")
+                    exp_default = user_data['experiences'][i] if i < len(user_data['experiences']) else {}
+                    
+                    # Parse the existing date correctly
+                    try:
+                        if exp_default.get('Date'):
+                            # Try parsing the date string in various formats
+                            try:
+                                default_date = datetime.strptime(exp_default['Date'], '%Y-%m-%d').date()
+                            except ValueError:
+                                try:
+                                    default_date = datetime.strptime(exp_default['Date'], '%a, %d %b %Y %H:%M:%S GMT').date()
+                                except ValueError:
+                                    default_date = None
+                        else:
+                            default_date = None
+                    except Exception as e:
+                        st.write(f"Debug: Date parsing error: {str(e)}")
+                        default_date = None
+                    
+                    exp = {
+                        'ExperienceName': st.text_input(f"Name {i+1}", value=exp_default.get('ExperienceName', '')),
+                        'Date': st.date_input(f"Date {i+1}", value=default_date).strftime('%Y-%m-%d') if default_date else None,
+                        'Location': st.text_input(f"Location {i+1}", value=exp_default.get('Location', '')),
+                        'Description': st.text_area(f"Description {i+1}", value=exp_default.get('Description', ''))
+                    }
+                    experiences.append(exp)
+                
+                # Submit button MUST be inside the form
+                submitted = st.form_submit_button("Update Profile")
+
+            # Process form submission
+            if submitted:
                 update_data = {
                     "fname": fname,
                     "lname": lname,
@@ -135,40 +163,26 @@ if user_id:
                     "num_coops": int(num_coops),
                     "skills": [s.strip() for s in skills.split('\n') if s.strip()],
                     "interests": [i.strip() for i in interests.split('\n') if i.strip()],
-                    "career_goals": user_data['career_goals'],  # Keep existing values
-                    "career_path": user_data['career_path'],    # Keep existing values
-                    "experiences": user_data['experiences']      # Keep existing values
+                    "career_goals": [g.strip() for g in career_goals.split('\n') if g.strip()],
+                    "career_path": [p.strip() for p in career_path.split('\n') if p.strip()],
+                    "experiences": experiences
                 }
                 
-                st.write("Debug: Update data prepared:", update_data)  # Debug line
-                
                 try:
-                    # Make the PUT request
-                    full_url = f"{UPDATE_USER_URL}/{user_id}"
-                    st.write(f"Debug: Sending PUT request to {full_url}")
-                    
                     response = requests.put(
-                        full_url,
+                        f"{UPDATE_USER_URL}/{user_id}",
                         json=update_data,
                         headers={'Content-Type': 'application/json'}
                     )
-                    
-                    st.write(f"Debug: Response received - Status: {response.status_code}")
-                    st.write(f"Debug: Response content: {response.text}")
                     
                     if response.status_code == 200:
                         st.success("Profile updated successfully!")
                         time.sleep(1)
                         st.rerun()
                     else:
-                        st.error(f"Failed to update profile. Status: {response.status_code}")
-                        st.error(f"Error message: {response.text}")
+                        st.error(f"Failed to update profile: {response.text}")
                 except Exception as e:
-                    st.error(f"Error sending update request: {str(e)}")
-                    st.write(f"Debug: Exception details: {type(e)}, {str(e)}")
-
-                st.write("Debug: Skills to update:", [s.strip() for s in skills.split('\n') if s.strip()])
-                st.write("Debug: Interests to update:", [i.strip() for i in interests.split('\n') if i.strip()])
+                    st.error(f"Error updating profile: {str(e)}")
 
         else:
             st.error(f"Failed to fetch user profile: {response.text}")
