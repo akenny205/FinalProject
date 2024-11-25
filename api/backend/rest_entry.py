@@ -2,6 +2,8 @@ from flask import Flask
 
 from backend.db_connection import db
 from backend.users.users_routes import users
+from backend.jobs.jobs_routes import jobs
+from backend.experience.experience_routes import experience
 import os
 from dotenv import load_dotenv
 
@@ -36,9 +38,18 @@ def create_app():
 
     # Register the routes from each Blueprint with the app object
     # and give a url prefix to each
-    app.logger.info('current_app(): registering blueprints with Flask app object.')   
+    app.logger.info('current_app(): registering blueprints with Flask app object.')
     app.register_blueprint(users,   url_prefix='/u')
-
+    # app.register_blueprint(career_goals, url_prefix='/cg')
+    # app.register_blueprint(career_path, url_prefix='/cp')
+    # app.register_blueprint(comments, url_prefix='/com')
+    # app.register_blueprint(employers, url_prefix='/emp')
+    app.register_blueprint(experience, url_prefix='/exp')
+    # app.register_blueprint(interests, url_prefix='/i')
+    app.register_blueprint(jobs, url_prefix='/j')
+    # app.register_blueprint(matches, url_prefix='/m')
+    # app.register_blueprint(posts, url_prefix='/p')
+    # app.register_blueprint(skills, url_prefix='/s')
     # Don't forget to return the app object
     return app
 

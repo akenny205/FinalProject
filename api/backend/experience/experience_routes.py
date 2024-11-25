@@ -5,14 +5,20 @@ from flask import make_response
 from flask import current_app
 from backend.db_connection import db
 
-experience = Blueprint('experiences', __name__)
+experience = Blueprint('experience', __name__)
 
 # Displays an Advisor's students and their experiences
-@experience.route('/experiences', methods=['GET'])
+@experience.route('/viewexp', methods=['GET'])
 def view_experiences():
     cursor = db.get_db().cursor()
-    cursor.execute('SELECT u.UserID, u.fName AS FirstName, u.lName AS LastName,'
-                   ' e.ExperienceName, e.Date, e.Location, e.Description, u.AdvisorID '
+    cursor.execute('SELECT u.AdvisorID,'
+                   'e.Date, '
+                   'e.Location,  '
+                   'e.Description,'
+                   ' e.ExperienceName, '
+                   'u.UserID, '
+                   'u.lName AS LastName,'
+                   'u.fName AS FirstName '
                    'FROM experience e JOIN users u ON e.UserID = u.UserID '
                    'ORDER BY u.AdvisorID, e.Date DESC;')
     experiences = cursor.fetchall()
@@ -20,9 +26,8 @@ def view_experiences():
     response.status_code = 200
     return response
 
-
 # Creates experience for a user
-@experience.route('/experiences', methods=['POST'])
+@experience.route('/createexp', methods=['POST'])
 def create_experience():
     current_app.logger.info('POST /customers route')
     cust_info = request.get_json()
@@ -44,5 +49,5 @@ def create_experience():
     db.get_db().commit()
     return 'Experience Created!'
 
-    # Must add filter by traits !
+# Must add filter by traits !
 

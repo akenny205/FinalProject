@@ -7,36 +7,31 @@ from backend.db_connection import db
 
 jobs = Blueprint('jobs', __name__)
 
-# admin creates jobs
-@jobs.route('/jobs', methods=['POST'])
-def create_job():
-    current_app.logger.info('/jobs POST request')
-    job_info = request.get_json()
-    # init
-    EmpID = job_info['EmpID']
-    Title = job_info['Title']
-    Description = job_info['Description']
-    JobID = job_info['JobID']
-    data = (EmpID, Title, Description, JobID)
-    # query
+# Admin can see all current JobIDs and Titles
+@jobs.route('/viewjobs', methods=['GET'])
+def view_jobs():
     query = '''
-    INSERT INTO jobs (EmpID, Title, Description, JobID)
-    VALUES (%s, %s, %s, %s)
-    '''
-    # cursor
-    cursor = db.get._db().cursor()
-    cursor.execute(query, data)
-    db.get_db().commit()
-    return 'Job Created!'
+        SELECT JobID, Title FROM jobs
+        '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    theData = cursor.fetchall()
+    response = make_response(jsonify(theData))
+    response.status_code = 200
+    return response
 
-# admin deletes jobs
-@jobs.route('/jobs', methods=['DELETE'])
-def delete_job(job_id):
-    current_app.logger.info('/jobs/job_id DELETE request')
-    # query
+# admin creates jobs
+@jobs.route('/deletejob/<JobID>', methods=['DELETE'])
+def delete_job(JobID):
+    current_app.logger.info(f'/jobs DELETE request for JobID: {JobID}')
     query = 'DELETE FROM jobs WHERE JobID = %s'
-    # cursor
-    cursor = db.get._db().cursor()
-    cursor.execute(query, job_id)
-    db.get_db().commit()
-    return 'Job Deleted!'
+    try:
+        with db.get_db().cursor() as cursor:
+            cursor.execute(query, (JobID,))
+        db.get_db().commit()
+        return jsonify({'message': 'Job Deleted!'}), 200
+    except Exception as e:
+        current_app.logger.error(f"Error deleting job {JobID}: {e}")
+        return jsonify({'error': 'Failed to delete job', 'details': str(e)}), 500
+
+
