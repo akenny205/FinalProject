@@ -146,62 +146,82 @@ def get_user_profile(userID):
 # Update user profile [users]
 @users.route('/user/<userID>', methods=['PUT'])
 def update_user_profile(userID):
-    user_info = request.json
-    cursor = db.get_db().cursor()
+    try:
+        user_info = request.json
+        cursor = db.get_db().cursor()
 
-    # Update basic user info
-    user_query = '''UPDATE users 
+        # First verify user exists
+        cursor.execute('SELECT UserID FROM users WHERE UserID = %s', (userID,))
+        if not cursor.fetchone():
+            return jsonify({'error': 'User not found'}), 404
+
+        # Update basic user info
+        user_query = '''UPDATE users 
                     SET fname = %s, lname = %s, Usertype = %s, Email = %s, Phone = %s, 
                         Major = %s, Minor = %s, Semesters = %s, numCoops = %s
                     WHERE UserID = %s'''
-    user_data = (
-        user_info['fname'], user_info['lname'], user_info['usertype'], user_info['email'],
-        user_info['phone'], user_info['major'], user_info['minor'], 
-        user_info.get('semesters'), user_info.get('num_coops'), userID
-    )
-    cursor.execute(user_query, user_data)
+        user_data = (
+            user_info['fname'], user_info['lname'], user_info['usertype'], user_info['email'],
+            user_info['phone'], user_info['major'], user_info['minor'], 
+            user_info['semesters'], user_info['num_coops'], userID
+        )
+        cursor.execute(user_query, user_data)
+        
+        # Clear and update related tables within a transaction
+        db.get_db().begin()
+        try:
+            # Update skills
+            if 'skills' in user_info:
+                cursor.execute('DELETE FROM skills WHERE UserID = %s', (userID,))
+                for skill in user_info['skills']:
+                    cursor.execute('INSERT INTO skills (UserID, Skill) VALUES (%s, %s)', 
+                                (userID, skill))
 
-    # Update skills
-    if 'skills' in user_info:
-        # First delete existing skills
-        cursor.execute('DELETE FROM skills WHERE UserID = %s', (userID,))
-        # Insert new skills
-        for skill in user_info['skills']:
-            cursor.execute('INSERT INTO skills (UserID, Skill) VALUES (%s, %s)', 
-                         (userID, skill))
+            # Update interests
+            if 'interests' in user_info:
+                cursor.execute('DELETE FROM interests WHERE UserID = %s', (userID,))
+                for interest in user_info['interests']:
+                    cursor.execute('INSERT INTO interests (UserID, Interest) VALUES (%s, %s)',
+                                (userID, interest))
 
-    # Update interests
-    if 'interests' in user_info:
-        cursor.execute('DELETE FROM interests WHERE UserID = %s', (userID,))
-        for interest in user_info['interests']:
-            cursor.execute('INSERT INTO interests (UserID, Interest) VALUES (%s, %s)',
-                         (userID, interest))
+            # Update career goals
+            if 'career_goals' in user_info:
+                cursor.execute('DELETE FROM career_goals WHERE UserID = %s', (userID,))
+                for goal in user_info['career_goals']:
+                    cursor.execute('INSERT INTO career_goals (UserID, Goal) VALUES (%s, %s)',
+                                (userID, goal))
 
-    # Update career goals
-    if 'career_goals' in user_info:
-        cursor.execute('DELETE FROM career_goals WHERE UserID = %s', (userID,))
-        for goal in user_info['career_goals']:
-            cursor.execute('INSERT INTO career_goals (UserID, Goal) VALUES (%s, %s)',
-                         (userID, goal))
+            # Update career path
+            if 'career_path' in user_info:
+                cursor.execute('DELETE FROM career_path WHERE UserID = %s', (userID,))
+                for path in user_info['career_path']:
+                    cursor.execute('INSERT INTO career_path (UserID, CareerPath) VALUES (%s, %s)',
+                                (userID, path))
 
-    # Update career path
-    if 'career_path' in user_info:
-        cursor.execute('DELETE FROM career_path WHERE UserID = %s', (userID,))
-        for path in user_info['career_path']:
-            cursor.execute('INSERT INTO career_path (UserID, CareerPath) VALUES (%s, %s)',
-                         (userID, path))
+            # Update experiences
+            if 'experiences' in user_info:
+                cursor.execute('DELETE FROM experience WHERE UserID = %s', (userID,))
+                for exp in user_info['experiences']:
+                    cursor.execute('''INSERT INTO experience 
+                                    (UserID, ExperienceName, Date, Location, Description)
+                                    VALUES (%s, %s, %s, %s, %s)''',
+                                (userID, exp['ExperienceName'], exp['Date'], 
+                                exp['Location'], exp['Description']))
 
-    # Update experiences
-    if 'experiences' in user_info:
-        cursor.execute('DELETE FROM experience WHERE UserID = %s', (userID,))
-        for exp in user_info['experiences']:
-            cursor.execute('''INSERT INTO experience 
-                            (UserID, ExperienceName, Date, Location, Description)
-                            VALUES (%s, %s, %s, %s, %s)''',
-                         (userID, exp['name'], exp['date'], exp['location'], exp['description']))
+            db.get_db().commit()
+            return jsonify({'message': 'User profile and related attributes updated!'}), 200
+            
+        except Exception as e:
+            db.get_db().rollback()
+            current_app.logger.error(f"Database error during update: {str(e)}")
+            return jsonify({'error': 'Database error during update'}), 500
 
-    db.get_db().commit()
-    return 'User profile and related attributes updated!', 200
+    except KeyError as e:
+        current_app.logger.error(f"Missing required field: {str(e)}")
+        return jsonify({'error': f'Missing required field: {str(e)}'}), 400
+    except Exception as e:
+        current_app.logger.error(f"Error updating user profile: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 #------------------------------------------------------------
 # Update status

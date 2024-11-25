@@ -109,11 +109,12 @@ if user_id:
                     for i in range(num_experiences):
                         st.write(f"Experience {i+1}")
                         exp_default = user_data['experiences'][i] if i < len(user_data['experiences']) else {}
+                        date_input = st.date_input(f"Date {i+1}", value=None)
                         exp = {
-                            'name': st.text_input(f"Name {i+1}", value=exp_default.get('ExperienceName', '')),
-                            'date': st.date_input(f"Date {i+1}", value=None),
-                            'location': st.text_input(f"Location {i+1}", value=exp_default.get('Location', '')),
-                            'description': st.text_area(f"Description {i+1}", value=exp_default.get('Description', ''))
+                            'ExperienceName': st.text_input(f"Name {i+1}", value=exp_default.get('ExperienceName', '')),
+                            'Date': date_input.strftime('%Y-%m-%d') if date_input else '',
+                            'Location': st.text_input(f"Location {i+1}", value=exp_default.get('Location', '')),
+                            'Description': st.text_area(f"Description {i+1}", value=exp_default.get('Description', ''))
                         }
                         experiences.append(exp)
 
@@ -138,8 +139,15 @@ if user_id:
                         }
 
                         try:
+                            # Debug output
+                            st.write("Debug: Update data being sent:", update_data)
+                            
                             update_response = requests.put(f"{UPDATE_USER_URL}/{user_id}", 
                                                         json=update_data)
+                            
+                            # Debug output
+                            st.write("Debug: Response received:", update_response.text)
+                            
                             if update_response.status_code == 200:
                                 st.success("Thank you! Your profile has been updated successfully.")
                                 st.rerun()  # Refresh the page to show updated info
