@@ -16,7 +16,7 @@ users = Blueprint('users', __name__)
 
 
 #------------------------------------------------------------
-# Get all users from the system [system admin purposes]
+# Get all users from the system [system admin purposes] - Done
 @users.route('/user', methods=['GET'])
 def get_customers():
     advisor_id = request.args.get('advisor_id')
@@ -36,13 +36,49 @@ def get_customers():
     return the_response
 
 #------------------------------------------------------------
-# Get users either mentors or mentees
+# Get users either mentors or mentees with optional filtering
 @users.route('/user/type', methods=['GET'])
 def get_users_by_type():
     user_type = request.args.get('usertype')
+    # Get optional filter parameters
+    interest = request.args.get('interest')
+    skill = request.args.get('skill')
+    career_goal = request.args.get('career_goal')
+    career_path = request.args.get('career_path')
+    
     cursor = db.get_db().cursor()
-    query = '''SELECT UserID, fname, lname, joinDate FROM users WHERE Usertype = %s'''
-    cursor.execute(query, (user_type,))
+    
+    # Base query
+    query = '''SELECT DISTINCT u.UserID, u.fname, u.lname, u.joinDate 
+               FROM users u'''
+    conditions = ['u.Usertype = %s']
+    params = [user_type]
+    
+    # Add joins and conditions based on filters
+    if interest:
+        query += ' JOIN interests i ON u.UserID = i.UserID'
+        conditions.append('i.Interest = %s')
+        params.append(interest)
+    
+    if skill:
+        query += ' JOIN skills s ON u.UserID = s.UserID'
+        conditions.append('s.Skill = %s')
+        params.append(skill)
+    
+    if career_goal:
+        query += ' JOIN career_goals g ON u.UserID = g.UserID'
+        conditions.append('g.Goal = %s')
+        params.append(career_goal)
+    
+    if career_path:
+        query += ' JOIN career_path p ON u.UserID = p.UserID'
+        conditions.append('p.CareerPath = %s')
+        params.append(career_path)
+    
+    # Add WHERE clause
+    query += ' WHERE ' + ' AND '.join(conditions)
+    
+    cursor.execute(query, tuple(params))
     theData = cursor.fetchall()
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
