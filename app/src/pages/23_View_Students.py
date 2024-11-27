@@ -15,16 +15,83 @@ st.title("User Data Viewer")
 
 BACKEND_URL = "http://web-api:4000/u/user"
 
+# Input for advisor ID
+advisor_id = st.text_input("Enter Advisor ID (leave blank to view all):")
+
+# Input validation
+if advisor_id and not advisor_id.isdigit():
+    st.error("Please enter a valid numeric Advisor ID.")
+    st.stop()
+
+# Construct the URL with query parameters
+url = BACKEND_URL
+if advisor_id:
+    url += f"?advisor_id={advisor_id}"
+
 try:
-    response = requests.get(BACKEND_URL)
+    response = requests.get(url)
 
     if response.status_code == 200:
         data = response.json()
+        
+        # Check if any data was returned
+        if not data:
+            st.warning("No users found for the specified Advisor ID.")
+            st.stop()
+            
+        # Create DataFrame and handle potential missing keys
         df = pd.DataFrame(data)
-
+        
+        # Check if required columns exist before processing
+        required_columns = ['fname', 'lname', 'joinDate', 'Usertype', 'UserID']
+        if not all(col in df.columns for col in required_columns):
+            st.error("The data structure is not in the expected format.")
+            st.stop()
+            
+        # Combine first and last names into a single column
+        df['Name'] = df['fname'] + ' ' + df['lname']
+        
+        # Drop the original first and last name columns
+        df = df.drop(columns=['fname', 'lname'])
+        
+        # Rename columns to be more readable
+        df = df.rename(columns={
+            'UserID': 'User ID',
+            'Usertype': 'Role',
+            'joinDate': 'Join Date'
+        })
+        
+        # Convert joinDate to a more readable format
+        df['Join Date'] = pd.to_datetime(df['Join Date']).dt.strftime('%d %b %Y')
+        
+        # Configure the display
         st.subheader("User Table")
-        st.dataframe(response)
-
+        st.dataframe(
+            df,
+            column_config={
+                "User ID": st.column_config.NumberColumn(
+                    "User ID",
+                    help="Unique identifier for each user",
+                    format="%d"
+                ),
+                "Role": st.column_config.TextColumn(
+                    "Role",
+                    help="User's role in the system"
+                ),
+                "Name": st.column_config.TextColumn(
+                    "Name",
+                    help="Full name of the user"
+                ),
+                "Join Date": st.column_config.DateColumn(
+                    "Join Date",
+                    help="Date when user joined"
+                )
+            },
+            hide_index=True,
+            width=1000
+        )
+        
+        # Add download button
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="Download User Data as CSV",
@@ -36,4 +103,4 @@ try:
         st.error(f"Failed to fetch data: {response.status_code} - {response.text}")
 
 except Exception as e:
-    st.error(f"An error occurred while fetching data: {e}")
+    st.error(f"An error occurred while fetching data: {str(e)}")

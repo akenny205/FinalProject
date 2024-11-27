@@ -19,14 +19,18 @@ users = Blueprint('users', __name__)
 # Get all users from the system [system admin purposes]
 @users.route('/user', methods=['GET'])
 def get_customers():
-
+    advisor_id = request.args.get('advisor_id')
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT UserID, fname, lname,
-                    joinDate, Usertype FROM users
-    ''')
+    
+    if advisor_id:
+        query = '''SELECT UserID, fname, lname, joinDate, Usertype 
+                   FROM users WHERE AdminID = %s'''
+        cursor.execute(query, (advisor_id,))
+    else:
+        query = '''SELECT UserID, fname, lname, joinDate, Usertype FROM users'''
+        cursor.execute(query)
     
     theData = cursor.fetchall()
-    
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response

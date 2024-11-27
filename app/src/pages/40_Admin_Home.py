@@ -37,6 +37,11 @@ if st.button('View Usage Dashboard',
              use_container_width=True):
   st.switch_page('pages/41_usage.py')
 
+if st.button('View Students',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/23_View_Students.py')
+
 if st.button('View Flagged Posts', 
              type='primary',
              use_container_width=True):
