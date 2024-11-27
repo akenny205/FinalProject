@@ -53,7 +53,7 @@ if st.button('Chat With Your Advisor',
              use_container_width=True):
   st.switch_page('pages/04_Chat_Advisor.py')
 
-if st.button('Search Mentors', 
+if st.button('Search for Mentors', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/05_Search_Mentors.py')
