@@ -24,5 +24,52 @@ def get_all_users_by_interests():
     response = make_response(jsonify(data))
     response.status_code = 200
     return response
+
+@interests.route('/interests', methods=['POST'])
+def add_interest():
+    interest_info = request.json
+    query = '''
+            INSERT INTO interests (UserID, Interest)
+            VALUES (%s, %s)
+    '''
+    data = (interest_info['user_id'], interest_info['interest'])
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Interest added!', 201
+
+
+@interests.route('/interess/<userID>', methods=['DELETE'])
+def delete_interest(userID):
+    query = '''DELETE FROM interests WHERE UserID = %s'''
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (userID,))
+    db.get_db().commit()
+    return 'Interest removed!', 200
+
+@interests.route('/interests/<userID>', methods=['PATCH'])
+def update_interest(userID):
+    content = request.json['interest']
+    query = '''UPDATE interests SET Interest = %s WHERE UserID = %s;'''
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (content, userID))
+    db.get_db().commit()
+    return 'User interest updated!', 200
+
+@interests.route('/interests/<userID>', methods=['DELETE'])
+def delete_interest(userID):
+    interest = request.json['interest']
+    query = '''DELETE FROM interests WHERE UserID = %s
+            AND Interest = %s
+            '''
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (userID, interest))
+    db.get_db().commit()
+    return 'Interest removed!', 200
+
+
+
+
+
     
 
