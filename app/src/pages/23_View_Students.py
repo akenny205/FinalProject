@@ -43,7 +43,7 @@ try:
         df = pd.DataFrame(data)
         
         # Check if required columns exist before processing
-        required_columns = ['fname', 'lname', 'joinDate', 'Usertype', 'UserID']
+        required_columns = ['fname', 'lname', 'joinDate', 'Usertype', 'UserID', 'status']
         if not all(col in df.columns for col in required_columns):
             st.error("The data structure is not in the expected format.")
             st.stop()
@@ -58,7 +58,8 @@ try:
         df = df.rename(columns={
             'UserID': 'User ID',
             'Usertype': 'Role',
-            'joinDate': 'Join Date'
+            'joinDate': 'Join Date',
+            'status': 'Status'
         })
         
         # Convert joinDate to a more readable format
@@ -85,6 +86,10 @@ try:
                 "Join Date": st.column_config.DateColumn(
                     "Join Date",
                     help="Date when user joined"
+                ),
+                "Status": st.column_config.NumberColumn(
+                    "Status",
+                    help="Current status of the user"
                 )
             },
             hide_index=True,

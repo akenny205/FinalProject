@@ -23,11 +23,11 @@ def get_customers():
     cursor = db.get_db().cursor()
     
     if advisor_id:
-        query = '''SELECT UserID, fname, lname, joinDate, Usertype 
+        query = '''SELECT UserID, fname, lname, joinDate, Usertype, status
                    FROM users WHERE AdminID = %s'''
         cursor.execute(query, (advisor_id,))
     else:
-        query = '''SELECT UserID, fname, lname, joinDate, Usertype FROM users'''
+        query = '''SELECT UserID, fname, lname, joinDate, Usertype, status FROM users'''
         cursor.execute(query)
     
     theData = cursor.fetchall()
