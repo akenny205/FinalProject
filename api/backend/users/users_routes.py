@@ -85,19 +85,7 @@ def get_users_by_type():
     return the_response
 
 #------------------------------------------------------------
-# Get users alumni
-@users.route('/user/alumni', methods=['GET'])
-def get_alumni():
-    cursor = db.get_db().cursor()
-    query = '''SELECT UserID, fname, lname, joinDate FROM users WHERE Status = FALSE'''
-    cursor.execute(query)
-    theData = cursor.fetchall()
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
-
-#------------------------------------------------------------
-# Get count of all users by type [system admin purposes]
+# Get count of all users by type [system admin purposes] - Done
 @users.route('/user/count', methods=['GET'])
 def get_users_count():
     cursor = db.get_db().cursor()
@@ -109,24 +97,32 @@ def get_users_count():
     return the_response
 
 #------------------------------------------------------------
-# Add new users to the system [system admin / advisor purposes]
+# Add new users to the system [system admin / advisor purposes] - Done
 @users.route('/user/add', methods=['POST'])
 def add_user():
     user_info = request.json
-    query = '''INSERT INTO users (fname, lname, Usertype, Email, Phone, Major, Minor, AdminID, EmpID)
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+
+    # Validate required fields
+    required_fields = ['fname', 'lname', 'usertype', 'email', 'phone', 'major', 'minor', 'admin_id', 'status']
+    for field in required_fields:
+        if field not in user_info:
+            return jsonify({'error': f'Missing required field: {field}'}), 400
+
+    query = '''INSERT INTO users (fname, lname, Usertype, Email, Phone, Major, Minor, AdminID, AdvisorID, Status)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
     data = (
         user_info['fname'], user_info['lname'], user_info['usertype'], user_info['email'], 
         user_info['phone'], user_info['major'], user_info['minor'], user_info['admin_id'], 
-        user_info.get('emp_id')
+        user_info.get('advisor_id'), user_info['status']
     )
+
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
     return 'User added!', 201
 
 #------------------------------------------------------------
-# Get user profile details [users]
+# Get user profile details [users] - Done
 @users.route('/user/<userID>', methods=['GET'])
 def get_user_profile(userID):
     cursor = db.get_db().cursor()
@@ -184,7 +180,7 @@ def get_user_profile(userID):
     
     return jsonify(profile_data), 200
 
-#------------------------------------------------------------ Done until here
+#------------------------------------------------------------ Done 
 # Update user profile [users]
 @users.route('/user/<userID>', methods=['PUT'])
 def update_user_profile(userID):
@@ -317,7 +313,7 @@ def update_user_profile(userID):
         current_app.logger.error(f"Error processing request: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
-#------------------------------------------------------------
+#------------------------------------------------------------ 
 # Update status
 @users.route('/user/<userID>/status', methods=['PATCH'])
 def update_user_status(userID):
@@ -350,11 +346,11 @@ def delete_user(userID):
     return 'User removed!', 200
 
 #------------------------------------------------------------
-# Get user based on a specific trait (major, minor, interest, skills, career_goals, career_path)
+# Get user based on a specific trait (major, minor, interest, skills, career_goals, career_path, status (alumni)) - Done
 @users.route('/user/trait', methods=['GET'])
 def get_users_by_trait():
     # Validate the trait to prevent SQL injection
-    valid_traits = ['Major', 'Minor']
+    valid_traits = ['Major', 'Minor', 'Status']
     join_tables = {
         'Interest': 'interests',
         'Skill': 'skills',
@@ -388,3 +384,6 @@ def get_users_by_trait():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+
+#------------------------------------------------------------
+# Add reviews from employers about students 

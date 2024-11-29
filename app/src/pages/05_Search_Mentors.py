@@ -16,9 +16,11 @@ st.title("Users by Type Viewer")
 
 user_type = st.selectbox("Select User Type", options=["mentor", "mentee"])
 
+filter_value = None
+
 filter_type = st.selectbox(
     "Filter By",
-    options=["Interest", "Skill", "Career Goal", "Career Path"]
+    options=["Interest", "Skill", "Career Goal", "Career Path", "Status"]
 )
 
 if filter_type == "Interest":
@@ -44,6 +46,11 @@ elif filter_type == "Career Path":
     filter_value = st.selectbox(
         "Select Career Path",
         options=["AI Specialist", "Genetic Researcher", "Career Coach"]
+    )
+elif filter_type == "Status":
+    filter_value = st.selectbox(
+        "Select Student Status",
+        options=["TRUE", "FALSE"]
     )
 
 if st.button("Get Users"):

@@ -33,7 +33,7 @@ try:
 
     if response.status_code == 200:
         data = response.json()
-        
+
         # Check if any data was returned
         if not data:
             st.warning("No users found for the specified Advisor ID.")
@@ -104,3 +104,30 @@ try:
 
 except Exception as e:
     st.error(f"An error occurred while fetching data: {str(e)}")
+
+st.subheader("Update User Status")
+
+# Input for User ID
+user_id = st.text_input("Enter User ID to update status:")
+
+# Select new status
+new_status = st.selectbox("Select New Status", options=["True", "False"])  # Assuming status is a boolean
+
+# Button to submit the update
+if st.button("Update Status"):
+    if user_id:
+        try:
+            # Prepare the payload for the PATCH request
+            payload = {"status": new_status == "True"}  # Convert string to boolean
+            
+            # Send PATCH request to update user status
+            response = requests.patch(f"{BACKEND_URL}/{user_id}/status", json=payload)
+
+            if response.status_code == 200:
+                st.success("User status updated successfully!")
+            else:
+                st.error(f"Failed to update status: {response.status_code} - {response.text}")
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+    else:
+        st.error("Please enter a valid User ID.")
