@@ -180,8 +180,8 @@ def get_user_profile(userID):
     
     return jsonify(profile_data), 200
 
-#------------------------------------------------------------ Done 
-# Update user profile [users]
+#------------------------------------------------------------ 
+# Update user profile [users] - Done 
 @users.route('/user/<userID>', methods=['PUT'])
 def update_user_profile(userID):
     try:
@@ -314,7 +314,7 @@ def update_user_profile(userID):
         return jsonify({'error': str(e)}), 500
 
 #------------------------------------------------------------ 
-# Update status
+# Update status - Done
 @users.route('/user/<userID>/status', methods=['PATCH'])
 def update_user_status(userID):
     status = request.json['status']
@@ -325,7 +325,7 @@ def update_user_status(userID):
     return 'User status updated!', 200
 
 #------------------------------------------------------------
-# Update reviews
+# Update reviews - Done
 @users.route('/user/<userID>/reviews', methods=['PATCH'])
 def update_reviews(userID):
     reviews = request.json['reviews']
@@ -336,7 +336,7 @@ def update_reviews(userID):
     return 'User reviews updated!', 200
 
 #------------------------------------------------------------
-# Remove users
+# Remove users - Done
 @users.route('/user/<userID>', methods=['DELETE'])
 def delete_user(userID):
     query = '''DELETE FROM users WHERE UserID = %s'''
@@ -384,6 +384,3 @@ def get_users_by_trait():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
-
-#------------------------------------------------------------
-# Add reviews from employers about students 

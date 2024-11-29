@@ -43,7 +43,7 @@ if st.button('View Feed',
              use_container_width=True):
   st.switch_page('pages/02_View_Feed.py')
 
-if st.button('View and Update Students', 
+if st.button('View, Update, and Remove Students', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/23_View_Students.py')

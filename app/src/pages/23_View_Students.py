@@ -116,14 +116,14 @@ st.subheader("Update User Status")
 user_id = st.text_input("Enter User ID to update status:")
 
 # Select new status
-new_status = st.selectbox("Select New Status", options=["True", "False"])  # Assuming status is a boolean
+new_status = st.selectbox("Select New Status", options=["True", "False"]) 
 
 # Button to submit the update
 if st.button("Update Status"):
     if user_id:
         try:
             # Prepare the payload for the PATCH request
-            payload = {"status": new_status == "True"}  # Convert string to boolean
+            payload = {"status": new_status == "True"} 
             
             # Send PATCH request to update user status
             response = requests.patch(f"{BACKEND_URL}/{user_id}/status", json=payload)
@@ -136,3 +136,54 @@ if st.button("Update Status"):
             st.error(f"An error occurred: {str(e)}")
     else:
         st.error("Please enter a valid User ID.")
+
+# Add a section to update user reviews
+st.subheader("Update User Reviews")
+
+# Input for User ID
+user_id = st.text_input("Enter User ID to update reviews:")
+
+# Input for new reviews
+new_reviews = st.text_area("Enter New Reviews", height=150)  # Text area for reviews
+
+# Button to submit the update
+if st.button("Update Reviews"):
+    if user_id and new_reviews:
+        try:
+            # Prepare the payload for the PATCH request
+            payload = {"reviews": new_reviews}  # Prepare the reviews payload
+            
+            # Send PATCH request to update user reviews
+            response = requests.patch(f"{BACKEND_URL}/{user_id}/reviews", json=payload)
+
+            if response.status_code == 200:
+                st.success("User reviews updated successfully!")
+            else:
+                st.error(f"Failed to update reviews: {response.status_code} - {response.text}")
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+    else:
+        st.error("Please enter a valid User ID and reviews.")
+
+# Add a section to remove a user
+st.subheader("Remove User")
+
+# Input for User ID
+user_id_to_delete = st.text_input("Enter User ID to remove:")
+
+# Button to submit the delete request
+if st.button("Remove User"):
+    if user_id_to_delete:
+        try:
+            # Send DELETE request to remove the user
+            response = requests.delete(f"{BACKEND_URL}/{user_id_to_delete}")
+
+            if response.status_code == 200:
+                st.success("User removed successfully!")
+            else:
+                st.error(f"Failed to remove user: {response.status_code} - {response.text}")
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+    else:
+        st.error("Please enter a valid User ID.")
+
