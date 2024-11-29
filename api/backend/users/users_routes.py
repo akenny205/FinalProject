@@ -133,7 +133,7 @@ def get_user_profile(userID):
     
     # Get basic user info
     user_query = '''SELECT fname, lname, Usertype, Email, Phone, Major, Minor, 
-                           Semesters, numCoops
+                           Semesters, numCoops, Matchstatus
                     FROM users 
                     WHERE UserID = %s'''
     cursor.execute(user_query, (userID,))
@@ -174,6 +174,7 @@ def get_user_profile(userID):
         'minor': user_data['Minor'],
         'semesters': user_data['Semesters'],
         'num_coops': user_data['numCoops'],
+        'matchstatus': user_data['Matchstatus'],
         'skills': skills,
         'interests': interests,
         'career_goals': career_goals,
@@ -202,13 +203,13 @@ def update_user_profile(userID):
             # Update basic user info first
             user_query = '''UPDATE users 
                         SET fname = %s, lname = %s, Usertype = %s, Email = %s, Phone = %s, 
-                            Major = %s, Minor = %s, Semesters = %s, numCoops = %s
+                            Major = %s, Minor = %s, Semesters = %s, numCoops = %s, Matchstatus = %s
                         WHERE UserID = %s'''
             user_data = (
                 user_info['fname'], user_info['lname'], user_info['usertype'], 
                 user_info['email'], user_info['phone'], user_info['major'], 
-                user_info['minor'], user_info['semesters'], user_info['num_coops'], 
-                userID
+                user_info['minor'], user_info['semesters'], user_info['num_coops'],
+                user_info['matchstatus'], userID
             )
             cursor.execute(user_query, user_data)
             current_app.logger.info(f"Basic info updated. Rows affected: {cursor.rowcount}")

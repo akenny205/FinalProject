@@ -50,6 +50,7 @@ if user_id:
                 st.write("**Minor:**", user_data['minor'])
                 st.write("**Semesters:**", user_data['semesters'])
                 st.write("**Number of Co-ops:**", user_data['num_coops'])
+                st.write("**At Capacity:**", "Yes" if user_data['matchstatus'] else "No")
 
             # Display multi-value attributes
             st.subheader("Skills")
@@ -87,6 +88,9 @@ if user_id:
                 usertype = st.selectbox("User Type", 
                                       options=["Mentor", "Mentee", "Advisor"],
                                       index=["Mentor", "Mentee", "Advisor"].index(user_data['usertype']))
+                matchstatus = st.selectbox("At Mentor/Mentee Capacity", 
+                                         options=["No", "Yes"],
+                                         index=1 if user_data['matchstatus'] else 0)
                 email = st.text_input("Email", value=user_data['email'])
                 phone = st.text_input("Phone Number", value=user_data['phone'])
                 major = st.text_input("Major", value=user_data['major'])
@@ -155,6 +159,7 @@ if user_id:
                     "fname": fname,
                     "lname": lname,
                     "usertype": usertype,
+                    "matchstatus": matchstatus == "Yes",  # Convert to boolean
                     "email": email,
                     "phone": phone,
                     "major": major,
