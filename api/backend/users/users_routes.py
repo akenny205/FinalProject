@@ -36,7 +36,7 @@ def get_customers():
     return the_response
 
 #------------------------------------------------------------
-# Get users either mentors or mentees with optional filtering
+# Get users either mentors or mentees with optional filtering - Done
 @users.route('/user/type', methods=['GET'])
 def get_users_by_type():
     user_type = request.args.get('usertype')
@@ -326,17 +326,6 @@ def update_user_status(userID):
     cursor.execute(query, (status, userID))
     db.get_db().commit()
     return 'User status updated!', 200
-
-#------------------------------------------------------------
-# Update match_status
-@users.route('/user/<userID>/match_status', methods=['PATCH'])
-def update_match_status(userID):
-    match_status = request.json['match_status']
-    query = '''UPDATE users SET Matchstatus = %s WHERE UserID = %s'''
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (match_status, userID))
-    db.get_db().commit()
-    return 'User match status updated!', 200
 
 #------------------------------------------------------------
 # Update reviews

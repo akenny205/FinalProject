@@ -80,7 +80,7 @@ if st.button('Act as Tom, a peer mentor',
             type = 'primary', 
             use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'peer_mentee'
+    st.session_state['role'] = 'peer_mentor'
     st.session_state['first_name'] = 'Tom'
     st.switch_page('pages/10_Exp_Student_Home.py')
 

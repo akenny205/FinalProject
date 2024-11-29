@@ -3,6 +3,11 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
+import os
+
+# Add API URL configuration
+API_URL = os.getenv('API_URL', 'http://localhost:5000')
 
 st.set_page_config(layout = 'wide')
 
@@ -77,12 +82,3 @@ if st.button('Update Profile',
              type='primary',
              use_container_width=False):
   st.switch_page('pages/06_Update_Profile.py')
-
-toggle = st.toggle("Toggle Mentee Capacity")
-
-# Need to connect this to the database!
-if toggle:
-    st.write("No Longer Open to Mentee Matches")
-    # Add advanced features or options here
-else:
-    st.write("Open to Mentee Matches")
