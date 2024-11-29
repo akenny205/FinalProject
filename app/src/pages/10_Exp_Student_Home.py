@@ -68,11 +68,6 @@ if st.button('Browse Employeers',
              use_container_width=True):
   st.switch_page('pages/12_Employeers.py')
 
-if st.button('Find Alumni',
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/13_Alumni.py')
-
 if st.button('Browse Experiences',
              type='primary',
              use_container_width=True):
