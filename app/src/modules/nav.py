@@ -23,17 +23,17 @@ def InexpStudentHomeNav():
 
 ## ------------------------ Examples for Role of Exp_Student ------------------------
 def ExpStudentHomeNav():
-    st.sidebar.page_link("pages/10_Exp_Student_Home.py", label="Student Home", icon="🛜")
+    st.sidebar.page_link("pages/10_Exp_Student_Home.py", label="Student Home", icon="👤")
 
 
 #### ------------------------ Advisor Role ------------------------
 def AdvisorsHomeNav():
-    st.sidebar.page_link("pages/20_Advisor_Home.py", label="Advisor Home", icon="🖥️")
+    st.sidebar.page_link("pages/20_Advisor_Home.py", label="Advisor Home", icon="🧑‍🏫")
 
 
 #### ------------------------ System Admin Role ------------------------
 def AdminPageNav():
-    st.sidebar.page_link("pages/40_Admin_Home.py", label="System Admin", icon="🖥️")
+    st.sidebar.page_link("pages/40_Admin_Home.py", label="Admin Home", icon="🖥️")
 
 
 # --------------------------------Links Function -----------------------------------------------
@@ -62,12 +62,12 @@ def SideBarLinks(show_home=False):
             InexpStudentHomeNav()
 
         # If the user role is usaid worker, show the Api Testing page
-        if st.session_state["role"] == 'peer_mentee':
+        if st.session_state["role"] == 'peer_mentor':
             ExpStudentHomeNav()
 
         # If the user is an advisor, give them access to the advisor pages
         if st.session_state["role"] == 'coop_career_advisor':
-            AdminPageNav()
+            AdvisorsHomeNav()
 
         # If the user is an administrator, give them access to the administrator pages
         if st.session_state["role"] == "admin":
