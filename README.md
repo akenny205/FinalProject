@@ -20,10 +20,10 @@ Currently, there are three major components each running in their own Docker Con
 - Flask REST api in the `./api` directory
 - SQL files for your data model and data base in the `./database-files` directory
 
-### How to bootstrap the repo on your personal machine
+## How to bootstrap the repo on your personal machine
 
 1. In GitHub, click the **fork** button in the upper right corner of the repo screen. 
-2. When prompted, give the new repo a unique name, perhaps including your last name and the word 'personal'. 
+2. When prompted, give the new repo a unique name.
 3. Once the fork has been created, clone YOUR forked version of the repo to your computer. 
 4. Set up the `.env` file in the `api` folder based on the `.env.template` file.
 5. Start the docker containers using `docker compose build` and `docker compose up -d`.  
@@ -36,5 +36,16 @@ The user has the ability to switch between these profiles by logging out (in the
 
 ## High Level Overview of top Features and Functionalities 
 
+### Detailed user profiles
+
+Detailed, linkedin style, user profiles allow students to maintain an updated record of what kind of student they are for others to view and match with. Experiences can be added or updated as the student progresses through their career.
+
+### Fine-tuned filtering
+
+Advanced search platform allows those in search of mentees and mentors to drill down the search results based on a series of traits. Those traits inclue interests, career goals, caree path, skills, and student status. 
+
+### Administrative control
+
+Perfect for a college campus application, advisors and administrators have advanced control of the network. Advisors are responsible for adding new students, updating their status when they graduate, adding employeer reviews, or removing users. The admin can view the system from a high level, seeing all students, posts, comments, and messages. The admin has complete control over all the content. 
 
  
