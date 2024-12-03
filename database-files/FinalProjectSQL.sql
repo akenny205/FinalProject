@@ -102,7 +102,7 @@ CREATE TABLE matches (
     Recommended BOOLEAN,
     Start DATETIME,
     End DATETIME,
-    Status BOOLEAN DEFAULT FALSE,
+    Status BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (MentorID, MenteeID),
     CONSTRAINT fk_mentor FOREIGN KEY (MentorID) REFERENCES users(UserID)
         ON UPDATE CASCADE ON DELETE CASCADE,
@@ -409,15 +409,98 @@ VALUES
     (3, 3, 96, '2023-04-08 15:00:00', 'Thank you for your insights.');
 
 -- Insert into Matches table
-INSERT INTO matches (MentorID, MenteeID, Recommended, Start, End, Status)
-VALUES
-    (1, 2, TRUE, '2023-04-01 08:00:00', '2023-06-01 18:00:00', FALSE),
-    (1, 3, FALSE, '2023-04-02 09:00:00', NULL, TRUE),
-    (2, 3, TRUE, '2023-05-01 10:00:00', '2023-07-01 17:00:00', FALSE),
-    (3, 4, TRUE, '2023-03-05 14:00:00', NULL, FALSE),
-    (5, 6, TRUE, '2023-03-10 09:00:00', NULL, FALSE),
-    (7, 8, TRUE, '2023-03-15 11:00:00', NULL, FALSE),
-    (9, 10, TRUE, '2023-03-20 08:30:00', NULL, FALSE);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (150, 9, true, '2021-12-23 03:33:31', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (114, 10, false, '2022-05-01 19:27:00', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (141, 11, true, '2024-05-28 03:03:43', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (175, 12, false, '2024-07-23 02:33:07', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (136, 13, true, '2021-10-16 01:09:21', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (148, 14, false, '2023-02-04 06:13:00', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (195, 15, false, '2022-06-06 15:33:41', '2023-03-06 02:42:00');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (155, 16, false, '2022-09-16 23:45:02', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (180, 17, false, '2023-03-08 01:44:57', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (144, 18, false, '2022-10-30 17:43:20', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (105, 19, false, '2021-09-02 11:27:42', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (187, 20, true, '2023-10-18 03:47:40', '2021-01-25 09:23:40');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (114, 21, false, '2021-08-15 16:39:39', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (148, 22, true, '2022-04-07 15:53:19', '2023-11-04 23:58:56');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (177, 23, true, '2024-09-05 21:32:05', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (126, 24, true, '2023-03-01 06:44:01', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (197, 25, false, '2022-08-03 00:14:01', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (103, 26, false, '2024-10-10 10:05:50', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (150, 27, true, '2021-12-16 18:19:27', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (152, 28, true, '2024-10-24 01:32:38', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (153, 29, true, '2023-03-18 04:55:37', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (180, 30, true, '2022-07-19 13:52:26', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (137, 31, false, '2022-08-18 19:05:36', '2021-11-22 06:19:45');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (123, 32, true, '2023-07-28 18:08:50', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (198, 33, false, '2024-05-17 06:05:54', '2022-10-14 23:40:15');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (181, 34, true, '2023-09-22 04:33:00', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (107, 35, true, '2023-09-15 20:48:20', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (120, 36, false, '2022-09-21 19:30:18', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (146, 37, true, '2021-10-02 14:22:27', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (147, 38, true, '2024-03-05 20:30:32', '2024-06-07 21:11:58');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (125, 39, true, '2021-08-31 19:13:53', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (181, 40, true, '2021-11-27 11:04:36', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (164, 41, false, '2023-09-28 07:34:50', '2023-12-30 01:40:28');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (122, 42, true, '2022-01-01 14:12:40', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (194, 43, true, '2021-03-17 20:39:39', '2024-09-27 23:47:57');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (118, 44, false, '2021-03-26 23:04:28', '2024-09-27 07:22:29');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (125, 45, true, '2023-11-09 06:16:11', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (120, 46, true, '2022-01-31 06:41:22', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (135, 47, true, '2022-03-16 01:54:26', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (171, 48, false, '2022-04-06 08:20:34', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (167, 49, false, '2021-05-06 22:29:33', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (177, 50, true, '2021-02-17 04:11:18', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (121, 51, true, '2022-10-08 01:32:09', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (138, 52, false, '2024-10-28 14:41:47', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (173, 53, false, '2023-04-07 18:46:55', '2022-01-04 09:48:17');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (107, 54, false, '2020-10-21 18:06:07', '2024-06-16 23:59:11');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (114, 55, false, '2021-08-23 00:34:57', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (144, 56, true, '2020-12-05 15:31:52', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (149, 57, true, '2021-12-29 02:53:40', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (134, 58, false, '2021-01-12 20:14:44', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (164, 59, false, '2022-08-15 03:11:05', '2021-11-29 16:29:37');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (192, 60, false, '2021-02-17 18:33:16', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (128, 61, false, '2024-02-11 00:40:27', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (185, 62, true, '2024-06-13 00:16:15', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (143, 63, true, '2024-07-18 01:18:48', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (139, 64, true, '2022-04-23 19:56:26', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (178, 65, false, '2021-10-11 07:37:59', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (102, 66, true, '2024-07-02 02:33:14', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (153, 67, false, '2021-04-22 21:46:40', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (137, 68, true, '2022-07-13 00:41:55', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (111, 69, false, '2022-09-12 15:28:07', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (128, 70, false, '2022-08-18 05:05:50', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (126, 71, true, '2023-12-09 19:48:00', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (121, 72, false, '2023-12-30 07:15:03', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (180, 73, false, '2021-12-28 00:19:18', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (185, 74, false, '2020-10-08 23:58:11', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (190, 75, true, '2021-10-04 01:59:38', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (131, 76, true, '2023-03-31 22:00:36', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (143, 77, false, '2023-08-14 09:28:21', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (187, 78, true, '2023-09-14 08:33:44', '2021-11-15 17:44:29');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (200, 79, true, '2024-06-11 23:53:27', '2022-09-12 23:08:01');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (165, 80, true, '2020-12-23 22:19:17', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (151, 81, false, '2023-02-05 21:37:08', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (196, 82, false, '2022-03-18 09:23:36', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (165, 83, true, '2021-11-14 09:52:49', '2022-11-11 21:06:46');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (134, 84, false, '2022-09-27 19:35:24', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (127, 85, true, '2021-03-31 23:38:49', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (178, 86, true, '2022-03-04 10:41:58', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (138, 87, false, '2024-02-11 14:58:27', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (199, 88, false, '2024-08-17 07:43:37', '2021-08-08 11:17:07');
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (133, 89, false, '2021-11-27 16:22:43', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (144, 90, true, '2022-10-03 13:15:23', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (145, 91, true, '2023-04-25 13:27:18', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (137, 92, true, '2021-04-30 05:49:51', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (157, 93, true, '2024-08-06 19:08:39', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (105, 94, false, '2023-06-07 04:38:26', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (149, 95, true, '2023-02-07 00:28:04', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (106, 96, true, '2024-04-07 01:03:09', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (153, 97, false, '2021-12-06 22:00:58', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (119, 98, true, '2023-03-14 09:35:54', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (103, 99, false, '2022-06-17 14:51:41', null);
+insert into matches (MentorID, MenteeID, Recommended, Start, End) values (105, 100, false, '2024-03-21 20:30:24', null);
 
 -- Insert into Interests table
 insert into interests (InterestID, UserID, Interest) values (9, 9, 'social justice');
@@ -1004,9 +1087,9 @@ insert into career_goals (GoalID, UserID, Goal) values (200, 200, 'improve publi
 -- Insert into Experience table
 INSERT INTO experience (ExperienceID, UserID, ExperienceName, Date, Location, Description)
 VALUES
-    (1, 1, 'Software Developer Intern', '2023-03-01 09:00:00', 'TechCorp', 'Worked on developing mobile apps'),
-    (2, 2, 'Research Assistant', '2023-04-01 10:00:00', 'HealthPlus', 'Assisted in lab experiments'),
-    (3, 3, 'Academic Tutor', '2023-05-01 11:00:00', 'EduWorld', 'Provided career counseling');
+    (1, 9, 'Software Developer Intern', '2023-03-01 09:00:00', 'TechCorp', 'Worked on developing mobile apps'),
+    (2, 10, 'Research Assistant', '2023-04-01 10:00:00', 'HealthPlus', 'Assisted in lab experiments'),
+    (3, 11, 'Academic Tutor', '2023-05-01 11:00:00', 'EduWorld', 'Provided career counseling');
 
 -- Insert into Career Path table
 insert into career_path (CareerPathID, UserID, CareerPath) values (9, 9, 'software engineer');
