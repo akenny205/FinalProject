@@ -1,3 +1,4 @@
+from apscheduler.job import Job
 from flask import Blueprint
 from flask import request
 from flask import jsonify
@@ -10,15 +11,32 @@ jobs = Blueprint('jobs', __name__)
 # Admin can see all current JobIDs and Titles
 @jobs.route('/viewjobs', methods=['GET'])
 def view_jobs():
-    query = '''
-        SELECT JobID, Title FROM jobs
+    try:
+        query = 'SELECT JobID, Title FROM jobs'
+        cursor = db.get_db().cursor()
+        cursor.execute(query)
+        theData = cursor.fetchall()
+        return jsonify(theData), 200
+    except Exception as e:
+        current_app.logger.error(f"Error in view_jobs: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@jobs.route('/create_job/<EmpID>/<Title>/<Description>', methods=['POST'])
+def create_job(EmpID, Title, Description):
+    try:
+        current_app.logger.info('/jobs POST request')
+        data = (EmpID, Title, Description)
+        query = '''
+            INSERT INTO jobs (EmpID, Title, Description)
+            VALUES (%s, %s, %s)
         '''
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    theData = cursor.fetchall()
-    response = make_response(jsonify(theData))
-    response.status_code = 200
-    return response
+        cursor = db.get_db().cursor()
+        cursor.execute(query, data)
+        db.get_db().commit()
+        return jsonify({'message': 'Job Created!'}), 200
+    except Exception as e:
+        current_app.logger.error(f"Error in create_job: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 # admin creates jobs
 @jobs.route('/deletejob/<JobID>', methods=['DELETE'])
