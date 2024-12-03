@@ -10,12 +10,6 @@ logger = logging.getLogger(__name__)
 if st.session_state['role'] == 'admin':
     st.set_page_config(layout='wide')
 
-    # Quick links
-    st.sidebar.header("Quick Links")
-    if st.sidebar.button("Home"):
-        st.switch_page('Home.py')
-    if st.sidebar.button("Back"):
-        st.switch_page('pages/40_Admin_Home.py')
 
     SideBarLinks()
 
@@ -83,13 +77,6 @@ else:
         page = 'pages/00_Inexp_Student_Home.py'
     
     st.set_page_config(layout='wide')
-
-    # Quick links
-    st.sidebar.header("Quick Links")
-    if st.sidebar.button("Home"):
-        st.switch_page('Home.py')
-    if st.sidebar.button("Back"):
-        st.switch_page(page)
 
     SideBarLinks()
 
