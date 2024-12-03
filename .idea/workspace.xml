@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0049fa5b-da61-4b4d-b695-3bc70504f24a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/pages/16_Create_Experience.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/backend/experience/experience_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/backend/experience/experience_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/backend/experience/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/backend/experience/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/backend/jobs/jobs_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/backend/jobs/jobs_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/api/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/pages/11_Jobs.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/pages/11_Jobs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/pages/14_Experiences.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/pages/14_Experiences.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/pages/15_View_Experiences.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/pages/15_View_Experiences.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/pages/16_Create_Experience.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/ian/Desktop/MAINFRAME/School/Year 2/CS3200/Flask/FinalProject&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,6 +88,10 @@
       <workItem from="1732394243699" duration="5417000" />
       <workItem from="1732417267951" duration="9000" />
       <workItem from="1732419430595" duration="2138000" />
+      <workItem from="1733164540239" duration="9000" />
+      <workItem from="1733255190037" duration="218000" />
+      <workItem from="1733255468219" duration="740000" />
+      <workItem from="1733261746312" duration="415000" />
     </task>
     <task id="LOCAL-00001" summary="Testing Commits">
       <option name="closed" value="true" />
@@ -197,12 +204,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/api/backend/experience/example.py</url>
-          <line>39</line>
+          <line>38</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app/src/pages/11_Jobs.py</url>
-          <line>31</line>
+          <line>42</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

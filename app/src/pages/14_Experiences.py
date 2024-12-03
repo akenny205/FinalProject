@@ -6,19 +6,25 @@ from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+import requests
 
 
-st.title('Student Experiences Home')
+st.sidebar.header("Quick Links")
+if st.sidebar.button("Home"):
+    st.switch_page('Home.py')
+if st.sidebar.button('Back'):
+    st.switch_page('/appcode/pages/10_Exp_Student_Home.py')
 
 SideBarLinks()
 
-# View Experience
+st.title('Student Experiences Browser')
 
-if st.button("View Students' Experiences",
-             type='primary', use_container_width=True):
-    st.switch_page('/appcode/pages/15_View_Experiences.py')
-
-# Create Experience
-if st.button("Create Experience",
-             type='primary', use_container_width=True):
-    st.switch_page('/appcode/pages/16_Create_Experience.py')
+response = requests.get('http://api:4000/exp/viewexp')
+if response.status_code == 200:
+    experiences = response.json()
+    if experiences:
+        st.dataframe(experiences)
+    else:
+        st.write('No Experiences Found')
+else:
+    st.write('Failed to Fetch Experiences')
