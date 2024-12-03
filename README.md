@@ -4,7 +4,7 @@ This repo is for PeerPoint, an app created as the final project for CS3200 Datab
 
 Video Walk-Through Link: (user needs to have permission)
 
-Briefly, PeerPoint is a campus social networking platform that encourages peer mentorship while allowing continuous monitoring by advisors.  test
+Briefly, PeerPoint is a campus social networking platform that encourages peer mentorship while allowing continuous monitoring by advisors. 
 
 # PeerPoint Elevator Pitch
 
