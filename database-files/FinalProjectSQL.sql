@@ -387,26 +387,26 @@ insert into users (UserID, lName, fName, Usertype, joinDate, Email, Phone, Match
 -- Insert into Messages table
 INSERT INTO messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID)
 VALUES
-    (1, '2023-04-01 12:00:00', 1, 2, 'Welcome to the program!', 1),
-    (2, '2023-04-02 15:00:00', 2, 1, 'Thank you for your guidance.', 2),
-    (3, '2023-04-03 10:00:00', 3, 1, 'Please schedule a meeting.', 3);
+    (1, '2023-04-01 12:00:00', 10, 11, 'Welcome to the program!', 1),
+    (2, '2023-04-02 15:00:00', 29, 109, 'Thank you for your guidance.', 2),
+    (3, '2023-04-03 10:00:00', 3, 21, 'Please schedule a meeting.', 3);
 
 -- Insert into Posts table
 INSERT INTO posts (PostID, UserID, Content, PostDate, AdminID)
 VALUES
-    (1, 1, 'Mentorship is a valuable experience!', '2023-04-05 08:00:00', 1),
-    (2, 2, 'Looking forward to learning more!', '2023-04-06 10:00:00', 2),
-    (3, 3, 'Advisors play a key role in guidance.', '2023-04-07 14:00:00', 3),
-    (4, 4, 'Excited to help mentees learn about machine learning!', '2023-03-01 09:00:00', 1),
-    (5, 5, 'Looking forward to learning from experienced mentors!', '2023-03-02 10:00:00', 2),
-    (6, 6, 'Sharing my experience in data visualization with mentees.', '2023-03-03 11:00:00', 3);
+    (1, 10, 'Mentorship is a valuable experience!', '2023-04-05 08:00:00', 1),
+    (2, 34, 'Looking forward to learning more!', '2023-04-06 10:00:00', 2),
+    (3, 27, 'Advisors play a key role in guidance.', '2023-04-07 14:00:00', 3),
+    (4, 109, 'Excited to help mentees learn about machine learning!', '2023-03-01 09:00:00', 1),
+    (5, 182, 'Looking forward to learning from experienced mentors!', '2023-03-02 10:00:00', 2),
+    (6, 63, 'Sharing my experience in data visualization with mentees.', '2023-03-03 11:00:00', 3);
 
 -- Insert into Comments table
 INSERT INTO comments (CommentID, PostID, CommenterID, CommentDate, Content)
 VALUES
-    (1, 1, 2, '2023-04-06 09:00:00', 'I agree!'),
-    (2, 2, 1, '2023-04-07 11:00:00', 'Happy to help!'),
-    (3, 3, 2, '2023-04-08 15:00:00', 'Thank you for your insights.');
+    (1, 1, 24, '2023-04-06 09:00:00', 'I agree!'),
+    (2, 2, 167, '2023-04-07 11:00:00', 'Happy to help!'),
+    (3, 3, 96, '2023-04-08 15:00:00', 'Thank you for your insights.');
 
 -- Insert into Matches table
 INSERT INTO matches (MentorID, MenteeID, Recommended, Start, End, Status)
@@ -420,46 +420,586 @@ VALUES
     (9, 10, TRUE, '2023-03-20 08:30:00', NULL, FALSE);
 
 -- Insert into Interests table
-INSERT INTO interests (InterestID, UserID, Interest)
-VALUES
-    (1, 1, 'Machine Learning'),
-    (2, 2, 'Machine Learning'),
-    (3, 3, 'Renewable Energy'),
-    (4, 4, 'Renewable Energy'),
-    (5, 5, 'Data Analysis'),
-    (6, 6, 'Data Analysis'),
-    (7, 7, 'Genetics'),
-    (8, 8, 'Genetics'),
-    (9, 9, 'Stock Trading'),
-    (10, 10, 'Stock Trading');
+insert into interests (InterestID, UserID, Interest) values (9, 9, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (10, 10, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (11, 11, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (12, 12, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (13, 13, 'music production');
+insert into interests (InterestID, UserID, Interest) values (14, 14, 'music production');
+insert into interests (InterestID, UserID, Interest) values (15, 15, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (16, 16, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (17, 17, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (18, 18, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (19, 19, 'music production');
+insert into interests (InterestID, UserID, Interest) values (20, 20, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (21, 21, 'public health');
+insert into interests (InterestID, UserID, Interest) values (22, 22, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (23, 23, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (24, 24, 'software development');
+insert into interests (InterestID, UserID, Interest) values (25, 25, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (26, 26, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (27, 27, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (28, 28, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (29, 29, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (30, 30, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (31, 31, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (32, 32, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (33, 33, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (34, 34, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (35, 35, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (36, 36, 'software development');
+insert into interests (InterestID, UserID, Interest) values (37, 37, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (38, 38, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (39, 39, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (40, 40, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (41, 41, 'software development');
+insert into interests (InterestID, UserID, Interest) values (42, 42, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (43, 43, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (44, 44, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (45, 45, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (46, 46, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (47, 47, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (48, 48, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (49, 49, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (50, 50, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (51, 51, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (52, 52, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (53, 53, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (54, 54, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (55, 55, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (56, 56, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (57, 57, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (58, 58, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (59, 59, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (60, 60, 'public health');
+insert into interests (InterestID, UserID, Interest) values (61, 61, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (62, 62, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (63, 63, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (64, 64, 'music production');
+insert into interests (InterestID, UserID, Interest) values (65, 65, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (66, 66, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (67, 67, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (68, 68, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (69, 69, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (70, 70, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (71, 71, 'public health');
+insert into interests (InterestID, UserID, Interest) values (72, 72, 'music production');
+insert into interests (InterestID, UserID, Interest) values (73, 73, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (74, 74, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (75, 75, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (76, 76, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (77, 77, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (78, 78, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (79, 79, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (80, 80, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (81, 81, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (82, 82, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (83, 83, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (84, 84, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (85, 85, 'public health');
+insert into interests (InterestID, UserID, Interest) values (86, 86, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (87, 87, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (88, 88, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (89, 89, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (90, 90, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (91, 91, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (92, 92, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (93, 93, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (94, 94, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (95, 95, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (96, 96, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (97, 97, 'music production');
+insert into interests (InterestID, UserID, Interest) values (98, 98, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (99, 99, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (100, 100, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (101, 101, 'public health');
+insert into interests (InterestID, UserID, Interest) values (102, 102, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (103, 103, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (104, 104, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (105, 105, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (106, 106, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (107, 107, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (108, 108, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (109, 109, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (110, 110, 'public health');
+insert into interests (InterestID, UserID, Interest) values (111, 111, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (112, 112, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (113, 113, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (114, 114, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (115, 115, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (116, 116, 'music production');
+insert into interests (InterestID, UserID, Interest) values (117, 117, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (118, 118, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (119, 119, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (120, 120, 'software development');
+insert into interests (InterestID, UserID, Interest) values (121, 121, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (122, 122, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (123, 123, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (124, 124, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (125, 125, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (126, 126, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (127, 127, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (128, 128, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (129, 129, 'software development');
+insert into interests (InterestID, UserID, Interest) values (130, 130, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (131, 131, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (132, 132, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (133, 133, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (134, 134, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (135, 135, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (136, 136, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (137, 137, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (138, 138, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (139, 139, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (140, 140, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (141, 141, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (142, 142, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (143, 143, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (144, 144, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (145, 145, 'renewable energy');
+insert into interests (InterestID, UserID, Interest) values (146, 146, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (147, 147, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (148, 148, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (149, 149, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (150, 150, 'software development');
+insert into interests (InterestID, UserID, Interest) values (151, 151, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (152, 152, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (153, 153, 'public health');
+insert into interests (InterestID, UserID, Interest) values (154, 154, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (155, 155, 'robotics');
+insert into interests (InterestID, UserID, Interest) values (156, 156, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (157, 157, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (158, 158, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (159, 159, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (160, 160, 'public health');
+insert into interests (InterestID, UserID, Interest) values (161, 161, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (162, 162, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (163, 163, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (164, 164, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (165, 165, 'music production');
+insert into interests (InterestID, UserID, Interest) values (166, 166, 'software development');
+insert into interests (InterestID, UserID, Interest) values (167, 167, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (168, 168, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (169, 169, 'software development');
+insert into interests (InterestID, UserID, Interest) values (170, 170, 'literature analysis');
+insert into interests (InterestID, UserID, Interest) values (171, 171, 'political theory');
+insert into interests (InterestID, UserID, Interest) values (172, 172, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (173, 173, 'graphic design');
+insert into interests (InterestID, UserID, Interest) values (174, 174, 'creative writing');
+insert into interests (InterestID, UserID, Interest) values (175, 175, 'public health');
+insert into interests (InterestID, UserID, Interest) values (176, 176, 'public health');
+insert into interests (InterestID, UserID, Interest) values (177, 177, 'machine learning');
+insert into interests (InterestID, UserID, Interest) values (178, 178, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (179, 179, 'blockchain technology');
+insert into interests (InterestID, UserID, Interest) values (180, 180, 'classical music');
+insert into interests (InterestID, UserID, Interest) values (181, 181, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (182, 182, 'digital marketing');
+insert into interests (InterestID, UserID, Interest) values (183, 183, 'social justice');
+insert into interests (InterestID, UserID, Interest) values (184, 184, 'music production');
+insert into interests (InterestID, UserID, Interest) values (185, 185, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (186, 186, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (187, 187, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (188, 188, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (189, 189, 'entrepreneurship');
+insert into interests (InterestID, UserID, Interest) values (190, 190, 'statistical analysis');
+insert into interests (InterestID, UserID, Interest) values (191, 191, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (192, 192, 'software development');
+insert into interests (InterestID, UserID, Interest) values (193, 193, 'data visualization');
+insert into interests (InterestID, UserID, Interest) values (194, 194, 'biomechanics');
+insert into interests (InterestID, UserID, Interest) values (195, 195, 'cybersecurity');
+insert into interests (InterestID, UserID, Interest) values (196, 196, 'public health');
+insert into interests (InterestID, UserID, Interest) values (197, 197, 'artificial intelligence');
+insert into interests (InterestID, UserID, Interest) values (198, 198, 'music production');
+insert into interests (InterestID, UserID, Interest) values (199, 199, 'music production');
+insert into interests (InterestID, UserID, Interest) values (200, 200, 'machine learning');
 
 -- Insert into Skills table
-INSERT INTO skills (SkillID, UserID, Skill)
-VALUES
-    (1, 1, 'Python Programming'),
-    (2, 2, 'Python Programming'),
-    (3, 3, 'CAD Design'),
-    (4, 4, 'CAD Design'),
-    (5, 5, 'Data Visualization'),
-    (6, 6, 'Data Visualization'),
-    (7, 7, 'Lab Techniques'),
-    (8, 8, 'Lab Techniques'),
-    (9, 9, 'Financial Modeling'),
-    (10, 10, 'Financial Modeling');
+insert into skills (SkillID, UserID, Skill) values (9, 9, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (10, 10, 'networking');
+insert into skills (SkillID, UserID, Skill) values (11, 11, 'research');
+insert into skills (SkillID, UserID, Skill) values (12, 12, 'research');
+insert into skills (SkillID, UserID, Skill) values (13, 13, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (14, 14, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (15, 15, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (16, 16, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (17, 17, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (18, 18, 'project management');
+insert into skills (SkillID, UserID, Skill) values (19, 19, 'writing');
+insert into skills (SkillID, UserID, Skill) values (20, 20, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (21, 21, 'research');
+insert into skills (SkillID, UserID, Skill) values (22, 22, 'research');
+insert into skills (SkillID, UserID, Skill) values (23, 23, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (24, 24, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (25, 25, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (26, 26, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (27, 27, 'time management');
+insert into skills (SkillID, UserID, Skill) values (28, 28, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (29, 29, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (30, 30, 'communication');
+insert into skills (SkillID, UserID, Skill) values (31, 31, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (32, 32, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (33, 33, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (34, 34, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (35, 35, 'communication');
+insert into skills (SkillID, UserID, Skill) values (36, 36, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (37, 37, 'research');
+insert into skills (SkillID, UserID, Skill) values (38, 38, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (39, 39, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (40, 40, 'programming');
+insert into skills (SkillID, UserID, Skill) values (41, 41, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (42, 42, 'coding');
+insert into skills (SkillID, UserID, Skill) values (43, 43, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (44, 44, 'project management');
+insert into skills (SkillID, UserID, Skill) values (45, 45, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (46, 46, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (47, 47, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (48, 48, 'time management');
+insert into skills (SkillID, UserID, Skill) values (49, 49, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (50, 50, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (51, 51, 'project management');
+insert into skills (SkillID, UserID, Skill) values (52, 52, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (53, 53, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (54, 54, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (55, 55, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (56, 56, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (57, 57, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (58, 58, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (59, 59, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (60, 60, 'project management');
+insert into skills (SkillID, UserID, Skill) values (61, 61, 'teamwork');
+insert into skills (SkillID, UserID, Skill) values (62, 62, 'communication');
+insert into skills (SkillID, UserID, Skill) values (63, 63, 'teamwork');
+insert into skills (SkillID, UserID, Skill) values (64, 64, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (65, 65, 'project management');
+insert into skills (SkillID, UserID, Skill) values (66, 66, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (67, 67, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (68, 68, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (69, 69, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (70, 70, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (71, 71, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (72, 72, 'teamwork');
+insert into skills (SkillID, UserID, Skill) values (73, 73, 'coding');
+insert into skills (SkillID, UserID, Skill) values (74, 74, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (75, 75, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (76, 76, 'time management');
+insert into skills (SkillID, UserID, Skill) values (77, 77, 'time management');
+insert into skills (SkillID, UserID, Skill) values (78, 78, 'writing');
+insert into skills (SkillID, UserID, Skill) values (79, 79, 'writing');
+insert into skills (SkillID, UserID, Skill) values (80, 80, 'research');
+insert into skills (SkillID, UserID, Skill) values (81, 81, 'communication');
+insert into skills (SkillID, UserID, Skill) values (82, 82, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (83, 83, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (84, 84, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (85, 85, 'communication');
+insert into skills (SkillID, UserID, Skill) values (86, 86, 'coding');
+insert into skills (SkillID, UserID, Skill) values (87, 87, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (88, 88, 'writing');
+insert into skills (SkillID, UserID, Skill) values (89, 89, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (90, 90, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (91, 91, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (92, 92, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (93, 93, 'project management');
+insert into skills (SkillID, UserID, Skill) values (94, 94, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (95, 95, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (96, 96, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (97, 97, 'time management');
+insert into skills (SkillID, UserID, Skill) values (98, 98, 'project management');
+insert into skills (SkillID, UserID, Skill) values (99, 99, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (100, 100, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (101, 101, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (102, 102, 'communication');
+insert into skills (SkillID, UserID, Skill) values (103, 103, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (104, 104, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (105, 105, 'communication');
+insert into skills (SkillID, UserID, Skill) values (106, 106, 'writing');
+insert into skills (SkillID, UserID, Skill) values (107, 107, 'coding');
+insert into skills (SkillID, UserID, Skill) values (108, 108, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (109, 109, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (110, 110, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (111, 111, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (112, 112, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (113, 113, 'communication');
+insert into skills (SkillID, UserID, Skill) values (114, 114, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (115, 115, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (116, 116, 'conflict resolution');
+insert into skills (SkillID, UserID, Skill) values (117, 117, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (118, 118, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (119, 119, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (120, 120, 'research');
+insert into skills (SkillID, UserID, Skill) values (121, 121, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (122, 122, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (123, 123, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (124, 124, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (125, 125, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (126, 126, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (127, 127, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (128, 128, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (129, 129, 'networking');
+insert into skills (SkillID, UserID, Skill) values (130, 130, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (131, 131, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (132, 132, 'time management');
+insert into skills (SkillID, UserID, Skill) values (133, 133, 'networking');
+insert into skills (SkillID, UserID, Skill) values (134, 134, 'writing');
+insert into skills (SkillID, UserID, Skill) values (135, 135, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (136, 136, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (137, 137, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (138, 138, 'research');
+insert into skills (SkillID, UserID, Skill) values (139, 139, 'research');
+insert into skills (SkillID, UserID, Skill) values (140, 140, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (141, 141, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (142, 142, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (143, 143, 'programming');
+insert into skills (SkillID, UserID, Skill) values (144, 144, 'project management');
+insert into skills (SkillID, UserID, Skill) values (145, 145, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (146, 146, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (147, 147, 'time management');
+insert into skills (SkillID, UserID, Skill) values (148, 148, 'time management');
+insert into skills (SkillID, UserID, Skill) values (149, 149, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (150, 150, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (151, 151, 'research');
+insert into skills (SkillID, UserID, Skill) values (152, 152, 'time management');
+insert into skills (SkillID, UserID, Skill) values (153, 153, 'problem-solving');
+insert into skills (SkillID, UserID, Skill) values (154, 154, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (155, 155, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (156, 156, 'coding');
+insert into skills (SkillID, UserID, Skill) values (157, 157, 'writing');
+insert into skills (SkillID, UserID, Skill) values (158, 158, 'communication');
+insert into skills (SkillID, UserID, Skill) values (159, 159, 'research');
+insert into skills (SkillID, UserID, Skill) values (160, 160, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (161, 161, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (162, 162, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (163, 163, 'coding');
+insert into skills (SkillID, UserID, Skill) values (164, 164, 'research');
+insert into skills (SkillID, UserID, Skill) values (165, 165, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (166, 166, 'networking');
+insert into skills (SkillID, UserID, Skill) values (167, 167, 'statistical modeling');
+insert into skills (SkillID, UserID, Skill) values (168, 168, 'coding');
+insert into skills (SkillID, UserID, Skill) values (169, 169, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (170, 170, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (171, 171, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (172, 172, 'communication');
+insert into skills (SkillID, UserID, Skill) values (173, 173, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (174, 174, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (175, 175, 'creativity');
+insert into skills (SkillID, UserID, Skill) values (176, 176, 'public speaking');
+insert into skills (SkillID, UserID, Skill) values (177, 177, 'coding');
+insert into skills (SkillID, UserID, Skill) values (178, 178, 'adaptability');
+insert into skills (SkillID, UserID, Skill) values (179, 179, 'technical writing');
+insert into skills (SkillID, UserID, Skill) values (180, 180, 'Data analysis');
+insert into skills (SkillID, UserID, Skill) values (181, 181, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (182, 182, 'project management');
+insert into skills (SkillID, UserID, Skill) values (183, 183, 'leadership');
+insert into skills (SkillID, UserID, Skill) values (184, 184, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (185, 185, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (186, 186, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (187, 187, 'writing');
+insert into skills (SkillID, UserID, Skill) values (188, 188, 'writing');
+insert into skills (SkillID, UserID, Skill) values (189, 189, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (190, 190, 'communication');
+insert into skills (SkillID, UserID, Skill) values (191, 191, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (192, 192, 'writing');
+insert into skills (SkillID, UserID, Skill) values (193, 193, 'research');
+insert into skills (SkillID, UserID, Skill) values (194, 194, 'time management');
+insert into skills (SkillID, UserID, Skill) values (195, 195, 'critical thinking');
+insert into skills (SkillID, UserID, Skill) values (196, 196, 'graphic design');
+insert into skills (SkillID, UserID, Skill) values (197, 197, 'networking');
+insert into skills (SkillID, UserID, Skill) values (198, 198, 'project management');
+insert into skills (SkillID, UserID, Skill) values (199, 199, 'time management');
+insert into skills (SkillID, UserID, Skill) values (200, 200, 'graphic design');
 
 -- Insert into Career Goals table
-INSERT INTO career_goals (GoalID, UserID, Goal)
-VALUES
-    (1, 1, 'Develop AI tools for healthcare'),
-    (2, 2, 'Work in AI healthcare solutions'),
-    (3, 3, 'Create sustainable engineering solutions'),
-    (4, 4, 'Design renewable energy systems'),
-    (5, 5, 'Become a Data Scientist'),
-    (6, 6, 'Work in data-driven healthcare analytics'),
-    (7, 7, 'Research genetic disorders'),
-    (8, 8, 'Contribute to genetic therapies'),
-    (9, 9, 'Build a career in Investment Banking'),
-    (10, 10, 'Work in financial data analytics');
+insert into career_goals (GoalID, UserID, Goal) values (9, 9, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (10, 10, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (11, 11, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (12, 12, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (13, 13, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (14, 14, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (15, 15, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (16, 16, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (17, 17, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (18, 18, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (19, 19, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (20, 20, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (21, 21, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (22, 22, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (23, 23, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (24, 24, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (25, 25, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (26, 26, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (27, 27, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (28, 28, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (29, 29, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (30, 30, 'create impactful art');
+insert into career_goals (GoalID, UserID, Goal) values (31, 31, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (32, 32, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (33, 33, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (34, 34, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (35, 35, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (36, 36, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (37, 37, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (38, 38, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (39, 39, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (40, 40, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (41, 41, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (42, 42, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (43, 43, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (44, 44, 'solve real-world problems through AI');
+insert into career_goals (GoalID, UserID, Goal) values (45, 45, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (46, 46, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (47, 47, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (48, 48, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (49, 49, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (50, 50, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (51, 51, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (52, 52, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (53, 53, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (54, 54, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (55, 55, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (56, 56, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (57, 57, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (58, 58, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (59, 59, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (60, 60, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (61, 61, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (62, 62, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (63, 63, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (64, 64, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (65, 65, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (66, 66, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (67, 67, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (68, 68, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (69, 69, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (70, 70, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (71, 71, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (72, 72, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (73, 73, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (74, 74, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (75, 75, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (76, 76, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (77, 77, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (78, 78, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (79, 79, 'solve real-world problems through AI');
+insert into career_goals (GoalID, UserID, Goal) values (80, 80, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (81, 81, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (82, 82, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (83, 83, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (84, 84, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (85, 85, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (86, 86, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (87, 87, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (88, 88, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (89, 89, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (90, 90, 'create impactful art');
+insert into career_goals (GoalID, UserID, Goal) values (91, 91, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (92, 92, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (93, 93, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (94, 94, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (95, 95, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (96, 96, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (97, 97, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (98, 98, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (99, 99, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (100, 100, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (101, 101, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (102, 102, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (103, 103, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (104, 104, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (105, 105, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (106, 106, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (107, 107, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (108, 108, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (109, 109, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (110, 110, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (111, 111, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (112, 112, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (113, 113, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (114, 114, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (115, 115, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (116, 116, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (117, 117, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (118, 118, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (119, 119, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (120, 120, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (121, 121, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (122, 122, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (123, 123, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (124, 124, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (125, 125, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (126, 126, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (127, 127, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (128, 128, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (129, 129, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (130, 130, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (131, 131, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (132, 132, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (133, 133, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (134, 134, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (135, 135, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (136, 136, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (137, 137, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (138, 138, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (139, 139, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (140, 140, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (141, 141, 'solve real-world problems through AI');
+insert into career_goals (GoalID, UserID, Goal) values (142, 142, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (143, 143, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (144, 144, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (145, 145, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (146, 146, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (147, 147, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (148, 148, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (149, 149, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (150, 150, 'advocate for policy change');
+insert into career_goals (GoalID, UserID, Goal) values (151, 151, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (152, 152, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (153, 153, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (154, 154, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (155, 155, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (156, 156, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (157, 157, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (158, 158, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (159, 159, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (160, 160, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (161, 161, 'create impactful art');
+insert into career_goals (GoalID, UserID, Goal) values (162, 162, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (163, 163, 'revolutionize user experiences');
+insert into career_goals (GoalID, UserID, Goal) values (164, 164, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (165, 165, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (166, 166, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (167, 167, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (168, 168, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (169, 169, 'work as a political strategist');
+insert into career_goals (GoalID, UserID, Goal) values (170, 170, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (171, 171, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (172, 172, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (173, 173, 'achieve financial independence');
+insert into career_goals (GoalID, UserID, Goal) values (174, 174, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (175, 175, 'solve real-world problems through AI');
+insert into career_goals (GoalID, UserID, Goal) values (176, 176, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (177, 177, 'conduct groundbreaking research');
+insert into career_goals (GoalID, UserID, Goal) values (178, 178, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (179, 179, 'create impactful art');
+insert into career_goals (GoalID, UserID, Goal) values (180, 180, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (181, 181, 'publish a novel');
+insert into career_goals (GoalID, UserID, Goal) values (182, 182, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (183, 183, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (184, 184, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (185, 185, 'develop innovative software');
+insert into career_goals (GoalID, UserID, Goal) values (186, 186, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (187, 187, 'mentor future professionals');
+insert into career_goals (GoalID, UserID, Goal) values (188, 188, 'solve real-world problems through AI');
+insert into career_goals (GoalID, UserID, Goal) values (189, 189, 'become a data scientist');
+insert into career_goals (GoalID, UserID, Goal) values (190, 190, 'lead a research project');
+insert into career_goals (GoalID, UserID, Goal) values (191, 191, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (192, 192, 'manage a high-performing team');
+insert into career_goals (GoalID, UserID, Goal) values (193, 193, 'build a personal brand');
+insert into career_goals (GoalID, UserID, Goal) values (194, 194, 'design sustainable technology');
+insert into career_goals (GoalID, UserID, Goal) values (195, 195, 'start a successful business');
+insert into career_goals (GoalID, UserID, Goal) values (196, 196, 'improve public health outcomes');
+insert into career_goals (GoalID, UserID, Goal) values (197, 197, 'become a university professor');
+insert into career_goals (GoalID, UserID, Goal) values (198, 198, 'compose music for films');
+insert into career_goals (GoalID, UserID, Goal) values (199, 199, 'establish a health startup');
+insert into career_goals (GoalID, UserID, Goal) values (200, 200, 'improve public health outcomes');
 
 -- Insert into Experience table
 INSERT INTO experience (ExperienceID, UserID, ExperienceName, Date, Location, Description)
@@ -469,11 +1009,198 @@ VALUES
     (3, 3, 'Academic Tutor', '2023-05-01 11:00:00', 'EduWorld', 'Provided career counseling');
 
 -- Insert into Career Path table
-INSERT INTO career_path (CareerPathID, UserID, CareerPath)
-VALUES
-    (1, 1, 'AI Specialist'),
-    (2, 2, 'Genetic Researcher'),
-    (3, 3, 'Career Coach');
+insert into career_path (CareerPathID, UserID, CareerPath) values (9, 9, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (10, 10, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (11, 11, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (12, 12, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (13, 13, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (14, 14, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (15, 15, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (16, 16, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (17, 17, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (18, 18, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (19, 19, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (20, 20, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (21, 21, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (22, 22, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (23, 23, 'biomedical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (24, 24, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (25, 25, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (26, 26, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (27, 27, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (28, 28, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (29, 29, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (30, 30, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (31, 31, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (32, 32, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (33, 33, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (34, 34, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (35, 35, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (36, 36, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (37, 37, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (38, 38, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (39, 39, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (40, 40, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (41, 41, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (42, 42, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (43, 43, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (44, 44, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (45, 45, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (46, 46, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (47, 47, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (48, 48, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (49, 49, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (50, 50, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (51, 51, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (52, 52, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (53, 53, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (54, 54, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (55, 55, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (56, 56, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (57, 57, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (58, 58, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (59, 59, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (60, 60, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (61, 61, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (62, 62, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (63, 63, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (64, 64, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (65, 65, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (66, 66, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (67, 67, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (68, 68, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (69, 69, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (70, 70, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (71, 71, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (72, 72, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (73, 73, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (74, 74, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (75, 75, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (76, 76, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (77, 77, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (78, 78, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (79, 79, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (80, 80, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (81, 81, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (82, 82, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (83, 83, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (84, 84, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (85, 85, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (86, 86, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (87, 87, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (88, 88, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (89, 89, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (90, 90, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (91, 91, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (92, 92, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (93, 93, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (94, 94, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (95, 95, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (96, 96, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (97, 97, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (98, 98, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (99, 99, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (100, 100, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (101, 101, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (102, 102, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (103, 103, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (104, 104, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (105, 105, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (106, 106, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (107, 107, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (108, 108, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (109, 109, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (110, 110, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (111, 111, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (112, 112, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (113, 113, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (114, 114, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (115, 115, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (116, 116, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (117, 117, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (118, 118, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (119, 119, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (120, 120, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (121, 121, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (122, 122, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (123, 123, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (124, 124, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (125, 125, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (126, 126, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (127, 127, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (128, 128, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (129, 129, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (130, 130, 'teacher');
+insert into career_path (CareerPathID, UserID, CareerPath) values (131, 131, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (132, 132, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (133, 133, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (134, 134, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (135, 135, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (136, 136, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (137, 137, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (138, 138, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (139, 139, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (140, 140, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (141, 141, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (142, 142, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (143, 143, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (144, 144, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (145, 145, 'biomedical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (146, 146, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (147, 147, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (148, 148, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (149, 149, 'biomedical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (150, 150, 'financial analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (151, 151, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (152, 152, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (153, 153, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (154, 154, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (155, 155, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (156, 156, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (157, 157, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (158, 158, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (159, 159, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (160, 160, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (161, 161, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (162, 162, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (163, 163, 'editor');
+insert into career_path (CareerPathID, UserID, CareerPath) values (164, 164, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (165, 165, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (166, 166, 'electrical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (167, 167, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (168, 168, 'mechanical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (169, 169, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (170, 170, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (171, 171, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (172, 172, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (173, 173, 'research scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (174, 174, 'biomedical engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (175, 175, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (176, 176, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (177, 177, 'software engineer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (178, 178, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (179, 179, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (180, 180, 'project manager');
+insert into career_path (CareerPathID, UserID, CareerPath) values (181, 181, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (182, 182, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (183, 183, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (184, 184, 'UX designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (185, 185, 'musician');
+insert into career_path (CareerPathID, UserID, CareerPath) values (186, 186, 'marketing specialist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (187, 187, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (188, 188, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (189, 189, 'public health consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (190, 190, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (191, 191, 'graphic designer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (192, 192, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (193, 193, 'writer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (194, 194, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (195, 195, 'music producer');
+insert into career_path (CareerPathID, UserID, CareerPath) values (196, 196, 'policy analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (197, 197, 'political consultant');
+insert into career_path (CareerPathID, UserID, CareerPath) values (198, 198, 'business analyst');
+insert into career_path (CareerPathID, UserID, CareerPath) values (199, 199, 'data scientist');
+insert into career_path (CareerPathID, UserID, CareerPath) values (200, 200, 'software engineer');
 
 -- Insert into Jobs table
 INSERT INTO jobs (JobID, EmpID, Title, Description)
