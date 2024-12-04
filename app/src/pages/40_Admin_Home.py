@@ -32,7 +32,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-if st.button('View Usage Dashboard', 
+if st.button('User Dashboard', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/41_usage.py')
@@ -42,17 +42,17 @@ if st.button('View Students',
              use_container_width=True):
   st.switch_page('pages/23_View_Students.py')
 
-if st.button('View Flagged Posts', 
+if st.button('View Feed', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/02_View_Feed.py')
 
-if st.button('Update Flagged Comments', 
+if st.button('Delete or Edit Posts and Comments', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/42_update_comments.py')
 
-if st.button('Update User Details', 
+if st.button('Delete Users', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/43_update_users.py')
@@ -61,3 +61,8 @@ if st.button('Create and Delete Jobs',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/11_Jobs.py')
+
+if st.button('Add and Delete Empoyers',
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/45_edit_employers.py')

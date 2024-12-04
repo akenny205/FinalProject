@@ -30,7 +30,7 @@ try:
 
         # Display the data as a table
         st.subheader("User Counts by Type")
-        st.dataframe(df)
+        st.dataframe(df, use_container_width=True)
 
         # Plot the data as a bar chart
         st.subheader("User Counts by Type (Bar Chart)")

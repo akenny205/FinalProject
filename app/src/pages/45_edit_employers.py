@@ -13,4 +13,4 @@ if st.session_state['role'] == 'admin':
 
     SideBarLinks()
 
-    st.title('Admin Feed Editor')
+    st.title('Admin Employer Editor (Reference Jobs page use same format)')
