@@ -7,6 +7,8 @@ from backend.db_connection import db
 
 posts = Blueprint('posts', __name__)
 
+#------------------------------------------------------------
+# Add a post
 @posts.route('/createpost', methods=['POST'])
 def add_post():
     post_info = request.json
@@ -21,6 +23,8 @@ def add_post():
     db.get_db().commit()
     return 'Post created!', 201
 
+#------------------------------------------------------------
+# View posts
 @posts.route('/viewposts', methods=['GET'])
 def get_posts():
     try:
@@ -41,6 +45,8 @@ def get_posts():
 
     return the_response
 
+#------------------------------------------------------------
+# Get comments on a post
 @posts.route('/getcomment/<postID>', methods=['POST'])
 def get_comments():
     post_id = request.json['post_id']
@@ -49,3 +55,13 @@ def get_comments():
     cursor.execute(query)
     comments = cursor.fetchall()
     return jsonify(comments)
+
+#------------------------------------------------------------
+# Delete posts
+@posts.route('/deletepost/<PostID>', methods=['DELETE'])
+def delete_post(PostID):
+    cursor = db.get_db().cursor()
+    query = "DELETE FROM posts WHERE PostID = %s"
+    cursor.execute(query, (PostID,))
+    db.get_db().commit()
+    return 'Post deleted!', 200
