@@ -76,6 +76,7 @@ def get_users_by_type():
         query += ' JOIN career_path p ON u.UserID = p.UserID'
         conditions.append('p.CareerPath = %s')
         params.append(career_path)
+        
     
     # Add WHERE to query for conditions
     query += ' WHERE ' + ' AND '.join(conditions)
