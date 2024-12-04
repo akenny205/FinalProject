@@ -8,7 +8,7 @@ from backend.db_connection import db
 messages = Blueprint('messages', __name__)
 
 
-@message.route('/messages', methods=['POST'])
+@messages.route('/messages', methods=['POST'])
 def add_message():
     message_info = request.json
     query = '''
@@ -22,6 +22,30 @@ def add_message():
     cursor.execute(query, data)
     db.get_db().commit()
     return 'Message sent!', 201
+
+@messages.route('/messages/<userID>', methods=['GET'])
+def get_advisorID(userID):
+
+    cursor = db.get_db.cursor()
+    query = '''
+        SELECT u.AdvisorID, u.fname, u.lname
+        FROM users u
+        WHERE u.UserID = %s;
+    '''
+    data = (int(userID),)
+    cursor.execute(query, data)
+    ids = cursor.fetchall()
+    if not ids:
+        return make_response(jsonify({"error": "User not found"}), 404)
+    results = [
+    {"AdvisorID": row[0], "FirstName": row[1], "LastName": row[2]}
+        for row in ids
+    ]
+    response = make_response(jsonify(results))
+    response.status_code = 200
+    return response
+    
+
 
 
 
