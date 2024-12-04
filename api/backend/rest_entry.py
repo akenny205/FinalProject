@@ -5,6 +5,7 @@ from backend.users.users_routes import users
 from backend.jobs.jobs_routes import jobs
 from backend.experience.experience_routes import experience
 from backend.messages.messages_routes import messages
+from backend.posts.posts_routes import posts
 import os
 from dotenv import load_dotenv
 
@@ -49,7 +50,7 @@ def create_app():
     # app.register_blueprint(interests, url_prefix='/i')
     app.register_blueprint(jobs, url_prefix='/j')
     # app.register_blueprint(matches, url_prefix='/m')
-    # app.register_blueprint(posts, url_prefix='/p')
+    app.register_blueprint(posts, url_prefix='/p')
     # app.register_blueprint(skills, url_prefix='/s')
     app.register_blueprint(messages, url_prefix='/me')
     # Don't forget to return the app object

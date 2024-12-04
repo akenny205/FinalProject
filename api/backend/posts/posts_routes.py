@@ -7,7 +7,7 @@ from backend.db_connection import db
 
 posts = Blueprint('posts', __name__)
 
-@posts.route('/posts/create', methods=['POST'])
+@posts.route('/createpost', methods=['POST'])
 def add_post():
     post_info = request.json
     query = '''
@@ -21,7 +21,7 @@ def add_post():
     db.get_db().commit()
     return 'Post created!', 201
 
-@posts.route('/posts', methods=['GET'])
+@posts.route('/viewposts', methods=['GET'])
 def get_posts():
     cursor = db.get_db().cursor()
     query = """
