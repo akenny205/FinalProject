@@ -2,8 +2,6 @@ import logging
 logger = logging.getLogger(__name__)
 import streamlit as st
 import pandas as pd
-from sklearn import datasets
-from sklearn.ensemble import RandomForestClassifier
 from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
 import requests
@@ -23,7 +21,25 @@ response = requests.get('http://api:4000/exp/viewexp')
 if response.status_code == 200:
     experiences = response.json()
     if experiences:
-        st.dataframe(experiences)
+        column_order = [
+            "FirstName", "LastName", "ExperienceName", 
+            "Location", "Description", "UserID", "AdvisorID"
+        ]
+        df = pd.DataFrame(experiences)[column_order]
+
+        st.dataframe(
+            df,
+            hide_index=True,
+            column_config={
+                "FirstName": "First Name",
+                "LastName": "Last Name",
+                "ExperienceName": "Experience",
+                "Location": "Location",
+                "Description": "Description",
+                "UserID": "User ID",
+                "AdvisorID": "Advisor ID",
+            },
+        )
     else:
         st.write('No Experiences Found')
 else:
