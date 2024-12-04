@@ -111,10 +111,48 @@ if posts_response.status_code == 200:
                 st.session_state[f"liked_{post['PostID']}"] = not st.session_state[f"liked_{post['PostID']}"]
         
         with button_col2:
+            # Fetch comments for the post
+            post_comments = requests.post(
+                f'http://web-api:4000/p/getcomment/{post["PostID"]}'
+            )
+            
+            # Initialize view_comments state for this post
+            if f"view_comments_{post['PostID']}" not in st.session_state:
+                st.session_state[f"view_comments_{post['PostID']}"] = False
+            
+            if post_comments.status_code == 200:
+                comments = post_comments.json()
+                if len(comments) == 0:
+                    st.write("💬 Be the first to comment:")
+                elif len(comments) == 1:
+                    st.write("💬 1 Comment")
+                    # Add view comments button
+                    if st.button("View Comment", key=f"view_{post['PostID']}"):
+                        st.session_state[f"view_comments_{post['PostID']}"] = not st.session_state[f"view_comments_{post['PostID']}"]
+                    
+                    # Show comments if button was clicked
+                    if st.session_state[f"view_comments_{post['PostID']}"]:
+                        st.write(comments[0]['content'])
+                else:
+                    st.write(f"💬 {len(comments)} Comments")
+                    # Add view comments button
+                    if st.button("View Comments", key=f"view_{post['PostID']}"):
+                        st.session_state[f"view_comments_{post['PostID']}"] = not st.session_state[f"view_comments_{post['PostID']}"]
+                    
+                    # Show comments if button was clicked
+                    if st.session_state[f"view_comments_{post['PostID']}"]:
+                        for comment in comments:
+                            st.write(comment['content'])
+
+            # Comment button and text area
             if st.button("💬", key=f"comment_{post['PostID']}", help="Comment"):
-                st.session_state.show_comment_form = True
-                st.session_state.post_id = post['PostID']
-        
-        st.markdown("---")
+                comment_content = st.text_area("Add a comment:")
+                if comment_content:
+                    comment_data = {
+                        "user_id": st.session_state.get('user_id'),
+                        "post_id": post['PostID'],
+                        "content": comment_content
+                    }
+
 else:
     st.error(f"Failed to fetch posts: {posts_response.status_code}")

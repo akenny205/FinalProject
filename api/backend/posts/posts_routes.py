@@ -40,3 +40,12 @@ def get_posts():
         the_response.status_code = 500
 
     return the_response
+
+@posts.route('/getcomment/<postID>', methods=['POST'])
+def get_comments():
+    post_id = request.json['post_id']
+    query = f"SELECT * FROM comments WHERE PostID = {post_id}"
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    comments = cursor.fetchall()
+    return jsonify(comments)
