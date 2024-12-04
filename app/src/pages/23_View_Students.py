@@ -11,7 +11,7 @@ from modules.nav import SideBarLinks
 
 SideBarLinks()
 
-st.title("User Data Viewer")
+st.title("Student Data Viewer")
 
 BACKEND_URL = "http://web-api:4000/u/user"
 
