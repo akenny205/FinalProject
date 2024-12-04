@@ -12,7 +12,7 @@ messages = Blueprint('messages', __name__)
 def add_message():
     message_info = request.json
     query = '''
-            NSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
+            INSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
             VALUES (%s,%s,%s,%s,%s,%s);
     '''
     data = (message_info['message_id'], message_info['sender_id'], message_info['sent_date'], 
