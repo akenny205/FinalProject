@@ -18,10 +18,6 @@ if 'authenticated' not in st.session_state or not st.session_state['authenticate
     st.error("Please log in first")
     st.stop()
 
-if 'user_id' not in st.session_state:
-    st.error("User ID not found in session")
-    st.stop()
-
 if 'show_post_form' not in st.session_state:
     st.session_state.show_post_form = False
 
