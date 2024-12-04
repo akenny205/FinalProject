@@ -15,7 +15,7 @@ SideBarLinks()
 
 st.title('Post')
 
-response = requests.get('http://api:4000/posts')
+response = requests.get('http://api:4000/p/viewposts')
 if response.status_code == 200:
     posts = response.json()
     if posts:

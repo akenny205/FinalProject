@@ -23,15 +23,20 @@ def add_post():
 
 @posts.route('/viewposts', methods=['GET'])
 def get_posts():
-    cursor = db.get_db().cursor()
-    query = """
-        SELECT UserID, PostID, Content, PostDate, fName, lName
-        FROM posts JOIN users ON posts.UserID = users.UserID
-        ORDER BY PostDate DESC;
-    """
-    cursor.execute(query)
-    posts = cursor.fetchall()
-    the_response = make_response(jsonify(posts))
-    the_response.status_code = 200
+    try:
+        cursor = db.get_db().cursor()
+        query = """
+            SELECT p.UserID, p.PostID, p.Content, p.PostDate, u.fName, u.lName
+            FROM posts as p JOIN users as u ON p.UserID = u.UserID
+            ORDER BY p.PostDate DESC;
+        """
+        cursor.execute(query)
+        posts = cursor.fetchall()
+        the_response = make_response(jsonify(posts))
+        the_response.status_code = 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching posts: {e}")
+        the_response = make_response(jsonify({"error": "Internal Server Error"}))
+        the_response.status_code = 500
 
     return the_response
