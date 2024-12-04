@@ -13,13 +13,8 @@ def add_message():
     message_info = request.get_json()
     #print(message_info)
     query = '''
-<<<<<<< HEAD
-            INSERT INTO messages (SenderID, ReceiverID, SentDate, Content)
-            VALUES (%s,%s, NOW(), %s);
-=======
             INSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
             VALUES (%s,%s,%s,%s,%s,%s);
->>>>>>> d7968b9e57164a98867a3ef319a7c4b3d69143da
     '''
     data = (message_info['sender_id'], message_info['receiver_id'], message_info['content'])
     cursor.execute(query, data)
@@ -28,10 +23,7 @@ def add_message():
 
 @messages.route('/messages/<userID>', methods=['GET'])
 def get_advisorID(userID):
-<<<<<<< HEAD
-=======
     user_id = request.args.get('userID')
->>>>>>> d7968b9e57164a98867a3ef319a7c4b3d69143da
     cursor = db.get_db().cursor()
     query = '''
         SELECT u.AdvisorID
