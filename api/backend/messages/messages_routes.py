@@ -24,7 +24,7 @@ def add_message():
 
 @messages.route('/messages/<userID>', methods=['GET'])
 def get_advisorID(userID):
-    user_id = request.args.get('user_id')
+    user_id = request.args.get('userID')
     cursor = db.get_db().cursor()
 
     query = '''
