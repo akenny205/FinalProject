@@ -16,14 +16,14 @@ def AboutPageNav():
 
 #### ------------------------ Examples for Role of Inexp_Student ------------------------
 def InexpStudentHomeNav():
-    st.sidebar.page_link(
-        "pages/00_Inexp_Student_Home.py", label="Student Home", icon="👤"
-    )
+    st.sidebar.page_link("pages/00_Inexp_Student_Home.py", label="Student Home", icon="👤")
+    st.sidebar.page_link("pages/07_new_match.py", label="New Match", icon="❤️")
 
 
 ## ------------------------ Examples for Role of Exp_Student ------------------------
 def ExpStudentHomeNav():
     st.sidebar.page_link("pages/10_Exp_Student_Home.py", label="Student Home", icon="👤")
+    st.sidebar.page_link("pages/07_new_match.py", label="New Match", icon="❤️")
 
 
 #### ------------------------ Advisor Role ------------------------

@@ -15,7 +15,7 @@ from backend.db_connection import db
 matches = Blueprint('matches', __name__)
 
 #------------------------------------------------------------
-# Match with a user
+# Match with a user - Done
 @matches.route('/matches/<user_id>/<match_user_id>', methods=['POST'])
 def new_match(user_id, match_user_id):
     cursor = db.get_db().cursor()
@@ -24,7 +24,7 @@ def new_match(user_id, match_user_id):
     return make_response(jsonify(True), 200)
 
 #------------------------------------------------------------
-# Get all matches associated with a user
+# Get all matches associated with a user - Done (Need to add some stuff, a second query to see info)
 @matches.route('/matches/<user_id>', methods=['GET'])
 def get_matches(user_id):
     cursor = db.get_db().cursor()
@@ -33,7 +33,7 @@ def get_matches(user_id):
     return make_response(jsonify(theData), 200)
 
 #------------------------------------------------------------
-# Get all recommended matches for a user
+# Get all recommended matches for a user - Done (Needs testing)
 @matches.route('/matches/recommended/<user_id>', methods=['GET'])
 def get_recommended_matches(user_id):
     cursor = db.get_db().cursor()
@@ -46,14 +46,32 @@ def get_recommended_matches(user_id):
 @matches.route('/matches/students/<advisor_id>', methods=['GET'])
 def get_matches_for_students(advisor_id):
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT MenteeID, MentorID FROM matches WHERE AdvisorID = %s''', (advisor_id))
+    cursor.execute('''SELECT 
+                            mentee.UserID AS MenteeID,
+                            mentee.fName AS MenteeFirstName,
+                            mentee.lName AS MenteeLastName,
+                            mentor.UserID AS MentorID,
+                            mentor.fName AS MentorFirstName,
+                            mentor.lName AS MentorLastName,
+                            matches.Recommended,
+                            matches.Start,
+                            matches.End,
+                            matches.Status
+                        FROM 
+                            matches
+                        JOIN 
+                            users AS mentee ON matches.MenteeID = mentee.UserID
+                        JOIN 
+                            users AS mentor ON matches.MentorID = mentor.UserID
+                        WHERE 
+                            mentee.AdvisorID = %s OR mentor.AdvisorID = %s''', (advisor_id))
     theData = cursor.fetchall()
     return make_response(jsonify(theData), 200)
 
 #------------------------------------------------------------
 # Recommend matches
 @matches.route('/matches/recommended/<user_id>/<match_user_id>', methods=['POST'])
-def new_match(user_id, match_user_id):
+def new_recommended_match(user_id, match_user_id):
     cursor = db.get_db().cursor()
     cursor.execute('''INSERT INTO matches (MenteeID, MentorID, Recommended) VALUES (%s, %s, 1)''', (user_id, match_user_id))
     db.get_db().commit()

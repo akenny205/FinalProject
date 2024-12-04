@@ -43,6 +43,11 @@ if st.button('Chat With Your Mentors',
              use_container_width=True):
   st.switch_page('pages/03_Chat_Mentors.py')
 
+if st.button('New Match', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/07_new_match.py')
+
 if st.button('Search for Mentees', 
              type='primary',
              use_container_width=True):
