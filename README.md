@@ -6,6 +6,8 @@ Video Walk-Through Link: (user needs to have permission)
 
 Briefly, PeerPoint is a campus social networking platform that encourages peer mentorship while allowing continuous monitoring by advisors. 
 
+when bootstrapping make sure that DB_NAME in the .env file is set to 'finalproject'
+
 # PeerPoint Elevator Pitch
 
 PeerPoint is a data-driven platform that builds valuable connections among students and alumni, specifically students navigating co-op and early career moves. Unlike general professional platforms like Linkedin, our app proactively connects students with seasoned peer mentors or alumni who share similar interests, career goals, and skills. By seamlessly connecting students to tailored peer mentors, we empower them to build relationships that support their career and personal growth. College career or co-op advisors also gain a unique, data-backed way to oversee and encourage their students’ networking efforts, ensuring that they’re actively building connections through networking. 

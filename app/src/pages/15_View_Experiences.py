@@ -13,7 +13,7 @@ if st.sidebar.button('Back'):
 
 SideBarLinks()
 
-st.title('Student Experiences Viewer')
+st.title('Student Experiences Browser')
 
 response = requests.get('http://api:4000/exp/viewexp')
 if response.status_code == 200:

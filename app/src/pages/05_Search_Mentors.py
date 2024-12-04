@@ -26,27 +26,86 @@ filter_type = st.selectbox(
 if filter_type == "Interest":
     filter_value = st.selectbox(
         "Select Interest",
-        options=["Machine Learning", "Renewable Energy", "Data Analysis", 
-                "Genetics", "Stock Trading"]
+        options=["machine learning", "artificial intelligence", "entrepreneurship", "software development",
+                "blockchain technology", "statistical analysis", "digital marketing", 
+                "data visualization", "cybersecurity", "public health", "creative writing", 
+                "political theory", "graphic design", "classical music", "robotics", 
+                "social justice", "literature analysis", "biomechanics", "renewable energy", "music production"]
     )
 elif filter_type == "Skill":
     filter_value = st.selectbox(
         "Select Skill",
-        options=["Python Programming", "CAD Design", "Data Visualization",
-                "Lab Techniques", "Financial Modeling"]
+        options=["data analysis", 
+                "programming", 
+                "problem-solving", 
+                "critical thinking", 
+                "communication", 
+                "teamwork", 
+                "leadership", 
+                "time management", 
+                "project management", 
+                "research", 
+                "writing", 
+                "creativity", 
+                "public speaking", 
+                "adaptability", 
+                "coding", 
+                "statistical modeling", 
+                "graphic design", 
+                "technical writing", 
+                "networking", 
+                "conflict resolution"]
     )
+
 elif filter_type == "Career Goal":
     filter_value = st.selectbox(
         "Select Career Goal",
-        options=["Develop AI tools for healthcare", "Create sustainable engineering solutions",
-                "Become a Data Scientist", "Research genetic disorders",
-                "Build a career in Investment Banking"]
+        options=["become a data scientist", 
+                "develop innovative software", 
+                "start a successful business", 
+                "lead a research project", 
+                "design sustainable technology", 
+                "improve public health outcomes", 
+                "publish a novel", 
+                "work as a political strategist", 
+                "create impactful art", 
+                "compose music for films", 
+                "manage a high-performing team", 
+                "build a personal brand", 
+                "become a university professor", 
+                "solve real-world problems through AI", 
+                "advocate for policy change", 
+                "revolutionize user experiences", 
+                "mentor future professionals", 
+                "establish a health startup", 
+                "conduct groundbreaking research", 
+                "achieve financial independence"]
     )
 elif filter_type == "Career Path":
     filter_value = st.selectbox(
         "Select Career Path",
-        options=["AI Specialist", "Genetic Researcher", "Career Coach"]
+        options=["data scientist", 
+                "software engineer", 
+                "business analyst", 
+                "financial analyst", 
+                "project manager", 
+                "mechanical engineer", 
+                "electrical engineer", 
+                "marketing specialist", 
+                "public health consultant", 
+                "writer", 
+                "editor", 
+                "political consultant", 
+                "ux designer", 
+                "musician", 
+                "music producer", 
+                "biomedical engineer", 
+                "research scientist", 
+                "teacher", 
+                "policy analyst", 
+                "graphic designer"]
     )
+
 elif filter_type == "Status":
     filter_value = st.selectbox(
         "Select Student Status",
@@ -90,3 +149,4 @@ if st.button("Get Users"):
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
+        

@@ -7,9 +7,9 @@ from backend.db_connection import db
 
 messages = Blueprint('messages', __name__)
 
-
-@message.route('/messages', methods=['POST'])
+@messages.route('/messages', methods=['POST'])
 def add_message():
+    cursor = db.get_db().cursor()
     message_info = request.json
     query = '''
             INSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
@@ -18,11 +18,31 @@ def add_message():
     data = (message_info['message_id'], message_info['sender_id'], message_info['sent_date'], 
             message_info['receiver_id'], message_info['content'], message_info['admin_id']
     )
-    cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
     return 'Message sent!', 201
 
+@messages.route('/messages/<userID>', methods=['GET'])
+def get_advisorID(userID):
+    user_id = request.args.get('user_id')
+    cursor = db.get_db().cursor()
+
+    query = '''
+        SELECT u.AdvisorID, u.fname, u.lname
+        FROM users u
+        WHERE u.UserID = %s;
+    '''
+    cursor.execute(query, (user_id,))
+    ids = cursor.fetchone()
+    if not ids:
+        return make_response(jsonify({"error": "User not found"}), 404)
+    results = [
+     {"AdvisorID": row[0], "FirstName": row[1], "LastName": row[2]}
+       for row in ids
+    ]
+    response = make_response(jsonify(results))
+    response.status_code = 200
+    return response
 
 
 @messages.route('/messages/<userID1>/<userID2>',  methods =['GET'])
