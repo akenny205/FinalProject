@@ -51,7 +51,7 @@ if st.button('View, Update, and Remove Students',
 if st.button('Recommend Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/22_Advisor_Matches.py')
+  st.switch_page('pages/24_recommend_matches.py')
 
 if st.button('Chat With Students', 
              type='primary',

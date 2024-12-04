@@ -30,7 +30,8 @@ def get_matches(user_id):
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s''', (user_id))
     theData = cursor.fetchall()
-    return make_response(jsonify(theData), 200)
+    response = make_response(jsonify(theData), 200)
+    return response
 
 #------------------------------------------------------------
 # Get all recommended matches for a user - Done (Needs testing)
@@ -39,10 +40,11 @@ def get_recommended_matches(user_id):
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s AND Recommended = 1''', (user_id))
     theData = cursor.fetchall()
-    return make_response(jsonify(theData), 200)
+    response = make_response(jsonify(theData), 200)
+    return response
 
 #------------------------------------------------------------
-# Get all matches associated with students and advisor advises
+# Get all matches associated with students and advisor advises - Done
 @matches.route('/matches/students/<advisor_id>', methods=['GET'])
 def get_matches_for_students(advisor_id):
     cursor = db.get_db().cursor()
@@ -64,9 +66,10 @@ def get_matches_for_students(advisor_id):
                         JOIN 
                             users AS mentor ON matches.MentorID = mentor.UserID
                         WHERE 
-                            mentee.AdvisorID = %s OR mentor.AdvisorID = %s''', (advisor_id))
+                            mentee.AdvisorID = %s OR mentor.AdvisorID = %s''', (advisor_id, advisor_id))
     theData = cursor.fetchall()
-    return make_response(jsonify(theData), 200)
+    response = make_response(jsonify(theData), 200)
+    return response
 
 #------------------------------------------------------------
 # Recommend matches
