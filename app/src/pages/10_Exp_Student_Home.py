@@ -3,6 +3,11 @@ logger = logging.getLogger(__name__)
 
 import streamlit as st
 from modules.nav import SideBarLinks
+import requests
+import os
+
+# Add API URL configuration
+API_URL = os.getenv('API_URL', 'http://localhost:5000')
 
 st.set_page_config(layout = 'wide')
 
@@ -38,6 +43,16 @@ if st.button('Chat With Your Mentors',
              use_container_width=True):
   st.switch_page('pages/03_Chat_Mentors.py')
 
+if st.button('New Match', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/07_new_match.py')
+
+if st.button('Search for Mentees', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/05_Search_Mentors.py')
+
 if st.button('View Matches', 
              type='primary',
              use_container_width=True):
@@ -58,11 +73,6 @@ if st.button('Browse Employeers',
              use_container_width=True):
   st.switch_page('pages/12_Employeers.py')
 
-if st.button('Find Alumni',
-             type='primary',
-             use_container_width=True):
-  st.switch_page('pages/13_Alumni.py')
-
 if st.button('Browse Experiences',
              type='primary',
              use_container_width=True):
@@ -72,12 +82,3 @@ if st.button('Update Profile',
              type='primary',
              use_container_width=False):
   st.switch_page('pages/06_Update_Profile.py')
-
-toggle = st.toggle("Toggle Mentee Capacity")
-
-# Need to connect this to the database!
-if toggle:
-    st.write("No Longer Open to Mentee Matches")
-    # Add advanced features or options here
-else:
-    st.write("Open to Mentee Matches")

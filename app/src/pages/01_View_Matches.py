@@ -8,34 +8,76 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 from modules.nav import SideBarLinks
+import requests
 
 # Call the SideBarLinks from the nav module in the modules directory
 SideBarLinks()
 
 # set the header of the page
-st.header('World Bank Data')
+st.header('Your Matches')
 
 # You can access the session state to make a more customized/personalized app experience
-st.write(f"### Hi, {st.session_state['first_name']}.")
+st.write(f"### Hi, {st.session_state['first_name']}! Here are your matches:")
 
-# get the countries from the world bank data
-with st.echo(code_location='above'):
-    countries:pd.DataFrame = wb.get_countries()
-   
-    st.dataframe(countries)
+# Function to get matches from the backend
+def fetch_matches(user_id):
+    try:
+        response = requests.get(f'http://web-api:4000/m/matches/{user_id}')
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error fetching matches: {e}")
+        return []
 
-# the with statment shows the code for this block above it 
-with st.echo(code_location='above'):
-    arr = np.random.normal(1, 1, size=100)
-    test_plot, ax = plt.subplots()
-    ax.hist(arr, bins=20)
+# Function to end a match
+def end_match(user_id, match_user_id):
+    try:
+        response = requests.put(f'http://web-api:4000/m/matches/end/{user_id}/{match_user_id}')
+        response.raise_for_status()  # Raise an error for bad responses
+        return True
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error ending match: {e}")
+        return False
 
-    st.pyplot(test_plot)
+# Display matches
+user_id = st.text_input("Please enter your User ID:")
 
+if user_id:
+    matches = fetch_matches(user_id)
+    st.write("### Your Matches:")
+    for match in matches:
+        st.write(f"- Mentor ID: {match['MentorID']}")
+else:
+    st.write("User ID not found")
 
-with st.echo(code_location='above'):
-    slim_countries = countries[countries['incomeLevel'] != 'Aggregates']
-    data_crosstab = pd.crosstab(slim_countries['region'], 
-                                slim_countries['incomeLevel'],  
-                                margins = False) 
-    st.table(data_crosstab)
+# Add a button to fetch recommended matches
+if st.button("Get Recommended Matches"):
+    if user_id:
+        st.write(f"### Here are recomendeded your matches:")
+        # Make a GET request to the backend to fetch recommended matches
+        response = requests.get(f'http://web-api:4000/m/matches/recommended/{user_id}')
+        if response.status_code == 200:
+            recommended_matches = response.json()
+            if recommended_matches:
+                st.write("### Recommended Matches:")
+                for match in recommended_matches:
+                    st.write(f"- Mentor ID: {match['MentorID']}")
+            else:
+                st.write("No recommended matches found.")
+        else:
+            st.error("Failed to fetch recommended matches.")
+    else:
+        st.warning("Please enter your User ID.")
+
+# Add a button to end a match
+if user_id:
+    match_user_id = st.text_input("Enter the Mentor ID to end the match:")
+    if st.button("End Match"):
+        if match_user_id:
+            success = end_match(user_id, match_user_id)
+            if success:
+                st.success("Match ended successfully.")
+            else:
+                st.error("Failed to end match.")
+        else:
+            st.warning("Please enter a Mentor ID.")

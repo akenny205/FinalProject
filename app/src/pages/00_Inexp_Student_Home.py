@@ -38,6 +38,11 @@ if st.button('View Matches',
             use_container_width=True):
   st.switch_page('pages/01_View_Matches.py')
 
+if st.button('New Match', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/07_new_match.py')
+
 if st.button('View Feed', 
              type='primary',
              use_container_width=True):
@@ -53,7 +58,7 @@ if st.button('Chat With Your Advisor',
              use_container_width=True):
   st.switch_page('pages/04_Chat_Advisor.py')
 
-if st.button('Search Mentors', 
+if st.button('Search for Mentors', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/05_Search_Mentors.py')

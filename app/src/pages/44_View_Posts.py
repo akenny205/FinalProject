@@ -9,18 +9,18 @@ st.sidebar.header("Quick Links")
 if st.sidebar.button("Home"):
     st.switch_page('Home.py')
 if st.sidebar.button('Back'):
-    st.switch_page('/appcode/pages/14_Experiences.py')
+    st.switch_page('/appcode/pages/20_Advisor_Home.py')
 
 SideBarLinks()
 
-st.title('Student Experiences Browser')
+st.title('Post')
 
-response = requests.get('http://api:4000/exp/viewexp')
+response = requests.get('http://api:4000/p/viewposts')
 if response.status_code == 200:
-    experiences = response.json()
-    if experiences:
-        st.dataframe(experiences)
+    posts = response.json()
+    if posts:
+        st.dataframe(posts)
     else:
-        st.write('No Experiences Found')
+        st.write('No Posts Found')
 else:
-    st.write('Failed to Fetch Experiences')
+    st.write('Failed to Fetch Posts')

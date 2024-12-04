@@ -43,7 +43,7 @@ if st.button('View Feed',
              use_container_width=True):
   st.switch_page('pages/02_View_Feed.py')
 
-if st.button('View Students', 
+if st.button('View, Update, and Remove Students', 
              type='primary',
              use_container_width=True):
   st.switch_page('pages/23_View_Students.py')
@@ -51,7 +51,7 @@ if st.button('View Students',
 if st.button('Recommend Matches', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/22_Advisor_Matches.py')
+  st.switch_page('pages/24_recommend_matches.py')
 
 if st.button('Chat With Students', 
              type='primary',
@@ -62,3 +62,8 @@ if st.button('Add Students',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/21_Add_Students.py')
+
+if st.button('View Posts', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/44_View_Posts.py')
