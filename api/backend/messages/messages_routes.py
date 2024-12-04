@@ -10,56 +10,54 @@ messages = Blueprint('messages', __name__)
 @messages.route('/messages', methods=['POST'])
 def add_message():
     cursor = db.get_db().cursor()
-    message_info = request.json
+    message_info = request.get_json()
+    #print(message_info)
     query = '''
-            NSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
-            VALUES (%s,%s,%s,%s,%s,%s);
+            INSERT INTO messages (SenderID, ReceiverID, SentDate, Content)
+            VALUES (%s,%s, NOW(), %s);
     '''
-    data = (message_info['message_id'], message_info['sender_id'], message_info['sent_date'], 
-            message_info['receiver_id'], message_info['content'], message_info['admin_id']
-    )
+    data = (message_info['sender_id'], message_info['receiver_id'], message_info['content'])
     cursor.execute(query, data)
     db.get_db().commit()
     return 'Message sent!', 201
 
 @messages.route('/messages/<userID>', methods=['GET'])
 def get_advisorID(userID):
-    user_id = request.args.get('user_id')
     cursor = db.get_db().cursor()
-
     query = '''
-        SELECT u.AdvisorID, u.fname, u.lname
+        SELECT u.AdvisorID
         FROM users u
         WHERE u.UserID = %s;
     '''
-    cursor.execute(query, (user_id,))
+    cursor.execute(query, (userID,))
     ids = cursor.fetchone()
     if not ids:
-        return make_response(jsonify({"error": "User not found"}), 404)
-    results = [
-     {"AdvisorID": row[0], "FirstName": row[1], "LastName": row[2]}
-       for row in ids
-    ]
-    response = make_response(jsonify(results))
-    response.status_code = 200
-    return response
+        return make_response(jsonify({"error": "User not found or User has no Advisor"}), 404)
+
+    #response = make_response(jsonify(ids))
+    #response.status_code = 200
+    return ids
 
 
-@messages.route('/messages/<userID1>/<userID2>',  methods =['GET'])
+@messages.route('/messages/<userID1>/<userID2>', methods =['GET'])
 def get_all_messages(userID1, userID2):
 
-    cursor = db.get_db.cursor()
-    query = """
+    cursor = db.get_db().cursor()
+    query = '''
         SELECT MessageID, SentDate, SenderID, ReceiverID, Content, AdminID
         FROM messages
         WHERE 
             (SenderID = %s AND ReceiverID = %s) OR 
             (SenderID = %s AND ReceiverID = %s)
         ORDER BY SentDate ASC;
-    """
+        '''
     data = (userID1, userID2, userID2, userID1)
     cursor.execute(query, data)
     messages = cursor.fetchall()
+
+    if not messages:
+        return make_response(jsonify({"error": "no messages between users"}), 404)
+
     the_response = make_response(jsonify(messages))
     the_response.status_code = 200
 

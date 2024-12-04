@@ -446,6 +446,18 @@ insert into messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminI
 insert into messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID) values (49, '2024-01-16 16:33:22', 49, 55, 'Horizontal cohesive solution', 3);
 insert into messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID) values (50, '2024-04-21 16:19:06', 50, 64, 'Cross-group high-level standardization', 1);
 
+-- messages for users to advisor
+INSERT INTO messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID)
+VALUES 
+(51, '2024-06-15 10:45:12', 9, 5, 'Collaborative scalable interface', 2),
+(52, '2024-06-15 11:02:33', 5, 9, 'Streamlined holistic approach', 2),
+(53, '2024-06-16 09:14:55', 9, 5, 'Innovative dynamic alignment', 3),
+(54, '2024-06-16 09:45:10', 5, 9, 'Optimized integrated paradigm', 3),
+(55, '2024-06-17 14:28:44', 9, 5, 'Seamless proactive synergy', 1),
+(56, '2024-06-17 15:00:05', 5, 9, 'User-centric adaptive strategy', 1),
+(57, '2024-06-18 08:13:26', 9, 5, 'Unified cross-functional development', 2),
+(58, '2024-06-18 08:29:47', 5, 9, 'Visionary targeted deployment', 2);
+
 -- Insert into Posts table
 INSERT INTO posts (PostID, UserID, Content, PostDate, AdminID)
 VALUES
