@@ -25,8 +25,8 @@ def add_post():
 def get_posts():
     cursor = db.get_db().cursor()
     query = """
-        SELECT UserID, PostID, Content, PostDate
-        FROM posts
+        SELECT UserID, PostID, Content, PostDate, fName, lName
+        FROM posts JOIN users ON posts.UserID = users.UserID
         ORDER BY PostDate DESC;
     """
     cursor.execute(query)
