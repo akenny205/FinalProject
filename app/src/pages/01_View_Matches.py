@@ -29,11 +29,18 @@ def fetch_matches(user_id):
         logger.error(f"Error fetching matches: {e}")
         return []
 
-# Display matches
-user_id = st.session_state.get('user_id', None)
+# Function to end a match
+def end_match(user_id, match_user_id):
+    try:
+        response = requests.put(f'http://web-api:4000/m/matches/end/{user_id}/{match_user_id}')
+        response.raise_for_status()  # Raise an error for bad responses
+        return True
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error ending match: {e}")
+        return False
 
-if not user_id:
-    user_id = st.text_input("Please enter your User ID:")
+# Display matches
+user_id = st.text_input("Please enter your User ID:")
 
 if user_id:
     matches = fetch_matches(user_id)
@@ -43,13 +50,10 @@ if user_id:
 else:
     st.write("User ID not found")
 
-st.write(f"### Here are recomendeded your matches:")
-
-user_id = st.text_input("Enter your User ID to see recommended matches:")
-
 # Add a button to fetch recommended matches
 if st.button("Get Recommended Matches"):
     if user_id:
+        st.write(f"### Here are recomendeded your matches:")
         # Make a GET request to the backend to fetch recommended matches
         response = requests.get(f'http://web-api:4000/m/matches/recommended/{user_id}')
         if response.status_code == 200:
@@ -64,3 +68,16 @@ if st.button("Get Recommended Matches"):
             st.error("Failed to fetch recommended matches.")
     else:
         st.warning("Please enter your User ID.")
+
+# Add a button to end a match
+if user_id:
+    match_user_id = st.text_input("Enter the Mentor ID to end the match:")
+    if st.button("End Match"):
+        if match_user_id:
+            success = end_match(user_id, match_user_id)
+            if success:
+                st.success("Match ended successfully.")
+            else:
+                st.error("Failed to end match.")
+        else:
+            st.warning("Please enter a Mentor ID.")

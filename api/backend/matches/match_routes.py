@@ -24,21 +24,21 @@ def new_match(user_id, match_user_id):
     return make_response(jsonify(True), 200)
 
 #------------------------------------------------------------
-# Get all matches associated with a user - Done (Need to add some stuff, a second query to see info)
+# Get all matches associated with a user - Done
 @matches.route('/matches/<user_id>', methods=['GET'])
 def get_matches(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s''', (user_id))
+    cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s AND Status = 1''', (user_id))
     theData = cursor.fetchall()
     response = make_response(jsonify(theData), 200)
     return response
 
 #------------------------------------------------------------
-# Get all recommended matches for a user - Done (Needs testing)
+# Get all recommended matches for a user - Done
 @matches.route('/matches/recommended/<user_id>', methods=['GET'])
 def get_recommended_matches(user_id):
     cursor = db.get_db().cursor()
-    cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s AND Recommended = 1''', (user_id))
+    cursor.execute('''SELECT MentorID FROM matches WHERE MenteeID = %s AND Recommended = 1 AND Status = 1''', (user_id))
     theData = cursor.fetchall()
     response = make_response(jsonify(theData), 200)
     return response
@@ -72,7 +72,7 @@ def get_matches_for_students(advisor_id):
     return response
 
 #------------------------------------------------------------
-# Recommend matches
+# Recommend matches - Done
 @matches.route('/matches/recommended/<user_id>/<match_user_id>', methods=['POST'])
 def new_recommended_match(user_id, match_user_id):
     cursor = db.get_db().cursor()
