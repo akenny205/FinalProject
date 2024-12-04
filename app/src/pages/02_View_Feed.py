@@ -1,104 +1,158 @@
 import logging
 logger = logging.getLogger(__name__)
 import streamlit as st
-from streamlit_extras.app_logo import add_logo
 import pandas as pd
-import pydeck as pdk
-from urllib.error import URLError
+from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+import requests
+import streamlit as st
+from datetime import datetime
+
+# Page Init
 
 SideBarLinks()
 
-# add the logo
-add_logo("assets/logo.png", height=400)
+st.title("Feed")
 
-# set up the page
-st.markdown("# Mapping Demo")
-st.sidebar.header("Mapping Demo")
-st.write(
-    """This Mapping Demo is from the Streamlit Documentation. It shows how to use
-[`st.pydeck_chart`](https://docs.streamlit.io/library/api-reference/charts/st.pydeck_chart)
-to display geospatial data."""
-)
+if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
+    st.error("Please log in first")
+    st.stop()
 
+if 'user_id' not in st.session_state:
+    st.error("User ID not found in session")
+    st.stop()
 
-@st.cache_data
-def from_data_file(filename):
-    url = (
-        "http://raw.githubusercontent.com/streamlit/"
-        "example-data/master/hello/v1/%s" % filename
-    )
-    return pd.read_json(url)
+if 'show_post_form' not in st.session_state:
+    st.session_state.show_post_form = False
 
+# Create Post Button
 
-try:
-    ALL_LAYERS = {
-        "Bike Rentals": pdk.Layer(
-            "HexagonLayer",
-            data=from_data_file("bike_rental_stats.json"),
-            get_position=["lon", "lat"],
-            radius=200,
-            elevation_scale=4,
-            elevation_range=[0, 1000],
-            extruded=True,
-        ),
-        "Bart Stop Exits": pdk.Layer(
-            "ScatterplotLayer",
-            data=from_data_file("bart_stop_stats.json"),
-            get_position=["lon", "lat"],
-            get_color=[200, 30, 0, 160],
-            get_radius="[exits]",
-            radius_scale=0.05,
-        ),
-        "Bart Stop Names": pdk.Layer(
-            "TextLayer",
-            data=from_data_file("bart_stop_stats.json"),
-            get_position=["lon", "lat"],
-            get_text="name",
-            get_color=[0, 0, 0, 200],
-            get_size=15,
-            get_alignment_baseline="'bottom'",
-        ),
-        "Outbound Flow": pdk.Layer(
-            "ArcLayer",
-            data=from_data_file("bart_path_stats.json"),
-            get_source_position=["lon", "lat"],
-            get_target_position=["lon2", "lat2"],
-            get_source_color=[200, 30, 0, 160],
-            get_target_color=[200, 30, 0, 160],
-            auto_highlight=True,
-            width_scale=0.0001,
-            get_width="outbound",
-            width_min_pixels=3,
-            width_max_pixels=30,
-        ),
-    }
-    st.sidebar.markdown("### Map Layers")
-    selected_layers = [
-        layer
-        for layer_name, layer in ALL_LAYERS.items()
-        if st.sidebar.checkbox(layer_name, True)
-    ]
-    if selected_layers:
-        st.pydeck_chart(
-            pdk.Deck(
-                map_style="mapbox://styles/mapbox/light-v9",
-                initial_view_state={
-                    "latitude": 37.76,
-                    "longitude": -122.4,
-                    "zoom": 11,
-                    "pitch": 50,
-                },
-                layers=selected_layers,
+with st.container():
+    col1, col2 = st.columns([0.0001, 0.7])
+    with col2:
+        if st.button("➕", help="Create new post"):
+            st.session_state.show_post_form = True
+
+if st.session_state.show_post_form:
+    with st.form(key="new_post_form", clear_on_submit=True):
+        col1, col2 = st.columns([0.9, 0.1])
+        with col1:
+            st.subheader("Create New Post")
+        with col2:
+            if st.form_submit_button("❌", help="Close"):
+                st.session_state.show_post_form = False
+        
+        post_content = st.text_area("What's on your mind?", height=100)
+        submit_button = st.form_submit_button("Post")
+        
+        if submit_button and post_content:
+            post_data = {
+                "user_id": st.session_state.get('user_id'),
+                "content": post_content,
+                "post_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "admin_id": None
+            }
+            
+            try:
+                response = requests.post(
+                    'http://web-api:4000/p/createpost',
+                    json=post_data
+                )
+                if response.status_code == 201:
+                    st.success("Post created successfully!")
+                    st.session_state.show_post_form = False
+                    st.experimental_rerun()
+                else:
+                    st.error("Failed to create post")
+            except Exception as e:
+                st.error(f"Error creating post: {str(e)}")
+
+# Post Feed
+
+# Add CSS style once, outside the loop
+st.markdown("""
+    <style>
+        .post-container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+posts_response = requests.get('http://web-api:4000/p/viewposts')
+if posts_response.status_code == 200:
+    posts = posts_response.json()
+    for post in posts:
+        st.markdown("""
+            <div class="post-container">
+            </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(f"**{post['fName']} {post['lName']}**")
+        with col2:
+            post_date = datetime.strptime(post['PostDate'], '%a, %d %b %Y %H:%M:%S GMT')
+            st.markdown(f"*{post_date.strftime('%B %d, %Y %I:%M %p')}*")
+        
+        st.write(post['Content'])
+        
+        # Initialize like state in session
+        if f"liked_{post['PostID']}" not in st.session_state:
+            st.session_state[f"liked_{post['PostID']}"] = False
+        
+        # New column layout for buttons
+        button_col1, button_col2 = st.columns([0.5, 0.5])
+        with button_col1:
+            if st.button("👍" if not st.session_state[f"liked_{post['PostID']}"] else "👍 Liked", 
+                         key=f"like_{post['PostID']}", help="Like"):
+                st.session_state[f"liked_{post['PostID']}"] = not st.session_state[f"liked_{post['PostID']}"]
+        
+        with button_col2:
+            # Fetch comments for the post
+            post_comments = requests.post(
+                f'http://web-api:4000/p/getcomment/{post["PostID"]}'
             )
-        )
-    else:
-        st.error("Please choose at least one layer above.")
-except URLError as e:
-    st.error(
-        """
-        **This demo requires internet access.**
-        Connection error: %s
-    """
-        % e.reason
-    )
+            
+            # Initialize view_comments state for this post
+            if f"view_comments_{post['PostID']}" not in st.session_state:
+                st.session_state[f"view_comments_{post['PostID']}"] = False
+            
+            if post_comments.status_code == 200:
+                comments = post_comments.json()
+                if len(comments) == 0:
+                    st.write("💬 Be the first to comment:")
+                elif len(comments) == 1:
+                    st.write("💬 1 Comment")
+                    # Add view comments button
+                    if st.button("View Comment", key=f"view_{post['PostID']}"):
+                        st.session_state[f"view_comments_{post['PostID']}"] = not st.session_state[f"view_comments_{post['PostID']}"]
+                    
+                    # Show comments if button was clicked
+                    if st.session_state[f"view_comments_{post['PostID']}"]:
+                        st.write(comments[0]['content'])
+                else:
+                    st.write(f"💬 {len(comments)} Comments")
+                    # Add view comments button
+                    if st.button("View Comments", key=f"view_{post['PostID']}"):
+                        st.session_state[f"view_comments_{post['PostID']}"] = not st.session_state[f"view_comments_{post['PostID']}"]
+                    
+                    # Show comments if button was clicked
+                    if st.session_state[f"view_comments_{post['PostID']}"]:
+                        for comment in comments:
+                            st.write(comment['content'])
+
+            # Comment button and text area
+            if st.button("💬", key=f"comment_{post['PostID']}", help="Comment"):
+                comment_content = st.text_area("Add a comment:")
+                if comment_content:
+                    comment_data = {
+                        "user_id": st.session_state.get('user_id'),
+                        "post_id": post['PostID'],
+                        "content": comment_content
+                    }
+
+else:
+    st.error(f"Failed to fetch posts: {posts_response.status_code}")
