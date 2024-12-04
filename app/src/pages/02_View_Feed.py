@@ -69,32 +69,52 @@ if st.session_state.show_post_form:
 
 # Post Feed
 
+# Add CSS style once, outside the loop
+st.markdown("""
+    <style>
+        .post-container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 posts_response = requests.get('http://web-api:4000/p/viewposts')
 if posts_response.status_code == 200:
     posts = posts_response.json()
     for post in posts:
-        with st.container():
-            
-            st.markdown("""
-                <style>
-                    .post-container {
-                        border: 1px solid #ddd;
-                        border-radius: 10px;
-                        padding: 15px;
-                        margin: 10px 0;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
-            
-            with st.container():
-                col1, col2 = st.columns([2, 1])
-                with col1:
-                    st.markdown(f"**{post['fName']} {post['lName']}**")
-                with col2:
-                    post_date = datetime.strptime(post['PostDate'], '%a, %d %b %Y %H:%M:%S GMT')
-                    st.markdown(f"*{post_date.strftime('%B %d, %Y %I:%M %p')}*")
-                st.markdown("---")
-                st.write(post['Content'])
-                st.markdown("---")
+        st.markdown("""
+            <div class="post-container">
+            </div>
+        """, unsafe_allow_html=True)
+        
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(f"**{post['fName']} {post['lName']}**")
+        with col2:
+            post_date = datetime.strptime(post['PostDate'], '%a, %d %b %Y %H:%M:%S GMT')
+            st.markdown(f"*{post_date.strftime('%B %d, %Y %I:%M %p')}*")
+        
+        st.write(post['Content'])
+        
+        # Initialize like state in session
+        if f"liked_{post['PostID']}" not in st.session_state:
+            st.session_state[f"liked_{post['PostID']}"] = False
+        
+        # New column layout for buttons
+        button_col1, button_col2 = st.columns([0.5, 0.5])
+        with button_col1:
+            if st.button("👍" if not st.session_state[f"liked_{post['PostID']}"] else "👍 Liked", 
+                         key=f"like_{post['PostID']}", help="Like"):
+                st.session_state[f"liked_{post['PostID']}"] = not st.session_state[f"liked_{post['PostID']}"]
+        
+        with button_col2:
+            if st.button("💬", key=f"comment_{post['PostID']}", help="Comment"):
+                st.session_state.show_comment_form = True
+                st.session_state.post_id = post['PostID']
+        
+        st.markdown("---")
 else:
     st.error(f"Failed to fetch posts: {posts_response.status_code}")
