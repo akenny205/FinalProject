@@ -112,8 +112,8 @@ if posts_response.status_code == 200:
         
         with button_col2:
             # Fetch comments for the post
-            post_comments = requests.post(
-                f'http://web-api:4000/p/getcomment/{post["PostID"]}'
+            post_comments = requests.get(
+                f'http://web-api:4000/p/viewcomments/{post["PostID"]}'
             )
             
             # Initialize states for this post
@@ -158,12 +158,12 @@ if posts_response.status_code == 200:
                             st.markdown('<div class="comment-container">', unsafe_allow_html=True)
                             col1, col2 = st.columns([0.7, 0.3])
                             with col1:
-                                st.markdown(f"**{comment.get('userName', 'User')}**")
+                                st.markdown(f"**{comment.get('FirstName', '')} {comment.get('LastName', '')}**")
                             with col2:
-                                comment_date = datetime.strptime(comment.get('commentDate', datetime.now().strftime("%Y-%m-%d %H:%M:%S")), 
+                                comment_date = datetime.strptime(comment.get('CommentDate', datetime.now().strftime("%Y-%m-%d %H:%M:%S")), 
                                                                "%Y-%m-%d %H:%M:%S")
                                 st.markdown(f"*{comment_date.strftime('%b %d, %Y')}*")
-                            st.write(comment['content'])
+                            st.write(comment['Content'])
                             st.markdown('</div>', unsafe_allow_html=True)
 
             # Comment input section
