@@ -8,11 +8,12 @@ import requests
 import streamlit as st
 from datetime import datetime
 
+# Page Init
+
 SideBarLinks()
 
 st.title("Feed")
 
-# Check if user is authenticated and has UserID
 if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
     st.error("Please log in first")
     st.stop()
@@ -23,6 +24,8 @@ if 'user_id' not in st.session_state:
 
 if 'show_post_form' not in st.session_state:
     st.session_state.show_post_form = False
+
+# Create Post Button
 
 with st.container():
     col1, col2 = st.columns([0.0001, 0.7])
@@ -64,13 +67,34 @@ if st.session_state.show_post_form:
             except Exception as e:
                 st.error(f"Error creating post: {str(e)}")
 
-
-def post_format(post):
-    return f"{post['FirstName']} {post['LastName']} - {post['PostDate']}\n{post['Content']}"
+# Post Feed
 
 posts_response = requests.get('http://web-api:4000/p/viewposts')
 if posts_response.status_code == 200:
     posts = posts_response.json()
-    st.write(posts)
+    for post in posts:
+        with st.container():
+            
+            st.markdown("""
+                <style>
+                    .post-container {
+                        border: 1px solid #ddd;
+                        border-radius: 10px;
+                        padding: 15px;
+                        margin: 10px 0;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+            
+            with st.container():
+                col1, col2 = st.columns([2, 1])
+                with col1:
+                    st.markdown(f"**{post['fName']} {post['lName']}**")
+                with col2:
+                    post_date = datetime.strptime(post['PostDate'], '%a, %d %b %Y %H:%M:%S GMT')
+                    st.markdown(f"*{post_date.strftime('%B %d, %Y %I:%M %p')}*")
+                st.markdown("---")
+                st.write(post['Content'])
+                st.markdown("---")
 else:
     st.error(f"Failed to fetch posts: {posts_response.status_code}")
