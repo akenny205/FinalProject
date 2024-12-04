@@ -62,3 +62,8 @@ if st.button('Add Students',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/21_Add_Students.py')
+
+if st.button('View Posts', 
+             type='primary',
+             use_container_width=True):
+  st.switch_page('pages/44_View_Posts.py')

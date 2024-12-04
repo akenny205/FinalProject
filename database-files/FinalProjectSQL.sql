@@ -100,7 +100,7 @@ CREATE TABLE matches (
     MentorID INT,
     MenteeID INT,
     Recommended BOOLEAN,
-    Start DATETIME,
+    Start DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     End DATETIME,
     Status BOOLEAN DEFAULT TRUE,
     PRIMARY KEY (MentorID, MenteeID),
