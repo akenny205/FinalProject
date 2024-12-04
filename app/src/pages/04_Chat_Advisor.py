@@ -1,11 +1,12 @@
 import logging
 logger = logging.getLogger(__name__)
-
 import streamlit as st
 from modules.nav import SideBarLinks
 import requests
 
 st.set_page_config(layout = 'wide')
+
+BASEURL = 'http://web-api:4000/me/messages/'
 
 # Display the appropriate sidebar links for the role of the logged in user
 SideBarLinks()
@@ -13,7 +14,7 @@ SideBarLinks()
 st.title('Chat with Your Advisor')
 userID = st.text_input("Your User ID")
 if userID:
-  advisorID = requests.get(f'http://web-api:4000/me/messages/{userID}')
+  advisorID = requests.get(f'{BASEURL}{userID}')
   st.write(f"status code: {advisorID.status_code}")
  #d = advisorID.json()
   st.write(advisorID["FirstName"])
