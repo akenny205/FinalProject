@@ -55,7 +55,7 @@ if st.session_state.show_post_form:
                 if response.status_code == 201:
                     st.success("Post created successfully!")
                     st.session_state.show_post_form = False
-                    st.experimental_rerun()
+                    st.session_state['rerun'] = True
                 else:
                     st.error("Failed to create post")
             except Exception as e:
@@ -173,7 +173,7 @@ if posts_response.status_code == 200:
                     with col2:
                         if st.form_submit_button("Cancel"):
                             st.session_state[f"show_comment_input_{post['PostID']}"] = False
-                            st.experimental_rerun()
+                            st.session_state['rerun'] = True
        
                     
                     if submit and comment_text:
@@ -198,6 +198,44 @@ if posts_response.status_code == 200:
                                 st.error("Failed to post comment")
                         except Exception as e:
                             st.error(f"Error posting comment: {str(e)}")
+
+        # Add an Edit button
+        if st.button("✏️ Edit", key=f"edit_{post['PostID']}"):
+            st.session_state[f"edit_post_{post['PostID']}"] = True
+
+        # Show edit form if the edit button was clicked
+        if st.session_state.get(f"edit_post_{post['PostID']}", False):
+            with st.form(key=f"edit_form_{post['PostID']}", clear_on_submit=True):
+                edited_content = st.text_area("Edit your post", post['Content'], key=f"edit_content_{post['PostID']}")
+                submit_edit = st.form_submit_button("Save")
+                cancel_edit = st.form_submit_button("Cancel")
+
+                if submit_edit:
+                    edit_data = {
+                        "content": edited_content,
+                        "post_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    }
+                    try:
+                        response = requests.put(
+                            f'http://web-api:4000/p/editpost/{post["PostID"]}',
+                            json=edit_data
+                        )
+                        if response.status_code == 200:
+                            st.success("Post edited successfully!")
+                            st.session_state[f"edit_post_{post['PostID']}"] = False
+                            st.session_state['rerun'] = True
+                        else:
+                            st.error("Failed to edit post")
+                    except Exception as e:
+                        st.error(f"Error editing post: {str(e)}")
+
+                if cancel_edit:
+                    st.session_state[f"edit_post_{post['PostID']}"] = False
+                    st.session_state['rerun'] = True
+
+        # Check for rerun flag
+        if st.session_state.get('rerun', False):
+            st.session_state['rerun'] = False
 
 else:
     st.error(f"Failed to fetch posts: {posts_response.status_code}")

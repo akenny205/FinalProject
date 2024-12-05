@@ -62,3 +62,15 @@ def delete_post(PostID):
     cursor.execute(query, (PostID,))
     db.get_db().commit()
     return 'Post deleted!', 200
+
+#------------------------------------------------------------
+# Edit posts
+@posts.route('/editpost/<PostID>', methods=['PUT'])
+def edit_post(PostID):
+    post_info = request.json
+    query = "UPDATE posts SET Content = %s WHERE PostID = %s"
+    data = (post_info['content'], PostID)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Post edited!', 200
