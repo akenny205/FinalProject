@@ -4,59 +4,77 @@ import streamlit as st
 from modules.nav import SideBarLinks
 import requests
 
-
-logger = logging.getLogger(__name__)
-
 if st.session_state['role'] == 'admin':
     st.set_page_config(layout='wide')
-  
     SideBarLinks()
 
-    st.title('Admin Job Editor')
-    # Add Job Form
-    st.subheader("Add a Employer")
-    admin = st.text_input('Input Admin')
+    st.title('Admin Employer Editor')
+    
+    # Add Employer Form
+    st.subheader("Add an Employer")
+    admin = st.text_input('Input Admin ID:')
     name = st.text_input('Input Employer Name:')
     description = st.text_input('Input Employer Description:')
-# Add Jobs
+
+    # Add Employer
     if st.button('Add Employer', use_container_width=True):
         if admin and name and description:
-            job_data = {
-                'Admin': admin,
-                'Name': name,
-                'Description': description
-            }
-            response = requests.post(f"http://api:4000/emp/employers/{name}/{description}/{admin}", json=job_data)
-
-            if response.status_code == 200:
-                st.success("Employer added successfully!")
-            else:
-                st.error("Failed to add job.")
+            try:
+                employer_data = {
+                    'Name': name,
+                    'Description': description,
+                    'Admin': admin
+                }
+                response = requests.post(
+                    "http://api:4000/emp/employers",
+                    json=employer_data
+                )
+                if response.status_code in [200, 201]:
+                    st.success("Employer added successfully!")
+                else:
+                    st.error(f"Failed to add employer: {response.text}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"Connection error: {str(e)}")
         else:
             st.warning("Please fill in all fields.")
+
+    # Delete Employer
     st.subheader("Delete an Employer")
-    JobID = st.text_input('Input Job ID:')
+    employer_id = st.text_input('Input Employer ID:')
 
-    # Delete Jobs
     if st.button('Delete Employer', use_container_width=True):
-        if JobID:
-            response = requests.delete(f"http://api:4000/emp/deleteEmployee/{JobID}")
-            if response.status_code == 200:
-                st.success("Job deleted successfully!")
-            else:
-                st.error("Failed to delete job.")
+        if employer_id:
+            try:
+                response = requests.delete(f"http://api:4000/emp/employers/{employer_id}")
+                if response.status_code == 200:
+                    st.success("Employer deleted successfully!")
+                else:
+                    st.error(f"Failed to delete employer: {response.text}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"Connection error: {str(e)}")
         else:
-            st.warning("Please fill in all fields.")
+            st.warning("Please enter an Employer ID.")
+
+    # Display Current Employers
+    st.subheader("Current Employers")
+    try:
+        response = requests.get('http://api:4000/emp/employers')
+        if response.status_code == 200:
+            employers = response.json()
+            if employers:
+                st.dataframe(employers)
+            else:
+                st.write("No employers available.")
+        else:
+            st.error("Failed to fetch employers")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Connection error: {str(e)}")
 
 else:
-    # Init Back Button:
     if st.session_state['role'] == 'coop_career_advisor':
         page = 'pages/20_Advisor_Home.py'
     elif st.session_state['role'] == 'peer_mentor':
         page = 'pages/10_Exp_Student_Home.py'
     elif st.session_state['role'] == 'inexperienced_student':
         page = 'pages/00_Inexp_Student_Home.py'
-    
-    st.set_page_config(layout='wide')
-
-    SideBarLinks()
+    st.switch_page(page)
