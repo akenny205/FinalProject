@@ -9,19 +9,18 @@ employers = Blueprint('employers', __name__)
 
 #------------------------------------------------------------
 # Add an employer
-@employers.route('/employers/<Name>/<Description>/<Admin>', methods=['POST'])
-def add_employee(Name, Description, Admin):
+@employers.route('/employers/add', methods=['POST'])
+def add_employee():
     user_info = request.json
     query = '''
-            INSERT INTO employers (Name, Description, Admin) 
+            INSERT INTO employers (Name, Description, AdminID) 
             VALUES (%s, %s, %s);
     '''
-    data = (Name, Description, Admin)
+    data = (user_info['Name'], user_info['Description'], user_info['AdminID'])
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
     return 'Employer added!', 201
-
 
 #------------------------------------------------------------
 # View specific employee by ID
@@ -33,11 +32,11 @@ def get_employee(employee_id):
     response = make_response(jsonify(theData), 200)
     return response
 
-
-# admin deletes eployee
-@employers.route('/deleteEmployee/<employee_ID>', methods=['DELETE'])
+#------------------------------------------------------------
+# admin deletes eployer
+@employers.route('/deleteEmployer/<employee_ID>', methods=['DELETE'])
 def delete_employee(employee_ID):
-    current_app.logger.info(f'/employee DELETE request for EmpID: {employee_ID}')
+    current_app.logger.info(f'/employer DELETE request for EmpID: {employee_ID}')
     query = 'DELETE FROM employers WHERE EmpID = %s'
     try:
         with db.get_db().cursor() as cursor:
@@ -47,3 +46,28 @@ def delete_employee(employee_ID):
     except Exception as e:
         current_app.logger.error(f"Error deleting employer {employee_ID}: {e}")
         return jsonify({'error': 'Failed to delete employer', 'details': str(e)}), 500
+
+#------------------------------------------------------------   
+# View all employers
+@employers.route('/employers', methods=['GET'])
+def get_employees():
+    cursor = db.get_db().cursor()
+    cursor.execute('''SELECT * FROM employers''')
+    theData = cursor.fetchall()
+    response = make_response(jsonify(theData), 200)
+    return response
+
+#------------------------------------------------------------   
+# Edit employer
+@employers.route('/employers/edit/<employee_ID>', methods=['PUT'])
+def edit_employee(employee_ID):
+    current_app.logger.info(f'/employer PUT request for EmpID: {employee_ID}')
+    user_info = request.json
+    query = '''
+            UPDATE employers SET Name = %s, Description = %s WHERE EmpID = %s;
+    '''
+    data = (user_info['Name'], user_info['Description'], employee_ID)
+    cursor = db.get_db().cursor()
+    cursor.execute(query, data)
+    db.get_db().commit()
+    return 'Employer edited!', 200

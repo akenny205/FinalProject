@@ -9,6 +9,23 @@ if st.session_state['role'] == 'admin':
     SideBarLinks()
 
     st.title('Admin Employer Editor')
+
+    # Display Current Employers
+    st.subheader("Current Employers")
+    try:
+        response = requests.get('http://api:4000/emp/employers')
+        if response.status_code == 200:
+            employers = response.json()
+            if employers:
+                column_order = ['Name', 'Description', 'EmpID']
+                df = pd.DataFrame(employers)[column_order]
+                st.dataframe(df, use_container_width=True, hide_index=True)
+            else:
+                st.write("No employers available.")
+        else:
+            st.error("Failed to fetch employers")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Connection error: {str(e)}")
     
     # Add Employer Form
     st.subheader("Add an Employer")
@@ -23,16 +40,42 @@ if st.session_state['role'] == 'admin':
                 employer_data = {
                     'Name': name,
                     'Description': description,
-                    'Admin': admin
+                    'AdminID': admin
                 }
                 response = requests.post(
-                    "http://api:4000/emp/employers",
+                    "http://api:4000/emp/employers/add",
                     json=employer_data
                 )
-                if response.status_code in [200, 201]:
+                if response.status_code == 201:
                     st.success("Employer added successfully!")
                 else:
                     st.error(f"Failed to add employer: {response.text}")
+            except requests.exceptions.RequestException as e:
+                st.error(f"Connection error: {str(e)}")
+        else:
+            st.warning("Please fill in all fields.")
+
+    # Edit Employer
+    st.subheader("Edit an Employer")
+    edit_employer_id = st.text_input('Input Employer ID to Edit:')
+    new_name = st.text_input('Input New Employer Name:')
+    new_description = st.text_input('Input New Employer Description:')
+
+    if st.button('Edit Employer', use_container_width=True):
+        if edit_employer_id and new_name and new_description:
+            try:
+                edit_data = {
+                    'Name': new_name,
+                    'Description': new_description
+                }
+                response = requests.put(
+                    f"http://api:4000/emp/employers/edit/{edit_employer_id}",
+                    json=edit_data
+                )
+                if response.status_code == 200:
+                    st.success("Employer edited successfully!")
+                else:
+                    st.error(f"Failed to edit employer: {response.text}")
             except requests.exceptions.RequestException as e:
                 st.error(f"Connection error: {str(e)}")
         else:
@@ -45,7 +88,7 @@ if st.session_state['role'] == 'admin':
     if st.button('Delete Employer', use_container_width=True):
         if employer_id:
             try:
-                response = requests.delete(f"http://api:4000/emp/employers/{employer_id}")
+                response = requests.delete(f"http://api:4000/emp//deleteEmployer/{employer_id}")
                 if response.status_code == 200:
                     st.success("Employer deleted successfully!")
                 else:
@@ -54,21 +97,6 @@ if st.session_state['role'] == 'admin':
                 st.error(f"Connection error: {str(e)}")
         else:
             st.warning("Please enter an Employer ID.")
-
-    # Display Current Employers
-    st.subheader("Current Employers")
-    try:
-        response = requests.get('http://api:4000/emp/employers')
-        if response.status_code == 200:
-            employers = response.json()
-            if employers:
-                st.dataframe(employers)
-            else:
-                st.write("No employers available.")
-        else:
-            st.error("Failed to fetch employers")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Connection error: {str(e)}")
 
 else:
     if st.session_state['role'] == 'coop_career_advisor':
