@@ -7,7 +7,8 @@ from backend.db_connection import db
 
 employers = Blueprint('employers', __name__)
 
-
+#------------------------------------------------------------
+# Add an employer
 @employers.route('/employers', methods=['POST'])
 def add_employee():
     user_info = request.json
@@ -24,7 +25,7 @@ def add_employee():
 
 #------------------------------------------------------------
 # View specific employee by ID
-@employers.route('/emp/employers/<employee_id>', methods=['GET'])
+@employers.route('/employers/<employee_id>', methods=['GET'])
 def get_employee(employee_id):
     cursor = db.get_db().cursor()
     cursor.execute('''SELECT * FROM employers WHERE EmpID = %s''', (employee_id))
