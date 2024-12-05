@@ -29,21 +29,18 @@ def add_post():
 def get_posts():
     try:
         cursor = db.get_db().cursor()
-        query = """
+        query = '''
             SELECT p.UserID, p.PostID, p.Content, p.PostDate, u.fName, u.lName
             FROM posts as p JOIN users as u ON p.UserID = u.UserID
             ORDER BY p.PostDate DESC;
-        """
+        '''
         cursor.execute(query)
-        posts = cursor.fetchall()
-        the_response = make_response(jsonify(posts))
-        the_response.status_code = 200
+        theData = cursor.fetchall()
+        response = make_response(jsonify(theData), 200)
     except Exception as e:
         current_app.logger.error(f"Error fetching posts: {e}")
-        the_response = make_response(jsonify({"error": "Internal Server Error"}))
-        the_response.status_code = 500
-
-    return the_response
+        response = make_response(jsonify({"error": "Internal Server Error"}), 500)
+    return response
 
 #------------------------------------------------------------
 # Get comments on a post
