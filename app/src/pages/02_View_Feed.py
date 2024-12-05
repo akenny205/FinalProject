@@ -36,15 +36,18 @@ if st.session_state.show_post_form:
             if st.form_submit_button("❌", help="Close"):
                 st.session_state.show_post_form = False
         
+        # New input for user ID
+        user_id = st.text_input("User ID", key="user_id_input")
+        
         post_content = st.text_area("What's on your mind?", height=100)
         submit_button = st.form_submit_button("Post")
         
-        if submit_button and post_content:
+        if submit_button and post_content and user_id:
             post_data = {
-                "user_id": st.session_state.get('user_id'),
+                "user_id": user_id,  # Use the input user ID
                 "content": post_content,
                 "post_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "admin_id": None
+                "admin_id": 1
             }
             
             try:
@@ -92,116 +95,115 @@ if posts_response.status_code == 200:
             st.markdown(f"*{post_date.strftime('%B %d, %Y %I:%M %p')}*")
         
         st.write(post['Content'])
-        
-        # Initialize like state in session
-        if f"liked_{post['PostID']}" not in st.session_state:
-            st.session_state[f"liked_{post['PostID']}"] = False
-        
-        # New column layout for buttons
-        button_col1, button_col2 = st.columns([0.5, 0.5])
-        with button_col1:
-            if st.button("👍" if not st.session_state[f"liked_{post['PostID']}"] else "👍 Liked", 
-                         key=f"like_{post['PostID']}", help="Like"):
-                st.session_state[f"liked_{post['PostID']}"] = not st.session_state[f"liked_{post['PostID']}"]
-        
-        with button_col2:
-            # Fetch comments for the post
-            post_comments = requests.get(
-                f'http://web-api:4000/p/viewcomments/{post["PostID"]}'
-            )
-            
-            # Initialize states for this post
-            if f"view_comments_{post['PostID']}" not in st.session_state:
-                st.session_state[f"view_comments_{post['PostID']}"] = False
-            if f"show_comment_input_{post['PostID']}" not in st.session_state:
-                st.session_state[f"show_comment_input_{post['PostID']}"] = False
-            
-            if post_comments.status_code == 200:
-                comments = post_comments.json()
-                comment_count = len(comments)
+        st.write('---')
+        st.write('**Comments:**')
+        st.write('---')
+        # Fetch and display comments for the post
+        comments_response = requests.get(f'http://web-api:4000/p/getcomment/{post["PostID"]}')
+        if comments_response.status_code == 200:
+            comments = comments_response.json()
+            for comment in comments:
+                st.markdown(f"{comment['Content']}")
                 
-                # Display comment count and toggle button
-                col1, col2 = st.columns([0.7, 0.3])
-                with col1:
-                    if comment_count == 0:
-                        st.write("💬 Be the first to comment")
-                    elif comment_count == 1:
-                        st.write("💬 1 Comment")
-                    else:
-                        st.write(f"💬 {comment_count} Comments")
-                
-                with col2:
-                    if st.button("View" if not st.session_state[f"view_comments_{post['PostID']}"] else "Hide", 
-                                 key=f"view_{post['PostID']}"):
-                        st.session_state[f"view_comments_{post['PostID']}"] = not st.session_state[f"view_comments_{post['PostID']}"]
-
-                # Show comments section if enabled
-                if st.session_state[f"view_comments_{post['PostID']}"]:
-                    for comment in comments:
-                        with st.container():
-                            st.markdown("""
-                                <style>
-                                    .comment-container {
-                                        border-left: 2px solid #e6e6e6;
-                                        padding-left: 10px;
-                                        margin: 5px 0;
-                                    }
-                                </style>
-                            """, unsafe_allow_html=True)
-                            
-                            st.markdown('<div class="comment-container">', unsafe_allow_html=True)
-                            col1, col2 = st.columns([0.7, 0.3])
-                            with col1:
-                                st.markdown(f"**{comment.get('FirstName', '')} {comment.get('LastName', '')}**")
-                            with col2:
-                                comment_date = datetime.strptime(comment.get('CommentDate', datetime.now().strftime("%Y-%m-%d %H:%M:%S")), 
-                                                               "%Y-%m-%d %H:%M:%S")
-                                st.markdown(f"*{comment_date.strftime('%b %d, %Y')}*")
-                            st.write(comment['Content'])
-                            st.markdown('</div>', unsafe_allow_html=True)
-
-            # Comment input section
-            if st.button("💬 Comment", key=f"comment_btn_{post['PostID']}"):
-                st.session_state[f"show_comment_input_{post['PostID']}"] = True
-
-            if st.session_state[f"show_comment_input_{post['PostID']}"]:
-                with st.form(key=f"comment_form_{post['PostID']}", clear_on_submit=True):
-                    comment_text = st.text_area("Write a comment...", key=f"comment_input_{post['PostID']}")
-                    col1, col2 = st.columns([0.7, 0.3])
-                    with col1:
-                        submit = st.form_submit_button("Post")
-                    with col2:
-                        if st.form_submit_button("Cancel"):
-                            st.session_state[f"show_comment_input_{post['PostID']}"] = False
-                            st.session_state['rerun'] = True
-       
+                if st.button("Edit Comment", key=f"edit_comment_{comment['CommentID']}"):
+                    # Debugging: Log that the edit button was clicked
+                    logger.debug(f"Edit Comment button clicked for CommentID {comment['CommentID']}")
                     
-                    if submit and comment_text:
+                    with st.form(key=f"edit_comment_form_{comment['CommentID']}"):
+                        edited_comment = st.text_area("Edit your comment", comment['Content'], key=f"edit_comment_content_{comment['CommentID']}")
+                        submit_edit = st.form_submit_button("Save")
+                        
+                        if submit_edit:
+                            # Debugging: Log the edited comment content
+                            logger.debug(f"Edited comment content for CommentID {comment['CommentID']}: {edited_comment}")
+                            
+                            try:
+                                edit_response = requests.put(
+                                    f'http://web-api:4000/com/editcomment/{comment["CommentID"]}',
+                                    json=edited_comment
+                                )
+                                # Debugging: Log the response status and content
+                                logger.debug(f"Edit response status: {edit_response.status_code}")
+                                logger.debug(f"Edit response content: {edit_response.text}")
+                                
+                                if edit_response.status_code == 200:
+                                    st.success("Comment edited successfully!")
+                                else:
+                                    st.error(f"Failed to edit comment: {edit_response.status_code} - {edit_response.text}")
+                            except Exception as e:
+                                # Debugging: Log the exception
+                                logger.error(f"Error editing comment: {str(e)}")
+                                st.error(f"Error editing comment: {str(e)}")
+
+                st.write('---')
+        else:
+            st.error(f"Failed to fetch comments for post {post['PostID']}: {comments_response.status_code} - {comments_response.text}")
+
+        # New column layout for buttons
+        button_col2, button_col3, button_col4 = st.columns([0.33, 0.33, 0.33])
+        
+        # Remove the liking functionality
+        # with button_col1:
+        #     if f"liked_{post['PostID']}" not in st.session_state:
+        #         st.session_state[f"liked_{post['PostID']}"] = False
+
+        #     if st.button("Like 👍" if not st.session_state[f"liked_{post['PostID']}"] else "👍 Liked", 
+        #                  key=f"like_{post['PostID']}", help="Like"):
+        #         st.session_state[f"liked_{post['PostID']}"] = not st.session_state[f"liked_{post['PostID']}"]
+
+        with button_col2:
+            if st.button("Edit Post", key=f"edit_{post['PostID']}"):
+                st.session_state[f"edit_post_{post['PostID']}"] = True
+
+        with button_col3:
+            if st.button("Delete Post", key=f"delete_{post['PostID']}"):
+                try:
+                    delete_response = requests.delete(f'http://web-api:4000/p/deletepost/{post["PostID"]}')
+                    if delete_response.status_code == 200:
+                        st.success("Post deleted successfully!")
+                        st.session_state['rerun'] = True
+                    else:
+                        st.error(f"Failed to delete post: {delete_response.status_code} - {delete_response.text}")
+                except Exception as e:
+                    st.error(f"Error deleting post: {str(e)}")
+
+        with button_col4:
+            if st.button("Add Comment", key=f"add_comment_{post['PostID']}"):
+                logger.debug(f"Add Comment button clicked for PostID {post['PostID']}")
+                with st.form(key=f"add_comment_form_{post['PostID']}", clear_on_submit=True):
+                    user_id = st.text_input("User ID", key=f"user_id_input_{post['PostID']}")
+                    comment_content = st.text_area("Enter your comment", key=f"comment_content_{post['PostID']}")
+                    submit_comment = st.form_submit_button("Submit Comment")
+                    
+                    if submit_comment and comment_content and user_id:
+                        logger.debug(f"Form submitted with content: {comment_content} and user_id: {user_id}")
                         comment_data = {
-                            "user_id": st.session_state.get('user_id'),
-                            "post_id": post['PostID'],
-                            "content": comment_text,
-                            "comment_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                            "post_ id": post['PostID'],
+                            "commenter_id": user_id,
+                            "comment_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "content":  comment_content
                         }
                         
-                        # Placeholder for comment submission route
+                        # Debugging: Log the comment data being sent
+                        logger.debug(f"Sending comment data: {comment_data}")
+                        
                         try:
                             response = requests.post(
-                                'http://web-api:4000/p/createcomment',  # Replace with actual endpoint
+                                'http://web-api:4000/com/createcomment',
                                 json=comment_data
                             )
-                            if response.status_code == 201:
-                                st.success("Comment posted successfully!")
-                                st.session_state[f"show_comment_input_{post['PostID']}"] = False
-                           
+                            # Debugging: Log the response status and content
+                            logger.debug(f"Response status: {response.status_code}")
+                            logger.debug(f"Response content: {response.text}")
+                            
+                            if response.status_code == 200:
+                                st.success("Comment added successfully!")
                             else:
-                                st.error("Failed to post comment")
+                                st.error("Failed to add comment")
                         except Exception as e:
-                            st.error(f"Error posting comment: {str(e)}")
-
-        # Add an Edit button
-        if st.button("✏️ Edit", key=f"edit_{post['PostID']}"):
-            st.session_state[f"edit_post_{post['PostID']}"] = True
+                            # Debugging: Log the exception
+                            logger.error(f"Error adding comment: {str(e)}")
+                            st.error(f"Error adding comment: {str(e)}")
 
         # Show edit form if the edit button was clicked
         if st.session_state.get(f"edit_post_{post['PostID']}", False):

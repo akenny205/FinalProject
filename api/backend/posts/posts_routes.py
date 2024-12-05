@@ -16,8 +16,7 @@ def add_post():
             INSERT INTO posts (UserID, Content, PostDate, AdminID)
             VALUES (%s, %s, %s, %s);
     '''
-    data = (post_info['user_id'], post_info['content'], post_info['post_date'], 
-            post_info.get('admin_id'))
+    data = (post_info['user_id'], post_info['content'], post_info['post_date'], post_info['admin_id'])
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
@@ -44,14 +43,17 @@ def get_posts():
 
 #------------------------------------------------------------
 # Get comments on a post
-@posts.route('/getcomment/<postID>', methods=['POST'])
-def get_comments():
-    post_id = request.json['post_id']
-    query = f"SELECT * FROM comments WHERE PostID = {post_id}"
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    comments = cursor.fetchall()
-    return jsonify(comments)
+@posts.route('/getcomment/<postID>', methods=['GET'])
+def get_comments(postID):
+    try:
+        query = "SELECT * FROM comments WHERE PostID = %s"
+        cursor = db.get_db().cursor()
+        cursor.execute(query, (postID,))
+        comments = cursor.fetchall()
+        return jsonify(comments), 200
+    except Exception as e:
+        current_app.logger.error(f"Error fetching comments: {e}")
+        return jsonify({"error": "Internal Server Error"}), 500
 
 #------------------------------------------------------------
 # Delete posts

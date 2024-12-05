@@ -15,14 +15,14 @@ comments = Blueprint('comments', __name__)
 def add_comment():
     comment_info = request.json
     query = '''
-        INSERT INTO comments (CommenterID, PostID, Content, CommentDate)
-        VALUES (%s, %s, %s, NOW())
+        INSERT INTO comments (PostID, CommenterID, CommentDate, Content)
+        VALUES (%s, %s, %s, %s)
     '''
-    data = (comment_info['commenter_id'], comment_info['post_id'], comment_info['content'])
+    data = (comment_info['post_id'], comment_info['commenter_id'], comment_info['comment_date'], comment_info['content'])
     cursor = db.get_db().cursor()
     cursor.execute(query, data)
     db.get_db().commit()
-    return 'Comment created!', 201
+    return 'Comment created!', 200
 
 #------------------------------------------------------------
 # View comments on a post
@@ -56,4 +56,15 @@ def delete_comment(CommentID):
     cursor.execute(query, (CommentID,))
     db.get_db().commit()
     return 'Comment deleted!', 200
+
+#------------------------------------------------------------
+# edit comments
+@comments.route('/editcomment/<CommentID>', methods=['PUT'])
+def edit_comment(CommentID):
+    comment_info = request.json
+    query = "UPDATE comments SET Content = %s WHERE CommentID = %s"
+    cursor = db.get_db().cursor()
+    cursor.execute(query, (comment_info['content'], CommentID))
+    db.get_db().commit()
+    return 'Comment updated!', 200
 
