@@ -7,6 +7,7 @@ from backend.db_connection import db
 
 messages = Blueprint('messages', __name__)
 
+# adds a message to the database
 @messages.route('/messages', methods=['POST'])
 def add_message():
     cursor = db.get_db().cursor()
@@ -21,6 +22,7 @@ def add_message():
     db.get_db().commit()
     return 'Message sent!', 201
 
+# simply gets the advisor ID for the given user ID
 @messages.route('/messages/<userID>', methods=['GET'])
 def get_advisorID(userID):
     user_id = request.args.get('userID')
@@ -34,12 +36,9 @@ def get_advisorID(userID):
     ids = cursor.fetchone()
     if not ids:
         return make_response(jsonify({"error": "User not found or User has no Advisor"}), 404)
-
-    #response = make_response(jsonify(ids))
-    #response.status_code = 200
     return ids
 
-
+# Gets all the messages between two users
 @messages.route('/messages/<userID1>/<userID2>', methods =['GET'])
 def get_all_messages(userID1, userID2):
 
