@@ -8,8 +8,6 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-# Page Init
-
 SideBarLinks()
 
 st.title("Feed")
