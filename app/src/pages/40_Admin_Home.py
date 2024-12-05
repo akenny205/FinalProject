@@ -62,7 +62,7 @@ if st.button('Create and Delete Jobs',
              use_container_width=True):
   st.switch_page('pages/11_Jobs.py')
 
-if st.button('Add and Delete Empoyers',
+if st.button('Create and Delete Employers',
              type='primary',
              use_container_width=True):
   st.switch_page('pages/45_edit_employers.py')
