@@ -394,3 +394,15 @@ def get_users_by_trait():
     the_response = make_response(jsonify(theData))
     the_response.status_code = 200
     return the_response
+
+#------------------------------------------------------------
+# Get a single user based on userID
+@users.route('/user/<userID>', methods=['GET'])
+def get_single_user(userID):
+    cursor = db.get_db().cursor()
+    query = "SELECT * FROM users WHERE UserID = %s"
+    cursor.execute(query, (userID,))
+    theData = cursor.fetchone()
+    the_response = make_response(jsonify(theData))
+    the_response.status_code = 200
+    return the_response
