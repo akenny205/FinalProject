@@ -14,17 +14,19 @@ if employee_id:
         response = requests.get(BACKEND_URL)
         response.raise_for_status()
         data = response.json()
-        if "error" in data:
-            st.error(data["error"])
-        else:
-            df = pd.DataFrame([data])  # Wrap data in a list to create a DataFrame
-            st.subheader("Employee Details")
-            # Configure the dataframe display
-            st.dataframe(df, hide_index=True, column_config={
-                "EmpId": "Employee ID",
+        df = pd.DataFrame(data)
+        st.subheader("Employee Details")
+        
+        # Configure the dataframe display
+        st.dataframe(df, 
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                "EmpID": "Employee ID",
                 "Name": "Name",
-                "Description": "Job Description"
-            })
+                "Description": "Job Description",
+                "AdminID": "Admin ID"
+        })
     except requests.exceptions.RequestException as e:
         st.error(f"An error occurred: {e}")
 else:
