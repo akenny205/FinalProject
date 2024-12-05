@@ -9,6 +9,8 @@ from backend.messages.messages_routes import messages
 from backend.posts.posts_routes import posts
 from backend.comments.comments_routes import comments
 from backend.matches.match_routes import matches
+from backend.interests.interests_routes import interests
+from backend.career_path.career_path_routes import career_path
 import os
 from dotenv import load_dotenv
 
@@ -45,16 +47,14 @@ def create_app():
     # and give a url prefix to each
     app.logger.info('current_app(): registering blueprints with Flask app object.')
     app.register_blueprint(users, url_prefix='/u')
-    # app.register_blueprint(career_goals, url_prefix='/cg')
-    # app.register_blueprint(career_path, url_prefix='/cp')
+    app.register_blueprint(career_path, url_prefix='/cp')
     app.register_blueprint(comments, url_prefix='/com')
     app.register_blueprint(employers, url_prefix='/emp')
     app.register_blueprint(experience, url_prefix='/exp')
-    # app.register_blueprint(interests, url_prefix='/i')
+    app.register_blueprint(interests, url_prefix='/i')
     app.register_blueprint(jobs, url_prefix='/j')
     app.register_blueprint(matches, url_prefix='/m')
     app.register_blueprint(posts, url_prefix='/p')
-    # app.register_blueprint(skills, url_prefix='/s')
     app.register_blueprint(messages, url_prefix='/me')
     # Don't forget to return the app object
     return app

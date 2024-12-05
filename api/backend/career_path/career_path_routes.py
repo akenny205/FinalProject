@@ -72,17 +72,3 @@ def update_career_path(userID):
     cursor.execute(query, (content, userID))
     db.get_db().commit()
     return 'User CareerPath updated!', 200
-
-
-#------------------------------------------------------------
-#  career paths from the system
-@career_path.route('/career_path/<userID>', methods=['DELETE'])
-def delete_career_path(userID):
-    career_path = request.json['career_path']
-    query = '''DELETE FROM career_paths WHERE UserID = %s
-            AND CareerPath = %s
-            '''
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (userID, career_path))
-    db.get_db().commit()
-    return 'CareerPath removed!', 200

@@ -25,7 +25,7 @@ def get_customers():
     # Allows for optional query based on advisor ID
     if advisor_id:
         query = '''SELECT UserID, fname, lname, joinDate, Usertype, status
-                   FROM users WHERE AdminID = %s'''
+                   FROM users WHERE AdvisorID = %s'''
         cursor.execute(query, (advisor_id,))
     else:
         query = '''SELECT UserID, fname, lname, joinDate, Usertype, status FROM users'''

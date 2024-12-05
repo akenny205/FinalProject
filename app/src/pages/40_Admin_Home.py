@@ -47,10 +47,10 @@ if st.button('View Feed',
              use_container_width=True):
   st.switch_page('pages/02_View_Feed.py')
 
-if st.button('Delete or Edit Posts and Comments', 
+if st.button('Delete Posts', 
              type='primary',
              use_container_width=True):
-  st.switch_page('pages/42_update_comments.py')
+  st.switch_page('pages/42_delete_posts.py')
 
 if st.button('Delete Users', 
              type='primary',

@@ -96,51 +96,8 @@ if posts_response.status_code == 200:
         
         st.write(post['Content'])
         st.write('---')
-        st.write('**Comments:**')
-        st.write('---')
-        # Fetch and display comments for the post
-        comments_response = requests.get(f'http://web-api:4000/p/getcomment/{post["PostID"]}')
-        if comments_response.status_code == 200:
-            comments = comments_response.json()
-            for comment in comments:
-                st.markdown(f"{comment['Content']}")
-                
-                if st.button("Edit Comment", key=f"edit_comment_{comment['CommentID']}"):
-                    # Debugging: Log that the edit button was clicked
-                    logger.debug(f"Edit Comment button clicked for CommentID {comment['CommentID']}")
-                    
-                    with st.form(key=f"edit_comment_form_{comment['CommentID']}"):
-                        edited_comment = st.text_area("Edit your comment", comment['Content'], key=f"edit_comment_content_{comment['CommentID']}")
-                        submit_edit = st.form_submit_button("Save")
-                        
-                        if submit_edit:
-                            # Debugging: Log the edited comment content
-                            logger.debug(f"Edited comment content for CommentID {comment['CommentID']}: {edited_comment}")
-                            
-                            try:
-                                edit_response = requests.put(
-                                    f'http://web-api:4000/com/editcomment/{comment["CommentID"]}',
-                                    json=edited_comment
-                                )
-                                # Debugging: Log the response status and content
-                                logger.debug(f"Edit response status: {edit_response.status_code}")
-                                logger.debug(f"Edit response content: {edit_response.text}")
-                                
-                                if edit_response.status_code == 200:
-                                    st.success("Comment edited successfully!")
-                                else:
-                                    st.error(f"Failed to edit comment: {edit_response.status_code} - {edit_response.text}")
-                            except Exception as e:
-                                # Debugging: Log the exception
-                                logger.error(f"Error editing comment: {str(e)}")
-                                st.error(f"Error editing comment: {str(e)}")
-
-                st.write('---')
-        else:
-            st.error(f"Failed to fetch comments for post {post['PostID']}: {comments_response.status_code} - {comments_response.text}")
-
         # New column layout for buttons
-        button_col2, button_col3, button_col4 = st.columns([0.33, 0.33, 0.33])
+        button_col2, button_col3 = st.columns([0.25, 0.25])
         
         # Remove the liking functionality
         # with button_col1:
@@ -166,44 +123,6 @@ if posts_response.status_code == 200:
                         st.error(f"Failed to delete post: {delete_response.status_code} - {delete_response.text}")
                 except Exception as e:
                     st.error(f"Error deleting post: {str(e)}")
-
-        with button_col4:
-            if st.button("Add Comment", key=f"add_comment_{post['PostID']}"):
-                logger.debug(f"Add Comment button clicked for PostID {post['PostID']}")
-                with st.form(key=f"add_comment_form_{post['PostID']}", clear_on_submit=True):
-                    user_id = st.text_input("User ID", key=f"user_id_input_{post['PostID']}")
-                    comment_content = st.text_area("Enter your comment", key=f"comment_content_{post['PostID']}")
-                    submit_comment = st.form_submit_button("Submit Comment")
-                    
-                    if submit_comment and comment_content and user_id:
-                        logger.debug(f"Form submitted with content: {comment_content} and user_id: {user_id}")
-                        comment_data = {
-                            "post_ id": post['PostID'],
-                            "commenter_id": user_id,
-                            "comment_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                            "content":  comment_content
-                        }
-                        
-                        # Debugging: Log the comment data being sent
-                        logger.debug(f"Sending comment data: {comment_data}")
-                        
-                        try:
-                            response = requests.post(
-                                'http://web-api:4000/com/createcomment',
-                                json=comment_data
-                            )
-                            # Debugging: Log the response status and content
-                            logger.debug(f"Response status: {response.status_code}")
-                            logger.debug(f"Response content: {response.text}")
-                            
-                            if response.status_code == 200:
-                                st.success("Comment added successfully!")
-                            else:
-                                st.error("Failed to add comment")
-                        except Exception as e:
-                            # Debugging: Log the exception
-                            logger.error(f"Error adding comment: {str(e)}")
-                            st.error(f"Error adding comment: {str(e)}")
 
         # Show edit form if the edit button was clicked
         if st.session_state.get(f"edit_post_{post['PostID']}", False):

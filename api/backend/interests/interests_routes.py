@@ -59,18 +59,6 @@ def update_interest(userID):
     db.get_db().commit()
     return 'User interest updated!', 200
 
-# Deletes an interest to the database
-@interests.route('/interests/<userID>', methods=['DELETE'])
-def delete_interest(userID):
-    interest = request.json['interest']
-    query = '''DELETE FROM interests WHERE UserID = %s
-            AND Interest = %s
-            '''
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (userID, interest))
-    db.get_db().commit()
-    return 'Interest removed!', 200
-
 
 
 
