@@ -84,13 +84,11 @@ if userID:
 
       #send message to advisor
       text = st.text_input("Send a Message")
-      date = st.date_input('What is the Date?')
       if st.button("Send Message"):
-        if text and date:
+        if text:
           message_data = {
               'sender_id': int(userID),
               'receiver_id': actual_advisor_id,
-              'sent_date': str(date),
               'content': text
               }
           response = requests.post(BASEURL[:-1], json=message_data)
@@ -101,9 +99,7 @@ if userID:
             st.error("Faled to Send Message")
         else:
           st.warning("Please fill in all fields")
-  
-      
-    
+
   else:
     st.warning('Looks like you do not have an advisor!')
 

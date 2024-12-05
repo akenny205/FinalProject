@@ -13,8 +13,8 @@ def add_message():
     message_info = request.get_json()
     #print(message_info)
     query = '''
-            INSERT INTO messages (MessageID, SenderID, SentDate, ReceiverID, Content, AdminID)
-            VALUES (%s,%s,%s,%s,%s,%s);
+            INSERT INTO messages (SenderID, SentDate, ReceiverID, Content)
+            VALUES (%s,NOW(),%s,%s);
     '''
     data = (message_info['sender_id'], message_info['receiver_id'], message_info['content'])
     cursor.execute(query, data)

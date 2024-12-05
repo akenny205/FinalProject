@@ -458,6 +458,14 @@ VALUES
 (57, '2024-06-18 08:13:26', 9, 5, 'Unified cross-functional development', 2),
 (58, '2024-06-18 08:29:47', 5, 9, 'Visionary targeted deployment', 2);
 
+
+INSERT INTO messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID)
+VALUES 
+(59,"2024-06-15 10:45:12", 11, 141, 'Can you help me find a co-op?', 2),
+(59,"2024-06-16 10:45:12", 141, 11, 'Sure thing!', 2);
+
+
+
 -- Insert into Posts table
 INSERT INTO posts (PostID, UserID, Content, PostDate, AdminID)
 VALUES
