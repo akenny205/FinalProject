@@ -397,7 +397,7 @@ def get_users_by_trait():
 
 #------------------------------------------------------------
 # Get a single user based on userID
-@users.route('/user/<userID>', methods=['GET'])
+@users.route('/user/single/<userID>', methods=['GET'])
 def get_single_user(userID):
     cursor = db.get_db().cursor()
     query = "SELECT * FROM users WHERE UserID = %s"

@@ -38,6 +38,15 @@ def end_match(user_id, match_user_id):
     except requests.exceptions.RequestException as e:
         logger.error(f"Error ending match: {e}")
         return False
+    
+def get_user_info(user_id):
+    try:
+        response = requests.get(f'http://web-api:4000/u/user/single/{user_id}')
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error getting user info: {e}")
+        return None
 
 # Display matches
 user_id = st.text_input("Please enter your User ID:")
@@ -46,7 +55,12 @@ if user_id:
     matches = fetch_matches(user_id)
     st.write("### Your Matches:")
     for match in matches:
-        st.write(f"- Mentor ID: {match['MentorID']}")
+        st.write(f"Mentor ID: {match['MentorID']}")
+        st.write(f"Mentor Name: {get_user_info(match['MentorID'])['fName']} {get_user_info(match['MentorID'])['lName']}")
+        st.write(f"Major & Minor: {get_user_info(match['MentorID'])['Major']} & {get_user_info(match['MentorID'])['Minor']}")
+        st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
+        st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
+        st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
 else:
     st.write("User ID not found")
 
@@ -61,7 +75,12 @@ if st.button("Get Recommended Matches"):
             if recommended_matches:
                 st.write("### Recommended Matches:")
                 for match in recommended_matches:
-                    st.write(f"- Mentor ID: {match['MentorID']}")
+                    st.write(f"Mentor ID: {match['MentorID']}")
+                    st.write(f"Mentor Name: {get_user_info(match['MentorID'])['fName']} {get_user_info(match['MentorID'])['lName']}")
+                    st.write(f"Major & Minor: {get_user_info(match['MentorID'])['Major']} & {get_user_info(match['MentorID'])['Minor']}")
+                    st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
+                    st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
+                    st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
             else:
                 st.write("No recommended matches found.")
         else:
