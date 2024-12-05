@@ -61,10 +61,12 @@ if user_id:
         st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
         st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
         st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
+        st.write("---")
 else:
     st.write("User ID not found")
 
 # Add a button to fetch recommended matches
+st.header("Recommended Matches")
 if st.button("Get Recommended Matches"):
     if user_id:
         st.write(f"### Here are recomendeded your matches:")
@@ -81,12 +83,17 @@ if st.button("Get Recommended Matches"):
                     st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
                     st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
                     st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
+                    st.write("---")
             else:
                 st.write("No recommended matches found.")
         else:
             st.error("Failed to fetch recommended matches.")
     else:
         st.warning("Please enter your User ID.")
+
+# Add vertical spacing
+st.write("---")
+st.header("End a Match")
 
 # Add a button to end a match
 if user_id:
