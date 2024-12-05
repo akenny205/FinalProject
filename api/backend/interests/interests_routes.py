@@ -8,6 +8,7 @@ from backend.db_connection import db
 interests = Blueprint('interests', __name__)
 
 
+# gets all the users who have one or more interests
 @interests.route('/interests', methods=['GET'])
 def get_all_users_by_interests():
 
@@ -25,6 +26,7 @@ def get_all_users_by_interests():
     response.status_code = 200
     return response
 
+# Adds an interest to the database
 @interests.route('/interests', methods=['POST'])
 def add_interest():
     interest_info = request.json
@@ -38,7 +40,7 @@ def add_interest():
     db.get_db().commit()
     return 'Interest added!', 201
 
-
+# Deletes an interest to the database
 @interests.route('/interess/<userID>', methods=['DELETE'])
 def delete_interest(userID):
     query = '''DELETE FROM interests WHERE UserID = %s'''
@@ -47,6 +49,7 @@ def delete_interest(userID):
     db.get_db().commit()
     return 'Interest removed!', 200
 
+# Updates an interest to the database
 @interests.route('/interests/<userID>', methods=['PATCH'])
 def update_interest(userID):
     content = request.json['interest']
@@ -56,6 +59,7 @@ def update_interest(userID):
     db.get_db().commit()
     return 'User interest updated!', 200
 
+# Deletes an interest to the database
 @interests.route('/interests/<userID>', methods=['DELETE'])
 def delete_interest(userID):
     interest = request.json['interest']
