@@ -8,18 +8,12 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-# Page Init
-
 SideBarLinks()
 
 st.title("Feed")
 
 if 'authenticated' not in st.session_state or not st.session_state['authenticated']:
     st.error("Please log in first")
-    st.stop()
-
-if 'user_id' not in st.session_state:
-    st.error("User ID not found in session")
     st.stop()
 
 if 'show_post_form' not in st.session_state:

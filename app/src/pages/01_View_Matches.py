@@ -38,6 +38,15 @@ def end_match(user_id, match_user_id):
     except requests.exceptions.RequestException as e:
         logger.error(f"Error ending match: {e}")
         return False
+    
+def get_user_info(user_id):
+    try:
+        response = requests.get(f'http://web-api:4000/u/user/single/{user_id}')
+        response.raise_for_status()  # Raise an error for bad responses
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Error getting user info: {e}")
+        return None
 
 # Display matches
 user_id = st.text_input("Please enter your User ID:")
@@ -46,38 +55,56 @@ if user_id:
     matches = fetch_matches(user_id)
     st.write("### Your Matches:")
     for match in matches:
-        st.write(f"- Mentor ID: {match['MentorID']}")
+        st.write(f"Mentor ID: {match['MentorID']}")
+        st.write(f"Mentor Name: {get_user_info(match['MentorID'])['fName']} {get_user_info(match['MentorID'])['lName']}")
+        st.write(f"Major & Minor: {get_user_info(match['MentorID'])['Major']} & {get_user_info(match['MentorID'])['Minor']}")
+        st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
+        st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
+        st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
+        st.write("---")
+
+    # Add a button to fetch recommended matches
+    st.header("Recommended Matches")
+    if st.button("Get Recommended Matches"):
+        if user_id:
+            st.write(f"### Here are recomendeded your matches:")
+            # Make a GET request to the backend to fetch recommended matches
+            response = requests.get(f'http://web-api:4000/m/matches/recommended/{user_id}')
+            if response.status_code == 200:
+                recommended_matches = response.json()
+                if recommended_matches:
+                    st.write("### Recommended Matches:")
+                    for match in recommended_matches:
+                        st.write(f"Mentor ID: {match['MentorID']}")
+                        st.write(f"Mentor Name: {get_user_info(match['MentorID'])['fName']} {get_user_info(match['MentorID'])['lName']}")
+                        st.write(f"Major & Minor: {get_user_info(match['MentorID'])['Major']} & {get_user_info(match['MentorID'])['Minor']}")
+                        st.write(f"Semesters: {get_user_info(match['MentorID'])['Semesters']}")
+                        st.write(f"Number of Co-ops: {get_user_info(match['MentorID'])['numCoops']}")
+                        st.write(f"Email: {get_user_info(match['MentorID'])['Email']}")
+                        st.write("---")
+                else:
+                    st.write("No recommended matches found.")
+            else:
+                st.error("Failed to fetch recommended matches.")
+        else:
+            st.warning("Please enter your User ID.")
+
+    # Add vertical spacing
+    st.write("---")
+    st.header("End a Match")
+
+    # Add a button to end a match
+    if user_id:
+        match_user_id = st.text_input("Enter the Mentor ID to end the match:")
+        if st.button("End Match"):
+            if match_user_id:
+                success = end_match(user_id, match_user_id)
+                if success:
+                    st.success("Match ended successfully.")
+                else:
+                    st.error("Failed to end match.")
+            else:
+                st.warning("Please enter a Mentor ID.")
+                
 else:
     st.write("User ID not found")
-
-# Add a button to fetch recommended matches
-if st.button("Get Recommended Matches"):
-    if user_id:
-        st.write(f"### Here are recomendeded your matches:")
-        # Make a GET request to the backend to fetch recommended matches
-        response = requests.get(f'http://web-api:4000/m/matches/recommended/{user_id}')
-        if response.status_code == 200:
-            recommended_matches = response.json()
-            if recommended_matches:
-                st.write("### Recommended Matches:")
-                for match in recommended_matches:
-                    st.write(f"- Mentor ID: {match['MentorID']}")
-            else:
-                st.write("No recommended matches found.")
-        else:
-            st.error("Failed to fetch recommended matches.")
-    else:
-        st.warning("Please enter your User ID.")
-
-# Add a button to end a match
-if user_id:
-    match_user_id = st.text_input("Enter the Mentor ID to end the match:")
-    if st.button("End Match"):
-        if match_user_id:
-            success = end_match(user_id, match_user_id)
-            if success:
-                st.success("Match ended successfully.")
-            else:
-                st.error("Failed to end match.")
-        else:
-            st.warning("Please enter a Mentor ID.")

@@ -125,6 +125,7 @@ if st.button("Get Users"):
 
         if response.status_code == 200:
             data = response.json()
+            column_order = ["UserID", "fname", "lname"]
             df = pd.DataFrame(data)
 
             st.subheader(f"Users of type: {user_type}")
@@ -133,7 +134,7 @@ if st.button("Get Users"):
             
             # Configure the dataframe display
             st.dataframe(
-                df,
+                df[column_order],
                 hide_index=True,
                 column_config={
                     "UserID": "User ID",
