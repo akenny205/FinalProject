@@ -22,23 +22,12 @@ def add_employee():
     return 'Employee added!', 201
 
 
-
-@employers.route('/employers/<userID>', methods=['GET'])
-def get_employer_description(userID):
-
+#------------------------------------------------------------
+# View specific employee by ID
+@employers.route('/emp/employers/<employee_id>', methods=['GET'])
+def get_employee(employee_id):
     cursor = db.get_db().cursor()
-    query = ('''SELECT e.EmpID, e.Name, e.Description 
-                    FROM employers e
-                    JOIN users u ON u.EmpID = e.EmpID
-                    WHERE u.UserID = %s
-    ''')
-    cursor.execute(query, (userID,))
-    theData = cursor.fetchone()
-
-    if not theData:
-        return 'User not Found', 404
-
-    the_response = make_response(jsonify(theData))
-    the_response.status_code = 200
-    return the_response
-
+    cursor.execute('''SELECT * FROM employers WHERE EmpID = %s''', (employee_id))
+    theData = cursor.fetchall()
+    response = make_response(jsonify(theData), 200)
+    return response
