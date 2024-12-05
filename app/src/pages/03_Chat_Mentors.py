@@ -14,15 +14,17 @@ st.title("Mentee and Mentor Chat Dashboard")
 userID = st.text_input("Your User ID")
 if userID:
   all_matches = requests.get(f'http://web-api:4000/m/matches/{userID}')
-  st.write(all_matches.status_code)
-  st.write(all_matches.json())
-  matches = all_matches.json()
+  matches = []
+  if all_matches.status_code == 200:
+    matches = all_matches.json()
+  else:
+    st.error('Failed to fetch matches')
+  
   match_names = ["Choose a User"]
   match_names_IDS = defaultdict(int)
   for match in matches:
     currID = match["MentorID"]
     curr_mentor = requests.get(f'http://web-api:4000/u/user/{currID}').json()
-    st.write(curr_mentor)
     fname = curr_mentor['fname']
     lname = curr_mentor['lname']
     full_name = fname + " " + lname
@@ -33,7 +35,6 @@ if userID:
   if mentor != "Choose a User":
     mentorID = match_names_IDS[mentor]
     all_messages = requests.get(f"http://web-api:4000/me/messages/{userID}/{mentorID}")
-    st.write(all_messages.status_code)
     if all_messages.status_code not in (200, 201):
       st.warning("no messages between users")
     else:
@@ -106,7 +107,7 @@ if userID:
           if text:
             message_data = {
                 'sender_id': int(userID),
-                'receiver_id': actual_advisor_id,
+                'receiver_id': mentorID,
                 'content': text
                 }
             response = requests.post("http://web-api:4000/me/messages", json=message_data)
@@ -117,5 +118,6 @@ if userID:
               st.error("Faled to Send Message")
           else:
             st.warning("Please fill in all fields")
+          
     
     

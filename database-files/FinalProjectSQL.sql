@@ -462,7 +462,7 @@ VALUES
 INSERT INTO messages (MessageID, SentDate, SenderID, ReceiverID, Content, AdminID)
 VALUES 
 (59,"2024-06-15 10:45:12", 11, 141, 'Can you help me find a co-op?', 2),
-(59,"2024-06-16 10:45:12", 141, 11, 'Sure thing!', 2);
+(60,"2024-06-16 10:45:12", 141, 11, 'Sure thing!', 2);
 
 
 
