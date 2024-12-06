@@ -2,7 +2,7 @@
 
 This repo is for PeerPoint, an app created as the final project for CS3200 Database Design by Jonathon Piesik, Andrew Kenney, Ian Solberg, Zac Labit, and Jack Young.  It includes the infrastructure setup (containers), front end code, REST API code, and SQL database files.
 
-Video Walk-Through Link: (user needs to have permission)
+Video Walk-Through Link: https://youtu.be/WcwxHZKXhMc
 
 Briefly, PeerPoint is a campus social networking platform that encourages peer mentorship while allowing continuous monitoring by advisors. 
 
