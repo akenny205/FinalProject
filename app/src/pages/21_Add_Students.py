@@ -54,7 +54,6 @@ if submitted:
 
         if response.status_code == 201:
             st.success("User added successfully!")
-            st.experimental_rerun()
         else:
             st.error(f"Failed to add user: {response.status_code} - {response.text}")
 
