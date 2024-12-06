@@ -6,7 +6,16 @@ Video Walk-Through Link: https://youtu.be/WcwxHZKXhMc
 
 Briefly, PeerPoint is a campus social networking platform that encourages peer mentorship while allowing continuous monitoring by advisors. 
 
-when bootstrapping make sure that DB_NAME in the .env file is set to 'finalproject'
+when bootstrapping make sure that:
+DB_NAME in the .env file is set to 'finalproject'
+SECRET_KEY is set to a unique key
+DB_USER is root
+DB_HOST is db
+DB_PORT is 3306
+And that you set a unique password in MYSQL_ROOT_PASSWORD
+
+Once a valid env file is set, docker compose up -d will properly build the containers
+
 
 # PeerPoint Elevator Pitch
 
